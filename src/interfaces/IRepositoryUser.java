@@ -1,3 +1,5 @@
-public interface IRepository<User> {
+package interfaces;
+import models.*;;
+public interface IRepositoryUser {
     User searchById(int id);
 }

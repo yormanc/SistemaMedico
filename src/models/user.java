@@ -1,4 +1,4 @@
-package src.models.user;
+package models;
 
 // Class for user credentials (Single Responsibility)
 public class Credentials {
