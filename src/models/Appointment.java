@@ -1,26 +1,23 @@
 package models;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 public class Appointment {
     private int appointmentId;
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDateTime dateTime;
     private Patient patient;
-    private Medic medic;
-    private int status;
+    private Doctor medic;
     private String diagnostic;
+    private appoinmentStatus status ;
 
     // Constructor vacío
     public Appointment() {
     }
 
     // Constructor con todos los parámetros
-    public Appointment(int appointmentId, LocalDate date, LocalTime time, Patient patient, Medic medic, int status, String diagnostic) {
+    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor medic, int status, String diagnostic) {
         this.appointmentId = appointmentId;
-        this.date = date;
-        this.time = time;
+        this.dateTime = dateTime;
         this.patient = patient;
         this.medic = medic;
         this.status = status;
@@ -36,20 +33,12 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public LocalTime getTime() {
-        return time;
-    }
-
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
     public Patient getPatient() {
@@ -60,11 +49,11 @@ public class Appointment {
         this.patient = patient;
     }
 
-    public Medic getMedic() {
+    public Doctor getMedic() {
         return medic;
     }
 
-    public void setMedic(Medic medic) {
+    public void setMedic(Doctor medic) {
         this.medic = medic;
     }
 
