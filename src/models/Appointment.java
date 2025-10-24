@@ -6,7 +6,7 @@ public class Appointment {
     private int appointmentId;
     private LocalDateTime dateTime;
     private Patient patient;
-    private Doctor medic;
+    private Doctor doctor;
     private String diagnostic;
     private appoinmentStatus status ;
 
@@ -15,11 +15,11 @@ public class Appointment {
     }
 
     // Constructor con todos los parámetros
-    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor medic, int status, String diagnostic) {
+    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor DOCnt status, String diagnostic) {
         this.appointmentId = appointmentId;
         this.dateTime = dateTime;
         this.patient = patient;
-        this.medic = medic;
+        this.doctor = doctor;
         this.status = status;
         this.diagnostic = diagnostic;
     }
@@ -50,11 +50,11 @@ public class Appointment {
     }
 
     public Doctor getMedic() {
-        return medic;
+        return Doctor;
     }
 
-    public void setMedic(Doctor medic) {
-        this.medic = medic;
+    public void setMedic(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public int getStatus() {
