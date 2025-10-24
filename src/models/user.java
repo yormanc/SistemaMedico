@@ -1,25 +1,5 @@
 package models;
 
-// Class for user credentials (Single Responsibility)
-public class Credentials {
-    private String username;
-    private String password;
-
-    public Credentials(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public boolean validatePassword(String inputPassword) {
-        return this.password.equals(inputPassword);
-    }
-
-    public String getUsername() {
-        return username;
-    }
-}
-
-// Abstract User class (Open/Closed, Liskov Substitution)
 public abstract class User implements Authenticable {
     protected String fullName;
     protected int age;
