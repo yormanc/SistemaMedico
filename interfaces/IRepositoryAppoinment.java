@@ -3,6 +3,8 @@ import java.util.ArrayList;
 
 import models.Appointment;
 import enumerations.AppoinmnetStatus;
+import models.Doctor;
+import models.Patient;
 
 
 public interface IRepositoryAppoinment extends IRepository<Appointment> {
