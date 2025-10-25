@@ -47,4 +47,16 @@ public abstract class User {
     public void setCredentials(Credentials credentials) {
         this.credentials = credentials;
     }
+
+     public boolean authenticate(String password) {
+        if (password == null || password.isEmpty()) {
+            return false;
+        }
+        
+        if (this.credentials == null || this.credentials.getPassword() == null) {
+            return false;
+        }
+        
+        return this.credentials.getPassword().equals(password);
+    }
 }

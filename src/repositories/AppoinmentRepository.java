@@ -1,18 +1,16 @@
 package repositories;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-
 import enumerations.AppoinmnetStatus;
-import interfaces.Doctor;
+import models.Doctor;
 import interfaces.IRepositoryAppoinment;
-import interfaces.Patient;
-import interfaces.User;
+import models.Patient;
 import models.Appointment;
 import java.time.LocalDateTime;  
-import java.util.stream.Collectors;
+
 
 public class AppoinmentRepository implements IRepositoryAppoinment {
-    private ArrayList<Appointment> appointments;
+    private final ArrayList<Appointment> appointments;
 
     // Agregar constructor
     public AppoinmentRepository() {
@@ -20,13 +18,13 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
     }
 
     @Override
-    public void add(Appointment appointment) {
+    public boolean add(Appointment appointment) {
         try {
             // Validaciones básicas
             if (appointment == null) {
                 throw new Exception("La cita no puede ser nula");
             }
-            if (appointment.getPatient() == null || appointment.getMedic() == null) {
+            if (appointment.getPatient() == null || appointment.getDoctor() == null) {
                 throw new Exception("La cita debe tener un paciente y un médico asignados");
             }
             if (appointment.getDateTime() == null) {
@@ -41,7 +39,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
 
             // Verificar si el médico está disponible
             boolean doctorIsBooked = appointments.stream()
-                .anyMatch(a -> a.getMedic().equals(appointment.getMedic()) 
+                .anyMatch(a -> a.getDoctor().equals(appointment.getDoctor()) 
                         && a.getDateTime().equals(appointment.getDateTime()));
 
             if (doctorIsBooked) {
@@ -59,6 +57,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
 
             // Si todas las validaciones pasan, agregar la cita
             appointments.add(appointment);
+            return true;
 
         } catch (Exception e) {
             throw new RuntimeException("Error al agregar la cita: " + e.getMessage());
@@ -66,7 +65,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
     }
 
     @Override
-    public void delete(Appointment appointmentToDelete) {
+    public boolean delete(Appointment appointmentToDelete) {
         try {
             if (appointments.isEmpty()) {
                 throw new Exception("No hay citas registradas");
@@ -85,6 +84,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
         } catch (Exception e) {
             throw new RuntimeException("Error al eliminar la cita: " + e.getMessage());
         }
+        return true;
     }
 
    @Override
@@ -100,8 +100,8 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
             }
 
             return appointments.stream()
-                .filter(appointment -> appointment.getMedic() != null && 
-                        appointment.getMedic().getId().equals(doctor.getId()))
+                .filter(appointment -> appointment.getDoctor() != null && 
+                        appointment.getDoctor().getCredentials().getId()==(doctor.getCredentials().getId()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         } catch (Exception e) {
@@ -118,7 +118,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
 
             return appointments.stream()
                 .filter(appointment -> appointment.getPatient() != null && 
-                        appointment.getPatient().getId().equals(patient.getId()))
+                        appointment.getPatient().getCredentials().getId()==(patient.getCredentials().getId()))
                 .collect(Collectors.toCollection(ArrayList::new));
 
         } catch (Exception e) {
@@ -127,13 +127,24 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
     }
 
     @Override
-    public ArrayList<Appointment> getByStatus(AppointmentStatus status) {
-        // TODO Auto-generated method stub
-        return null;
+    public ArrayList<Appointment> getByStatus(AppoinmnetStatus status) {
+       try {
+            if (status == null) {
+                throw new Exception("El estado no puede ser nulo");
+            }
+
+            return appointments.stream()
+                .filter(appointment -> appointment.getStatus() != null &&
+                        appointment.getStatus().equals(status))
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al obtener las citas del doctor: " + e.getMessage());
+        }
     }
 
     @Override
-public void update(Appointment updatedAppointment) {
+public boolean update(Appointment updatedAppointment) {
         try {
             // Validaciones básicas
             if (updatedAppointment == null) {
@@ -155,7 +166,7 @@ public void update(Appointment updatedAppointment) {
             // Verificar disponibilidad del médico (excluyendo la cita actual)
             boolean doctorIsBooked = appointments.stream()
                 .filter(a -> a.getAppointmentId() != updatedAppointment.getAppointmentId())
-                .anyMatch(a -> a.getMedic().equals(updatedAppointment.getMedic()) 
+                .anyMatch(a -> a.getDoctor().equals(updatedAppointment.getDoctor()) 
                         && a.getDateTime().equals(updatedAppointment.getDateTime()));
 
             if (doctorIsBooked) {
@@ -179,10 +190,11 @@ public void update(Appointment updatedAppointment) {
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar la cita: " + e.getMessage());
         }
+        return true;
     }
 
     @Override
-    public ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor, AppointmentStatus status){
+    public ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppoinmnetStatus status){
         try {
             if (doctor == null || status == null) {
                 throw new Exception("El doctor o el estado no puede ser nulo");
@@ -190,7 +202,7 @@ public void update(Appointment updatedAppointment) {
 
             return appointments.stream()
                 .filter(appointment -> appointment.getDoctor() != null && 
-                        appointment.getDoctor().getId().equals(doctor.getId()) &&
+                        appointment.getDoctor().getCredentials().getId()==(doctor.getCredentials().getId()) &&
                         appointment.getStatus() != null &&
                         appointment.getStatus().equals(status))
                 .collect(Collectors.toCollection(ArrayList::new));
@@ -201,7 +213,7 @@ public void update(Appointment updatedAppointment) {
     }
 
     @Override
-    public ArrayList<Appointment> getByPatientAndStatus(Patient patient, AppointmentStatus status){
+    public ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppoinmnetStatus status){
         try {
             if (patient == null || status == null) {
                 throw new Exception("El paciente o el estado no puede ser nulo");
@@ -209,7 +221,7 @@ public void update(Appointment updatedAppointment) {
 
             return appointments.stream()
                 .filter(appointment -> appointment.getPatient() != null && 
-                        appointment.getPatient().getId().equals(patient.getId()) &&
+                        appointment.getPatient().getCredentials().getId()==(patient.getCredentials().getId()) &&
                         appointment.getStatus() != null &&
                         appointment.getStatus().equals(status))
                 .collect(Collectors.toCollection(ArrayList::new));

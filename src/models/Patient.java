@@ -1,10 +1,6 @@
 package models;
 
 public class Patient extends User {
-    private String fullName;
-    private int age;
-    private String email;
-    private Credentials credentials;
     public Patient() {
     }
 

@@ -7,9 +7,9 @@ import models.Patient;
 
 
 public interface IRepositoryAppoinment extends IRepository<Appointment> {
-    void add(Appointment appointment);
-    void update(Appointment appointment);
-    void delete(Appointment appointmentToDelete);
+    boolean add(Appointment appointment);
+    boolean update(Appointment appointment);
+    boolean delete(Appointment appointmentToDelete);
     ArrayList<Appointment> getAll(); 
     ArrayList<Appointment> getByStatus(AppoinmnetStatus status);
     ArrayList<Appointment> getByPatient(Patient patient);   
