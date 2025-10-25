@@ -1,5 +1,5 @@
 package interfaces;
-import models.*;;
+import models.User;
 public interface IRepositoryUser {
     User searchById(int id);
 }

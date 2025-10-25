@@ -1,6 +1,9 @@
 package models;
 
+import java.io.ObjectInputFilter.Status;
 import java.time.LocalDateTime;
+
+import enumerations.AppoinmnetStatus;
 
 public class Appointment {
     private int appointmentId;
@@ -8,14 +11,16 @@ public class Appointment {
     private Patient patient;
     private Doctor doctor;
     private String diagnostic;
-    private appoinmentStatus status ;
+    private AppoinmnetStatus status ;
 
     // Constructor vacío
     public Appointment() {
     }
 
     // Constructor con todos los parámetros
+
     public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String status, String diagnostic) {
+
         this.appointmentId = appointmentId;
         this.dateTime = dateTime;
         this.patient = patient;
@@ -57,11 +62,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public int getStatus() {
+    public AppoinmnetStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(AppoinmnetStatus status) {
         this.status = status;
     }
 

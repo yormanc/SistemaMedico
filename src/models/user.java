@@ -1,10 +1,13 @@
 package models;
 
-public abstract class User implements Authenticable {
-    protected String fullName;
-    protected int age;
-    protected String email;
-    protected Credentials credentials;
+public abstract class User {
+    private String fullName;
+    private int age;
+    private String email;
+    private Credentials credentials;
+
+    public User() {
+    }
 
     public User(String fullName, int age, String email, Credentials credentials) {
         this.fullName = fullName;
@@ -17,41 +20,31 @@ public abstract class User implements Authenticable {
         return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getEmail() {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Credentials getCredentials() {
         return credentials;
     }
 
-    @Override
-    public boolean authenticate(String password) {
-        return credentials.validatePassword(password);
-    }
-}
-
-// Concrete implementation (Liskov Substitution)
-public class AdminUser extends User {
-    public AdminUser(String fullName, int age, String email, Credentials credentials) {
-        super(fullName, age, email, credentials);
-    }
-
-    public void manageSystem() {
-        System.out.println(fullName + " is managing the system.");
-    }
-}
-
-public class RegularUser extends User {
-    public RegularUser(String fullName, int age, String email, Credentials credentials) {
-        super(fullName, age, email, credentials);
-    }
-
-    public void browseContent() {
-        System.out.println(fullName + " is browsing content.");
+    public void setCredentials(Credentials credentials) {
+        this.credentials = credentials;
     }
 }
