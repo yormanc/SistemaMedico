@@ -7,4 +7,3 @@ public interface IRepositoryUser extends IRepository<User> {
     boolean delete(User userToDelete);
     User searchById(int id);
     
-}

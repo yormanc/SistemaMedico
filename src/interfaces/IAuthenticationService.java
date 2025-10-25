@@ -1,5 +1,6 @@
 package interfaces;
 import models.User;
+
 import models.Credentials;
 import models.Patient; 
 import models.Doctor;
@@ -14,3 +15,4 @@ public interface IAuthenticationService {
     boolean changePassword(int userId, String oldPassword, String newPassword);
 
 }
+
