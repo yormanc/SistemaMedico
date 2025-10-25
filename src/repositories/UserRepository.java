@@ -1,64 +1,106 @@
 package repositories;
 
 import java.util.ArrayList;
-import java.util.Optional;
-
 import interfaces.IRepositoryUser;
 import models.User;
 
 public class UserRepository implements IRepositoryUser {
-    private final ArrayList<User> users;
+    private final ArrayList<User> users; 
 
     public UserRepository() {
-        this.users = new ArrayList<>();
+        this.users = new ArrayList<>();  
     }
 
-    public void add(User user) {
+    @Override
+    public boolean add(User user) {
         try {
-            if (user == null) throw new Exception("El usuario no puede ser nulo");
-            if (users.contains(user)) throw new Exception("El usuario ya existe en el repositorio");
+            // Validaciones básicas
+            if (user == null) {
+                throw new Exception("El usuario no puede ser nulo");
+            }
+            if (user.getCredentials() == null) {
+                throw new Exception("El usuario debe tener credenciales");
+            }
+
+            // Verificar que no exista un usuario con el mismo ID
+            boolean userExists = users.stream()
+                .anyMatch(u -> u.getCredentials().getId() == user.getCredentials().getId());
+
+            if (userExists) {
+                throw new Exception("Ya existe un usuario con este ID");
+            }
+
+            // Agregar el usuario
             users.add(user);
+
         } catch (Exception e) {
             throw new RuntimeException("Error al agregar el usuario: " + e.getMessage());
         }
+        return true;
     }
 
-    public void delete(User user) {
+    @Override
+    public boolean update(User user) {
         try {
-            if (user == null) throw new Exception("El usuario a eliminar no puede ser nulo");
-            if (users.isEmpty()) throw new Exception("No hay usuarios registrados");
-            boolean removed = users.remove(user);
-            if (!removed) throw new Exception("No se encontró el usuario a eliminar");
-        } catch (Exception e) {
-            throw new RuntimeException("Error al eliminar el usuario: " + e.getMessage());
-        }
-    }
+            // Validaciones básicas
+            if (user == null) {
+                throw new Exception("El usuario a actualizar no puede ser nulo");
+            }
 
-    public ArrayList<User> getAll() {
-        return new ArrayList<>(users);
-    }
+            // Buscar el usuario existente
+            User existingUser = users.stream()
+                .filter(u -> u.getCredentials().getId() == user.getCredentials().getId())
+                .findFirst()
+                .orElseThrow(() -> new Exception("No se encontró el usuario a actualizar"));
 
-    public void update(User updated) {
-        try {
-            if (updated == null) throw new Exception("El usuario a actualizar no puede ser nulo");
-            int index = users.indexOf(updated);
-            if (index == -1) throw new Exception("No se encontró el usuario a actualizar");
-            users.set(index, updated);
+            // Actualizar los datos del usuario
+            int index = users.indexOf(existingUser);
+            users.set(index, user);
+
         } catch (Exception e) {
             throw new RuntimeException("Error al actualizar el usuario: " + e.getMessage());
         }
+        return true;
+    }
+
+    @Override
+    public boolean delete(User userToDelete) {
+        try {
+            if (users.isEmpty()) {
+                throw new Exception("No hay usuarios registrados");
+            }
+
+            if (userToDelete == null) {
+                throw new Exception("El usuario a eliminar no puede ser nulo");
+            }
+
+            boolean wasRemoved = users.remove(userToDelete);
+            
+            if (!wasRemoved) {
+                throw new Exception("No se pudo eliminar el usuario seleccionado");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar el usuario: " + e.getMessage());
+        }
+        return true;
     }
 
     @Override
     public User searchById(int id) {
         try {
-            if (id < 0) throw new Exception("El id no es válido");
-            Optional<User> found = users.stream()
-                .filter(u -> u.getCredentials() != null && u.getCredentials().getId() == id)
-                .findFirst();
-            return found.orElse(null);
+            return users.stream()
+                .filter(u -> u.getCredentials().getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new Exception("No se encontró un usuario con el ID: " + id));
+
         } catch (Exception e) {
-            throw new RuntimeException("Error al buscar el usuario por id: " + e.getMessage());
+            throw new RuntimeException("Error al buscar el usuario: " + e.getMessage());
         }
+    }
+
+    // Método adicional útil
+    public ArrayList<User> getAll() {
+        return new ArrayList<>(users);
     }
 }

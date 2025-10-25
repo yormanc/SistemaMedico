@@ -1,7 +1,8 @@
+package interfaces;
 import models.Speciality;
 public interface IRepositorySpeciality extends IRepository<Speciality> {
-    void add(Speciality speciality);
-    void update(Speciality speciality);
-    void delete(Speciality specialityToDelete);
-
+    boolean add(Speciality speciality);
+    boolean update(Speciality speciality);
+    boolean delete(Speciality specialityToDelete);
+    Speciality searchById(int specialityId);
 }
