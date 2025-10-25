@@ -18,7 +18,9 @@ public class Appointment {
     }
 
     // Constructor con todos los parámetros
-    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic, AppoinmnetStatus status) {
+
+    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String status, String diagnostic) {
+
         this.appointmentId = appointmentId;
         this.dateTime = dateTime;
         this.patient = patient;
