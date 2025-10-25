@@ -1,53 +1,39 @@
 package models;
 
-public class Patient {
-     private int patientId;
-    private String name;
+public class Patient extends User {
+    private String fullName;
+    private int age;
     private String email;
-    private String age;
-
-    // Constructor vacío
+    private Credentials credentials;
     public Patient() {
     }
 
-    // Constructor con todos los parámetros
-    public Patient(int patientId, String name, String email, String age) {
-        this.patientId = patientId;
-        this.name = name;
-        this.email = email;
-        this.age = age;
+    public Patient(String fullName, int age, String email, Credentials credentials) {
+        super(fullName, age, email, credentials);
     }
 
-    // Getters y Setters
-    public int getPatientId() {
-        return patientId;
+     public String getFullName() {
+        return super.getFullName();
     }
-
-    public void setPatientId(int patientId) {
-        this.patientId = patientId;
+    public void setFullName(String fullName) {
+        super.setFullName(fullName);
     }
-
-    public String getName() {
-        return name;
+    public int getAge() {
+        return super.getAge();
     }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setAge(int age) {
+        super.setAge(age);
     }
-
     public String getEmail() {
-        return email;
+        return super.getEmail();
     }
-
     public void setEmail(String email) {
-        this.email = email;
+        super.setEmail(email);
     }
-
-    public String getAge() {
-        return age;
+    public Credentials getCredentials() {
+        return super.getCredentials();
     }
-
-    public void setAge(String age) {
-        this.age = age;
+    public void setCredentials(Credentials credentials) {
+        super.setCredentials(credentials);
     }
 }

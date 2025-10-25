@@ -1,7 +1,9 @@
 package interfaces;
 import java.util.ArrayList;
-
 import models.Appointment;
+import enumerations.*;
+import models.Doctor;
+import models.Patient; 
 
 
 public interface IRepositoryAppoinment extends IRepository<Appointment> {
@@ -9,11 +11,11 @@ public interface IRepositoryAppoinment extends IRepository<Appointment> {
     void update(Appointment appointment);
     void delete(Appointment appointmentToDelete);
     ArrayList<Appointment> getAll(); 
-    ArrayList<Appointment> getByStatus(AppointmentStatus status);
+    ArrayList<Appointment> getByStatus(AppoinmnetStatus status);
     ArrayList<Appointment> getByPatient(Patient patient);   
     ArrayList<Appointment> getByDoctor(Doctor doctor);
-    ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor, AppointmentStatus status);
-    ArrayList<Appointment> getByPatientAndStatus(Patient patient, AppointmentStatus status);
+    ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppoinmnetStatus status);
+    ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppoinmnetStatus status);
 
 
 }
