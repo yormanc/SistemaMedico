@@ -1,9 +1,9 @@
+package services;
 import java.time.LocalDateTime;
 import java.util.List;
 import enumerations.*;
 import models.*;
 import repositories.*;
-import Services.*;
 public class MedicSystemService {
 
     private final UserRepository userRepository;
@@ -13,6 +13,15 @@ public class MedicSystemService {
     private final SpecialityRepository specialityRepository;
     private final AuthenticationService authService;
     public User authenticatedUser;
+    public MedicSystemService() {
+        this.userRepository = new UserRepository();
+        this.appointmentRepository = new AppoinmentRepository();
+        this.patientRepository = new PatientRepository();
+        this.doctorRepository = new DoctorRepository();
+        this.specialityRepository = new SpecialityRepository();
+        this.authService = new AuthenticationService(userRepository);
+        this.authenticatedUser = null;
+    }
 
     public MedicSystemService(
         UserRepository userRepository,
@@ -50,6 +59,28 @@ public class MedicSystemService {
     }
     public void loginUser(int id, String password) {
        authenticatedUser=authService.login(id, password);
+    }
+    public boolean logoutUser(int id) {
+        boolean result=authService.logout(id);
+        if(result){
+            authenticatedUser=null;
+        }
+        return result;
+    }
+    public boolean changeUserPassword(int userId, String oldPass, String newPass) {
+        return authService.changePassword(userId, oldPass, newPass);
+    }
+    public boolean updateDoctor(Doctor doctor) {
+        return doctorRepository.update(doctor);
+    }
+    public boolean removeDoctor(Doctor doctor) {
+        return doctorRepository.remove(doctor);
+    }
+    public boolean updatePatient(Patient patient) {
+        return patientRepository.update(patient);
+    }
+    public boolean removePatient(Patient patient) {
+        return patientRepository.remove(patient);
     }
     public boolean scheduleAppointment(LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic) {
         Appointment appointment = new Appointment(dateTime, patient, doctor, diagnostic);
