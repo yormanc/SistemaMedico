@@ -2,12 +2,18 @@ package services;
 
 import interfaces.IAuthenticationService;
 import interfaces.IRepositoryUser;
+import interfaces.IRepositoryPatient;
+import interfaces.IRepositoryDoctor;
 import models.User;
 import models.Credentials;
+import models.Doctor;
+import models.Patient;
 
 public class AuthenticationService implements IAuthenticationService {
 
     private IRepositoryUser userRepository;
+    private IRepositoryDoctor doctorRepository;
+    private IRepositoryPatient patientRepository;
 
     public AuthenticationService(IRepositoryUser userRepository) {
         this.userRepository = userRepository;
@@ -29,9 +35,10 @@ public class AuthenticationService implements IAuthenticationService {
     }
 
     @Override
-    public boolean register(User user, Credentials credentials) {
+    public boolean registerDoctor(Doctor doctor, Credentials credentials) {
         if (userRepository.searchById(credentials.getId()) == null) {
-            userRepository.add(user);
+            userRepository.add(doctor);
+            doctorRepository.add(doctor);
             return true;
         }
         return false;
@@ -40,12 +47,30 @@ public class AuthenticationService implements IAuthenticationService {
     @Override
     public boolean changePassword(int userId, String oldPass, String newPass) {
         User user = userRepository.searchById(userId);
-        if (user != null && user.getCredentials().validatePassword(oldPass)) {
+        if (user != null && user.getCredentials().verifyPassword(oldPass)) {
             user.getCredentials().setPassword(newPass);
-            userRepository.modify(user);
+            userRepository.update(user);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean registerPatient(Patient patient, Credentials credentials) {
+        if (userRepository.searchById(credentials.getId()) == null) {
+            userRepository.add(patient);
+            patientRepository.add(patient);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean registerUser(User user, Credentials credentials) {
+        if (userRepository.searchById(credentials.getId()) == null) {
+            userRepository.add(user);
             return true;
         }
         return false;
     }
 }
-
