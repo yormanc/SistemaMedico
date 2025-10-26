@@ -1,15 +1,13 @@
 package models;
 
-
-// Clase abstracta base para todos los usuarios
-public abstract class User implements Authenticable {
+public abstract class User {
     private String fullName;
     private int age;
     private String email;
     private Credentials credentials;
 
-    // Constructor vacío (útil para frameworks)
-    public User() {}
+    public User() {
+    }
 
     // Constructor con parámetros
     public User(String fullName, int age, String email, Credentials credentials) {
@@ -52,12 +50,15 @@ public abstract class User implements Authenticable {
         this.credentials = credentials;
     }
 
-    // Implementación de la interfaz Authenticable
-    @Override
-    public boolean authenticate(String password) {
-        return credentials != null && credentials.validatePassword(password);
+     public boolean authenticate(String password) {
+        if (password == null || password.isEmpty()) {
+            return false;
+        }
+        
+        if (this.credentials == null || this.credentials.getPassword() == null) {
+            return false;
+        }
+        
+        return this.credentials.getPassword().equals(password);
     }
-
-    // Método abstracto: obliga a las subclases a definir su rol
-    public abstract void showRole();
 }

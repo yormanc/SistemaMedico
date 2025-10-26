@@ -1,56 +1,50 @@
 package models;
+public class Doctor extends User {
+    private Speciality speciality;
 
-public class Doctor {
-    private int doctorId;
-    private String name;
-    private Speciality speciality; // relación con Speciality
-
-    // Constructor vacío (útil para frameworks)
-    public Doctor() {}
-
-    // Constructor con parámetros
-    public Doctor(int doctorId, String name, Speciality speciality) {
-        this.doctorId = doctorId;
-        this.name = name;
-        this.speciality = speciality;
+    // Constructor vacío
+    public Doctor() {
+    }
+    // Constructor con todos los parámetros
+    
+    public Doctor(String fullName, int age, String email, Credentials credentials,Speciality specialty) {
+        super(fullName, age, email, credentials);
+        this.speciality = specialty;
+        
+    }
+    public String getFullName() {
+        return super.getFullName();
+    }
+    public void setFullName(String fullName) {
+        super.setFullName(fullName);
+    }
+    public int getAge() {
+        return super.getAge();
+    }
+    public void setAge(int age) {
+        super.setAge(age);
+    }
+    public String getEmail() {
+        return super.getEmail();
+    }
+    public void setEmail(String email) {
+        super.setEmail(email);
+    }
+    public Credentials getCredentials() {
+        return super.getCredentials();
+    }
+    public void setCredentials(Credentials credentials) {
+        super.setCredentials(credentials);
     }
 
     // Getters y Setters
-    public int getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Speciality getSpeciality() {
         return speciality;
     }
 
-    public void setSpeciality(Speciality speciality) {
+    public void setSpecialty(Speciality speciality) {
         this.speciality = speciality;
     }
 
-    // Método de comportamiento
-    public void diagnose() {
-        System.out.println("Diagnosing as a specialist in " + speciality.getName());
-    }
-
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "doctorId=" + doctorId +
-                ", name='" + name + '\'' +
-                ", speciality=" + (speciality != null ? speciality.getName() : "None") +
-                '}';
-    }
+  
 }

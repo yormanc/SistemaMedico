@@ -1,36 +1,50 @@
 package models;
-
 import java.time.LocalDateTime;
+import enumerations.AppoinmnetStatus;
 
 public class Appointment {
+
+    private static int nextId = 1; // Variable estática para auto-incremento
+    
     private int appointmentId;
     private LocalDateTime dateTime;
     private Patient patient;
     private Doctor doctor;
     private String diagnostic;
-    private appoinmentStatus status ;
+    private AppoinmnetStatus status;
 
-    // Constructor vacío
+    // Constructor vacío - genera ID automáticamente
     public Appointment() {
+        this.appointmentId = nextId++;
     }
 
-    // Constructor con todos los parámetros
-    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor DOCnt status, String diagnostic) {
+    // Constructor sin ID - genera ID automáticamente
+    public Appointment(LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic) {
+        this.appointmentId = nextId++;
+        this.dateTime = dateTime;
+        this.patient = patient;
+        this.doctor = doctor;
+        this.status = AppoinmnetStatus.SCHEDULED;
+        this.diagnostic = diagnostic;
+    }
+
+    // Constructor con todos los parámetros (para cargar datos existentes)
+    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic, AppoinmnetStatus status) {
         this.appointmentId = appointmentId;
         this.dateTime = dateTime;
         this.patient = patient;
         this.doctor = doctor;
         this.status = status;
         this.diagnostic = diagnostic;
+        
+        if (appointmentId >= nextId) {
+            nextId = appointmentId + 1;
+        }
     }
 
     // Getters y Setters
     public int getAppointmentId() {
         return appointmentId;
-    }
-
-    public void setAppointmentId(int appointmentId) {
-        this.appointmentId = appointmentId;
     }
 
     public void setDateTime(LocalDateTime dateTime) {
@@ -49,19 +63,19 @@ public class Appointment {
         this.patient = patient;
     }
 
-    public Doctor getMedic() {
-        return Doctor;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setMedic(Doctor doctor) {
+    public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
     }
 
-    public int getStatus() {
+    public AppoinmnetStatus getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(AppoinmnetStatus status) {
         this.status = status;
     }
 
@@ -72,4 +86,15 @@ public class Appointment {
     public void setDiagnostic(String diagnostic) {
         this.diagnostic = diagnostic;
     }
+
+    // Método estático para obtener el próximo ID (útil para debugging)
+    public static int getNextId() {
+        return nextId;
+    }
+
+    // Método estático para resetear el contador (útil para testing)
+    public static void resetIdCounter() {
+        nextId = 1;
+    }
 }
+

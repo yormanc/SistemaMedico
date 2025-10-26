@@ -1,8 +1,6 @@
 package interfaces;
-
 public interface IRepository<T> {
-    void add(T item);
-    void update(T item);
-    void delete(int id);
-
+    boolean add(T item);
+    boolean update(T item);
+    boolean remove(T item);
 }

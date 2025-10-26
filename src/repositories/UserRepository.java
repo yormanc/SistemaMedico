@@ -1,35 +1,106 @@
 package repositories;
 
 import java.util.ArrayList;
-import java.util.Collections;  // Import necesario para unmodifiableList
-import java.util.List;
-
+import interfaces.IRepositoryUser;
 import models.User;
 
-public class UserRepository {
+public class UserRepository implements IRepositoryUser {
+    private final ArrayList<User> users; 
 
-    private final List<User> users = new ArrayList<>();
-
-    // Agregar un usuario
-    public void add(User user) {
-        users.add(user);
+    public UserRepository() {
+        this.users = new ArrayList<>();  
     }
 
-    // Buscar usuario por email (criterio único)
-    public User find(String email) {
-        return users.stream()
-            .filter(u -> u.getEmail().equalsIgnoreCase(email))
-            .findFirst()
-            .orElse(null);
+    @Override
+    public boolean add(User user) {
+        try {
+            // Validaciones básicas
+            if (user == null) {
+                throw new Exception("El usuario no puede ser nulo");
+            }
+            if (user.getCredentials() == null) {
+                throw new Exception("El usuario debe tener credenciales");
+            }
+
+            // Verificar que no exista un usuario con el mismo ID
+            boolean userExists = users.stream()
+                .anyMatch(u -> u.getCredentials().getId() == user.getCredentials().getId());
+
+            if (userExists) {
+                throw new Exception("Ya existe un usuario con este ID");
+            }
+
+            // Agregar el usuario
+            users.add(user);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al agregar el usuario: " + e.getMessage());
+        }
+        return true;
     }
 
-    // Listar todos los usuarios
-    public List<User> findAll() {
-        return Collections.unmodifiableList(users);
+    @Override
+    public boolean update(User user) {
+        try {
+            // Validaciones básicas
+            if (user == null) {
+                throw new Exception("El usuario a actualizar no puede ser nulo");
+            }
+
+            // Buscar el usuario existente
+            User existingUser = users.stream()
+                .filter(u -> u.getCredentials().getId() == user.getCredentials().getId())
+                .findFirst()
+                .orElseThrow(() -> new Exception("No se encontró el usuario a actualizar"));
+
+            // Actualizar los datos del usuario
+            int index = users.indexOf(existingUser);
+            users.set(index, user);
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al actualizar el usuario: " + e.getMessage());
+        }
+        return true;
     }
 
-    // Eliminar usuario por email
-    public void remove(String email) {
-        users.removeIf(u -> u.getEmail().equalsIgnoreCase(email));
+    @Override
+    public boolean remove(User userToremove) {
+        try {
+            if (users.isEmpty()) {
+                throw new Exception("No hay usuarios registrados");
+            }
+
+            if (userToremove == null) {
+                throw new Exception("El usuario a eliminar no puede ser nulo");
+            }
+
+            boolean wasRemoved = users.remove(userToremove);
+            
+            if (!wasRemoved) {
+                throw new Exception("No se pudo eliminar el usuario seleccionado");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al eliminar el usuario: " + e.getMessage());
+        }
+        return true;
+    }
+
+    @Override
+    public User searchById(int id) {
+        try {
+            return users.stream()
+                .filter(u -> u.getCredentials().getId() == id)
+                .findFirst()
+                .orElseThrow(() -> new Exception("No se encontró un usuario con el ID: " + id));
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar el usuario: " + e.getMessage());
+        }
+    }
+
+    // Método adicional útil
+    public ArrayList<User> getAll() {
+        return new ArrayList<>(users);
     }
 }
