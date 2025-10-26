@@ -64,17 +64,17 @@ public class UserRepository implements IRepositoryUser {
     }
 
     @Override
-    public boolean delete(User userToDelete) {
+    public boolean remove(User userToremove) {
         try {
             if (users.isEmpty()) {
                 throw new Exception("No hay usuarios registrados");
             }
 
-            if (userToDelete == null) {
+            if (userToremove == null) {
                 throw new Exception("El usuario a eliminar no puede ser nulo");
             }
 
-            boolean wasRemoved = users.remove(userToDelete);
+            boolean wasRemoved = users.remove(userToremove);
             
             if (!wasRemoved) {
                 throw new Exception("No se pudo eliminar el usuario seleccionado");

@@ -4,6 +4,6 @@ import models.User;
 public interface IRepositoryUser extends IRepository<User> {
     boolean add(User user);
     boolean update(User user);
-    boolean delete(User userToDelete);
-    User searchById(int id);
-    
+    boolean remove(User userToremove);
+    User searchById(int id);}
+

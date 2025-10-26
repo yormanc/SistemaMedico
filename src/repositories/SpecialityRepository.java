@@ -66,17 +66,17 @@ public class SpecialityRepository implements IRepositorySpeciality {
     }
 
     @Override
-    public boolean delete(Speciality specialityToDelete) {
+    public boolean remove(Speciality specialityToremove) {
         try {
             if (specialities.isEmpty()) {
                 throw new Exception("No hay especialidades registradas");
             }
 
-            if (specialityToDelete == null) {
+            if (specialityToremove == null) {
                 throw new Exception("La especialidad a eliminar no puede ser nula");
             }
 
-            boolean wasRemoved = specialities.remove(specialityToDelete);
+            boolean wasRemoved = specialities.remove(specialityToremove);
             
             if (!wasRemoved) {
                 throw new Exception("No se pudo eliminar la especialidad seleccionada");

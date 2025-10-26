@@ -65,17 +65,17 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
     }
 
     @Override
-    public boolean delete(Appointment appointmentToDelete) {
+    public boolean remove(Appointment appointmentToremove) {
         try {
             if (appointments.isEmpty()) {
                 throw new Exception("No hay citas registradas");
             }
 
-            if (appointmentToDelete == null) {
+            if (appointmentToremove == null) {
                 throw new Exception("La cita a eliminar no puede ser nula");
             }
 
-            boolean wasRemoved = appointments.remove(appointmentToDelete);
+            boolean wasRemoved = appointments.remove(appointmentToremove);
             
             if (!wasRemoved) {
                 throw new Exception("No se pudo eliminar la cita seleccionada");

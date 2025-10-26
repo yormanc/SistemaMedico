@@ -69,17 +69,17 @@ public class PatientRepository implements IRepositoryPatient {
     }
 
     @Override
-    public boolean delete(Patient patientToDelete) {
+    public boolean remove(Patient patientToremove) {
         try {
             if (patients.isEmpty()) {
                 throw new Exception("No hay pacientes registrados");
             }
 
-            if (patientToDelete == null) {
+            if (patientToremove == null) {
                 throw new Exception("El paciente a eliminar no puede ser nulo");
             }
 
-            boolean wasRemoved = patients.remove(patientToDelete);
+            boolean wasRemoved = patients.remove(patientToremove);
 
             if (!wasRemoved) {
                 throw new Exception("No se pudo eliminar el paciente seleccionado");
