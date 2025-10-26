@@ -38,4 +38,8 @@ public class Credentials {
     public boolean verifyPassword(String inputPassword) {
         return this.password.equals(inputPassword);
     }
+    @Override
+    public String toString(){
+        return String.valueOf(Id);
+    }
 } 

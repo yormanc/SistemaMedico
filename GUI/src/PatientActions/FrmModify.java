@@ -4,9 +4,8 @@
  */
 package PatientActions;
 import javax.swing.JOptionPane;
-import repositories.PatientRepository;
 import models.Patient;
-
+import repositories.PatientRepository;
 
 /**
  *
@@ -14,11 +13,25 @@ import models.Patient;
  */
 public class FrmModify extends javax.swing.JFrame {
 
-    private PatientRepository patientRepo; 
-    public FrmModify() {
+    /**
+     * Creates new form FrmModify
+     */
+    private final PatientRepository patientRepo;
+    private final Patient currentPatient;
+    public FrmModify(Patient patient) {
+        this.currentPatient = patient;
+        this.patientRepo = new PatientRepository();
         initComponents();
+        loadPatientData();
     }
-
+    
+    private void loadPatientData(){
+        jtextNombreCompleto.setText(currentPatient.getFullName());
+        jtextEdad.setText(String.valueOf(currentPatient.getAge()));
+        jtextEmail.setText(currentPatient.getEmail());
+        jtextNumeroDocumento.setText(String.valueOf(currentPatient.getCredentials()));
+        jtextNumeroDocumento.setEnabled(false);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,184 +41,178 @@ public class FrmModify extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jlblModificarPaciente = new javax.swing.JLabel();
+        jpnlModifcar = new javax.swing.JPanel();
+        jlblModificarUsuario = new javax.swing.JLabel();
+        jlblNumeroDocumento = new javax.swing.JLabel();
         jlblNombreCompleto = new javax.swing.JLabel();
         jtextNombreCompleto = new javax.swing.JTextField();
-        jlblNumeroDocumento = new javax.swing.JLabel();
-        jtextBuscarDocumento = new javax.swing.JTextField();
         jlblEdad = new javax.swing.JLabel();
         jtextEdad = new javax.swing.JTextField();
         jlblEmail = new javax.swing.JLabel();
         jtextEmail = new javax.swing.JTextField();
-        jbtGuardar = new javax.swing.JButton();
-        jbtCancelar = new javax.swing.JButton();
+        jtextNumeroDocumento = new javax.swing.JTextField();
+        jbtnModificar = new javax.swing.JButton();
+        jbtnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Modificar Usuario");
+        setResizable(false);
 
-        jlblModificarPaciente.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jlblModificarPaciente.setText(" MODIFICAR PACIENTE");
-        jlblModificarPaciente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jlblModificarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        jlblModificarUsuario.setText(" Modificar Usuario");
 
-        jlblNombreCompleto.setText("    Nombre Completo");
-        jlblNombreCompleto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-
-        jlblNumeroDocumento.setText("   Buscar Documento");
+        jlblNumeroDocumento.setText(" Numero Documento");
         jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jtextBuscarDocumento.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jtextBuscarDocumentoFocusLost(evt);
-            }
-        });
-        jtextBuscarDocumento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtextBuscarDocumentoActionPerformed(evt);
-            }
-        });
+        jlblNombreCompleto.setText(" Nombre Completo");
+        jlblNombreCompleto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblEdad.setText("             Edad");
+        jlblEdad.setText("            Edad");
         jlblEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblEmail.setText("             Email");
+        jlblEmail.setText("            Email");
         jlblEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jbtGuardar.setText("Guardar");
-        jbtGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jtextNumeroDocumento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtGuardarActionPerformed(evt);
+                jtextNumeroDocumentoActionPerformed(evt);
             }
         });
 
-        jbtCancelar.setText("Cancelar");
-        jbtCancelar.addActionListener(new java.awt.event.ActionListener() {
+        jbtnModificar.setText("Modificar");
+        jbtnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtCancelarActionPerformed(evt);
+                jbtnModificarActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jlblModificarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 36, Short.MAX_VALUE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jtextBuscarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(26, 26, 26))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(75, 75, 75)
-                .addComponent(jbtGuardar)
-                .addGap(84, 84, 84)
-                .addComponent(jbtCancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jpnlModifcarLayout = new javax.swing.GroupLayout(jpnlModifcar);
+        jpnlModifcar.setLayout(jpnlModifcarLayout);
+        jpnlModifcarLayout.setHorizontalGroup(
+            jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnlModifcarLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jlblModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
+            .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                                .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jlblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jtextNombreCompleto)
+                                    .addComponent(jtextEdad)
+                                    .addComponent(jtextEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))))
+                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jbtnModificar)
+                        .addGap(68, 68, 68)
+                        .addComponent(jbtnCancelar)))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(jlblModificarPaciente)
+        jpnlModifcarLayout.setVerticalGroup(
+            jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jlblModificarUsuario)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblNumeroDocumento)
-                    .addComponent(jtextBuscarDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblNombreCompleto)
                     .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEdad)
                     .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEmail)
                     .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtGuardar)
-                    .addComponent(jbtCancelar))
-                .addContainerGap(203, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNumeroDocumento)
+                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnModificar)
+                    .addComponent(jbtnCancelar))
+                .addContainerGap(101, Short.MAX_VALUE))
         );
 
-        jlblModificarPaciente.getAccessibleContext().setAccessibleParent(jlblModificarPaciente);
+        jlblModificarUsuario.getAccessibleContext().setAccessibleParent(jlblModificarUsuario);
+        jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
         jlblNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
-        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jtextNombreCompleto);
-        jtextBuscarDocumento.getAccessibleContext().setAccessibleParent(jtextBuscarDocumento);
+        jtextNombreCompleto.getAccessibleContext().setAccessibleName("");
+        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
+        jlblEdad.getAccessibleContext().setAccessibleParent(jlblEdad);
+        jtextEdad.getAccessibleContext().setAccessibleParent(jtextEdad);
+        jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
+        jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
+        jbtnModificar.getAccessibleContext().setAccessibleParent(jbtnModificar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpnlModifcar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jpnlModifcar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
+
+        jpnlModifcar.getAccessibleContext().setAccessibleParent(jpnlModifcar);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtGuardarActionPerformed
-       
-    }//GEN-LAST:event_jbtGuardarActionPerformed
+    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
 
-    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jbtCancelarActionPerformed
-
-    private void jtextBuscarDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextBuscarDocumentoActionPerformed
-        searchPatient();
-    }//GEN-LAST:event_jtextBuscarDocumentoActionPerformed
-
-    private void jtextBuscarDocumentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jtextBuscarDocumentoFocusLost
-        if(!jtextBuscarDocumento.getText().trim().isEmpty()){
-            searchPatient();
-        }
-    }//GEN-LAST:event_jtextBuscarDocumentoFocusLost
-    private void searchPatient(){
+    private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
         try{
-            int id = Integer.parseInt(jtextBuscarDocumento.getText().trim());
-            PatientRepository repo = new PatientRepository();
-            Patient patientFound = repo.searchById(id);
+            String name = jtextNombreCompleto.getText().trim();
+            int age =Integer.parseInt(jtextEdad.getText().trim());
+            String email = jtextEmail.getText().trim();
             
-            if (patientFound != null){
-                jtextBuscarDocumento.setEditable(false);
-                jtextNombreCompleto.setText(patientFound.getFullName());
-                jtextEdad.setText(String.valueOf(patientFound.getAge()));
-                jtextEmail.setText(patientFound.getEmail());
-            }else{
-                JOptionPane.showMessageDialog(this, "No se encontro ningún paciente con ese numero de documento");
+            if (name.isEmpty() || email.isEmpty()){
+                JOptionPane.showMessageDialog(this,"Debes llenar todos los campos");
+            
+                currentPatient.setFullName(name);
+                currentPatient.setAge(age);
+                currentPatient.setEmail(email);
+                patientRepo.update(currentPatient);
+                JOptionPane.showMessageDialog(this, "Datos del paciente actualizados");
+                this.dispose();
             }
-        }catch(NumberFormatException e ){
-            JOptionPane.showMessageDialog(this, "Numero de documento invalido");
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "La edad debe ser un numero entero sin puntos ni comas");
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Error al buscar el peciente");
-
+            JOptionPane.showMessageDialog(this, "Error al actualizar el usuario");
         }
-    }
+    }//GEN-LAST:event_jbtnModificarActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,23 +243,24 @@ public class FrmModify extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmModify().setVisible(true);
+                Patient tempPatient = new Patient ("Nombre de Prueba",30,"Email@prueba",12345);
+                new FrmModify(tempPatient).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jbtCancelar;
-    private javax.swing.JButton jbtGuardar;
+    private javax.swing.JButton jbtnCancelar;
+    private javax.swing.JButton jbtnModificar;
     private javax.swing.JLabel jlblEdad;
     private javax.swing.JLabel jlblEmail;
-    private javax.swing.JLabel jlblModificarPaciente;
+    private javax.swing.JLabel jlblModificarUsuario;
     private javax.swing.JLabel jlblNombreCompleto;
     private javax.swing.JLabel jlblNumeroDocumento;
-    private javax.swing.JTextField jtextBuscarDocumento;
+    private javax.swing.JPanel jpnlModifcar;
     private javax.swing.JTextField jtextEdad;
     private javax.swing.JTextField jtextEmail;
     private javax.swing.JTextField jtextNombreCompleto;
+    private javax.swing.JTextField jtextNumeroDocumento;
     // End of variables declaration//GEN-END:variables
 }
