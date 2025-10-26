@@ -73,17 +73,17 @@ public class DoctorRepository implements IRepositoryDoctor {
     }
 
     @Override
-    public boolean delete(Doctor doctorToDelete) {
+    public boolean remove(Doctor doctorToremove) {
         try {
             if (doctors.isEmpty()) {
                 throw new Exception("No hay doctores registrados");
             }
 
-            if (doctorToDelete == null) {
+            if (doctorToremove == null) {
                 throw new Exception("El doctor a eliminar no puede ser nulo");
             }
 
-            boolean wasRemoved = doctors.remove(doctorToDelete);
+            boolean wasRemoved = doctors.remove(doctorToremove);
 
             if (!wasRemoved) {
                 throw new Exception("No se pudo eliminar el doctor seleccionado");

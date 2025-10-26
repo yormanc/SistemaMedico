@@ -4,7 +4,7 @@ import enumerations.*;
 import models.*;
 import repositories.*;
 import interfaces.*;
-import services.*;
+import Services.*;
 public class MedicSystemService {
 
     private final UserRepository userRepository;
@@ -62,7 +62,23 @@ public class MedicSystemService {
         Appointment appointment = new Appointment(dateTime, patient, doctor, diagnostic);
         return appointmentRepository.add(appointment);
     }
-
+    public boolean updateAppointment(Appointment appointment, AppoinmnetStatus status) {
+        appointment.setStatus(status);
+        return appointmentRepository.update(appointment);
+    }
+    public boolean removeAppointment(Appointment appointment) {
+        return appointmentRepository.remove(appointment);
+    }
+    public boolean addSpeciality(int id, String name, String description){
+        Speciality speciality = new Speciality(id, name, description);
+        return specialityRepository.add(speciality);
+    }
+    public boolean updateSpeciality(Speciality speciality){
+        return specialityRepository.update(speciality);
+    }
+    public boolean removeSpeciality(Speciality speciality){
+        return specialityRepository.remove(speciality);
+    }
     // SRP: Cada método tiene una única responsabilidad
     public List<Appointment> viewPatientHistory(Patient patient) {
         return appointmentRepository.getByPatient(patient);
