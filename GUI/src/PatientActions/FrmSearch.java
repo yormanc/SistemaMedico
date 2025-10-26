@@ -30,11 +30,11 @@ public class FrmSearch extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();
-        jlblMensaje = new javax.swing.JLabel();
         jlblNumeroDocumento = new javax.swing.JLabel();
         jtextNumeroDocumento = new javax.swing.JTextField();
-        jbtnBuscar = new javax.swing.JButton();
+        jbtnBuscarModificar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
+        jbtnBuscarEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Usuario");
@@ -43,9 +43,6 @@ public class FrmSearch extends javax.swing.JFrame {
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jlblTitulo.setText(" Buscar Usuario");
         jlblTitulo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-
-        jlblMensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jlblMensaje.setText(" Buscar el usurio para modificarlo");
 
         jlblNumeroDocumento.setText(" Numero Documento");
         jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -56,14 +53,26 @@ public class FrmSearch extends javax.swing.JFrame {
             }
         });
 
-        jbtnBuscar.setText("Buscar");
-        jbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        jbtnBuscarModificar.setText("Buscar y Modificar");
+        jbtnBuscarModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarActionPerformed(evt);
+                jbtnBuscarModificarActionPerformed(evt);
             }
         });
 
         jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
+
+        jbtnBuscarEliminar.setText("Buscar y Eliminar");
+        jbtnBuscarEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnBuscarEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -71,51 +80,52 @@ public class FrmSearch extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGap(58, 58, 58)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jbtnBuscar)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jbtnCancelar))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                            .addGap(52, 52, 52)
-                            .addComponent(jlblMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(60, Short.MAX_VALUE))
+                        .addGap(137, 137, 137)
+                        .addComponent(jbtnCancelar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jbtnBuscarModificar)))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jbtnBuscarEliminar)
+                            .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(42, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jlblTitulo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jlblMensaje)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblNumeroDocumento)
                     .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnBuscar)
-                    .addComponent(jbtnCancelar))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(jbtnBuscarModificar)
+                    .addComponent(jbtnBuscarEliminar))
+                .addGap(18, 18, 18)
+                .addComponent(jbtnCancelar)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jlblTitulo.getAccessibleContext().setAccessibleParent(jlblTitulo);
-        jlblMensaje.getAccessibleContext().setAccessibleParent(jlblMensaje);
         jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
         jtextNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
         jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
-        jbtnBuscar.getAccessibleContext().setAccessibleParent(jbtnBuscar);
+        jbtnBuscarModificar.getAccessibleContext().setAccessibleParent(jbtnBuscarModificar);
         jbtnCancelar.getAccessibleContext().setAccessibleParent(jbtnCancelar);
+        jbtnBuscarEliminar.getAccessibleContext().setAccessibleParent(jbtnBuscarEliminar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -125,21 +135,23 @@ public class FrmSearch extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbtnCancelarActionPerformed
 
-    private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarActionPerformed
+    private void jbtnBuscarModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarModificarActionPerformed
         try{
             int id = Integer.parseInt(jtextNumeroDocumento.getText());
             Patient patient = patientRepo.searchById(id);
-            
+
             if (patient != null){
                 FrmModify frmModify = new FrmModify(patient);
                 frmModify.setVisible(true);;
@@ -150,7 +162,28 @@ public class FrmSearch extends javax.swing.JFrame {
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(this, "Ingrese el numero sin puntos ni comas");
         }
-    }//GEN-LAST:event_jbtnBuscarActionPerformed
+    }//GEN-LAST:event_jbtnBuscarModificarActionPerformed
+
+    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
+    
+    private void jbtnBuscarEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBuscarEliminarActionPerformed
+            try{
+            int id = Integer.parseInt(jtextNumeroDocumento.getText());
+            Patient patient = patientRepo.searchById(id);
+
+            if (patient != null){
+                FrmDelete frmDelete = new FrmDelete(patient);
+                frmDelete.setVisible(true);
+                this.dispose();
+            }else{
+                JOptionPane.showMessageDialog(this, "No se encontro paciente con ese numero de documento");
+            }
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(this, "Ingrese el numero sin puntos ni comas");
+        }
+    }//GEN-LAST:event_jbtnBuscarEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -189,9 +222,9 @@ public class FrmSearch extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jbtnBuscar;
+    private javax.swing.JButton jbtnBuscarEliminar;
+    private javax.swing.JButton jbtnBuscarModificar;
     private javax.swing.JButton jbtnCancelar;
-    private javax.swing.JLabel jlblMensaje;
     private javax.swing.JLabel jlblNumeroDocumento;
     private javax.swing.JLabel jlblTitulo;
     private javax.swing.JTextField jtextNumeroDocumento;
