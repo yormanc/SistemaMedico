@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 import javax.swing.JOptionPane;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import models.Patient;
 import repositories.PatientRepository;
 
@@ -194,15 +194,14 @@ public class FrmModify extends javax.swing.JFrame {
             
             if (name.isEmpty() || email.isEmpty()|| jtextEdad.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this,"Debes llenar todos los campos");
-                Patient modifyPatient = Patient(name,age,email,currentPatient.getCredentials());
+                Patient modifyPatient = new Patient(name,age,email,currentPatient.getCredentials());
                 MedicSystemService medicService = new MedicSystemService();
             boolean isUpdated = medicService.updatePatient(modifyPatient);
             if (!isUpdated) {
                 JOptionPane.showMessageDialog(this, "Datos del paciente actualizados");
                 this.dispose();
             }   else {
-                JOptionPane.showMessageDialog(this, "Error al actualizar los datos del paciente");
-            }
+                JOptionPane.showMessageDialog(this, "Error al actualizar los datos del paciente");}}}
                 catch(NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "La edad debe ser un numero entero sin puntos ni comas");
             }   catch(Exception e){
@@ -244,7 +243,7 @@ public class FrmModify extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Patient tempPatient = new Patient("Nombre de Prueba",30,"Email@prueba",12345);
+                Patient tempPatient = new Patient("Nombre de Prueba", 30, "Email@prueba", null);
                 new FrmModify(tempPatient).setVisible(true);
             }
         });
