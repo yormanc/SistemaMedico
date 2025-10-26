@@ -14,24 +14,30 @@ public class AuthenticationService implements IAuthenticationService {
     private IRepositoryUser userRepository;
     private IRepositoryDoctor doctorRepository;
     private IRepositoryPatient patientRepository;
+    private User currentUser; // Usuario actualmente autenticado
 
     public AuthenticationService(IRepositoryUser userRepository) {
         this.userRepository = userRepository;
+            this.currentUser = null;
     }
 
     @Override
     public User login(int id, String password) {
         User user = userRepository.searchById(id);
         if (user != null && user.authenticate(password)) {
-            return user;
+                currentUser = user;
+                return user;
         }
         return null;
     }
 
     @Override
     public boolean logout(int id) {
-        // En este caso no hay sesión persistente, así que devolvemos true directamente
-        return true;
+            if (currentUser != null && currentUser.getCredentials().getId() == id) {
+                currentUser = null;
+                return true;
+            }
+            return false;
     }
 
     @Override

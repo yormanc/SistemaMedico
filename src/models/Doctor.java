@@ -36,8 +36,6 @@ public class Doctor extends User {
     public void setCredentials(Credentials credentials) {
         super.setCredentials(credentials);
     }
-
-    // Getters y Setters
     public Speciality getSpeciality() {
         return speciality;
     }
