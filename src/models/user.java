@@ -9,6 +9,7 @@ public abstract class User {
     public User() {
     }
 
+    // Constructor con parámetros
     public User(String fullName, int age, String email, Credentials credentials) {
         this.fullName = fullName;
         this.age = age;
@@ -16,6 +17,7 @@ public abstract class User {
         this.credentials = credentials;
     }
 
+    // Getters y Setters
     public String getFullName() {
         return fullName;
     }

@@ -5,7 +5,7 @@ import models.Patient;
 public interface IRepositoryPatient extends IRepository<Patient> {
     boolean add(Patient patient);
     boolean update(Patient patient);
-    boolean delete(Patient patientToDelete);
+    boolean remove(Patient patient);
     Patient searchById(int patientId);
 
 }

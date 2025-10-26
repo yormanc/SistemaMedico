@@ -3,8 +3,7 @@ import java.util.List;
 import enumerations.*;
 import models.*;
 import repositories.*;
-import interfaces.*;
-import services.*;
+import Services.*;
 public class MedicSystemService {
 
     private final UserRepository userRepository;
@@ -23,7 +22,6 @@ public class MedicSystemService {
         SpecialityRepository specialityRepository,
         AuthenticationService authService,
         User authenticatedUser
-
     ) {
         this.userRepository = userRepository;
         this.appointmentRepository = appointmentRepository;
@@ -34,7 +32,6 @@ public class MedicSystemService {
         this.authenticatedUser = null;
     }
 
-    // SRP: Este método se encarga solo del registro de usuarios
     public boolean registerPatient(String fullName, int id, String password, int age, String email) {
         Credentials credentials = new Credentials(id, password, UserRole.PATIENT);
         Patient patient = new Patient(fullName, age, email, credentials);
@@ -50,28 +47,37 @@ public class MedicSystemService {
         Credentials credentials = new Credentials(id, password, UserRole.ADMIN);
         Patient admin = new Patient(fullName, age, email, credentials);
         return userRepository.add(admin);
-
     }
-    // SRP: Este método delega la autenticación al servicio correspondiente
     public void loginUser(int id, String password) {
        authenticatedUser=authService.login(id, password);
     }
-
-    // OCP: Si se quiere cambiar la lógica de agendamiento, se puede extender sin modificar este método
     public boolean scheduleAppointment(LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic) {
         Appointment appointment = new Appointment(dateTime, patient, doctor, diagnostic);
         return appointmentRepository.add(appointment);
     }
-
-    // SRP: Cada método tiene una única responsabilidad
+    public boolean updateAppointment(Appointment appointment, AppoinmnetStatus status) {
+        appointment.setStatus(status);
+        return appointmentRepository.update(appointment);
+    }
+    public boolean removeAppointment(Appointment appointment) {
+        return appointmentRepository.remove(appointment);
+    }
+    public boolean addSpeciality(int id, String name, String description){
+        Speciality speciality = new Speciality(id, name, description);
+        return specialityRepository.add(speciality);
+    }
+    public boolean updateSpeciality(Speciality speciality){
+        return specialityRepository.update(speciality);
+    }
+    public boolean removeSpeciality(Speciality speciality){
+        return specialityRepository.remove(speciality);
+    }
     public List<Appointment> viewPatientHistory(Patient patient) {
         return appointmentRepository.getByPatient(patient);
     }
-
     public List<Appointment> viewDoctorHistory(Doctor doctor) {
         return appointmentRepository.getByDoctor(doctor);
     }
-
     public List<Appointment> viewScheduledAppointmentsDoctor(Doctor doctor, AppoinmnetStatus status) {
         return appointmentRepository.getByDoctorAndStatus(doctor, AppoinmnetStatus.SCHEDULED);
     }
