@@ -2,20 +2,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package PatientActions;
 import javax.swing.JOptionPane;
-import repositories.PatientRepository;
-import models.Patient;
+import services.*;
 /**
  *
  * @author WINDOWS 11
  */
 public class FrmAdd extends javax.swing.JFrame {
 
-    private PatientRepository patientRepo;
     
     public FrmAdd(){
-        this.patientRepo = new PatientRepository();
         initComponents();
     }
 
@@ -176,12 +172,16 @@ public class FrmAdd extends javax.swing.JFrame {
             String email = jtextEmail.getText().trim();
             int id = Integer.parseInt(jtextNumeroDocumento.getText().trim());
             
-            if (name.isEmpty() || email.isEmpty()) {
+            if (name.isEmpty() || email.isEmpty() || jtextEdad.getText().trim().isEmpty() || jtextNumeroDocumento.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Debe llenar todos los campos");
                 return;
             }
-            Patient newpatient = new Patient(name, age, email, id);
-            patientRepo.add(newpatient);
+            MedicSystemService medicService = new MedicSystemService();
+            boolean isRegistered = medicService.registerPatient(name, id, "defaultPassword", age, email);
+            if (!isRegistered) {
+                JOptionPane.showMessageDialog(this, "Error al agregar el paciente");
+                return;
+            }
             JOptionPane.showMessageDialog(this, "Paciente agregado exitosamente");
 
             jtextNombreCompleto.setText("");

@@ -1,4 +1,4 @@
-package Services;
+package services;
 
 import models.Credentials;
 import models.User;

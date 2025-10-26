@@ -1,9 +1,9 @@
+package services;
 import java.time.LocalDateTime;
 import java.util.List;
 import enumerations.*;
 import models.*;
 import repositories.*;
-import Services.*;
 public class MedicSystemService {
 
     private final UserRepository userRepository;
@@ -13,6 +13,15 @@ public class MedicSystemService {
     private final SpecialityRepository specialityRepository;
     private final AuthenticationService authService;
     public User authenticatedUser;
+    public MedicSystemService() {
+        this.userRepository = new UserRepository();
+        this.appointmentRepository = new AppoinmentRepository();
+        this.patientRepository = new PatientRepository();
+        this.doctorRepository = new DoctorRepository();
+        this.specialityRepository = new SpecialityRepository();
+        this.authService = new AuthenticationService(userRepository);
+        this.authenticatedUser = null;
+    }
 
     public MedicSystemService(
         UserRepository userRepository,

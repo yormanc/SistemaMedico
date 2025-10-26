@@ -2,8 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package PatientActions;
 import javax.swing.JOptionPane;
+import services.MedicSystemService;
 import models.Patient;
 import repositories.PatientRepository;
 
@@ -192,20 +192,21 @@ public class FrmModify extends javax.swing.JFrame {
             int age =Integer.parseInt(jtextEdad.getText().trim());
             String email = jtextEmail.getText().trim();
             
-            if (name.isEmpty() || email.isEmpty()){
+            if (name.isEmpty() || email.isEmpty()|| jtextEdad.getText().trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this,"Debes llenar todos los campos");
-            
-                currentPatient.setFullName(name);
-                currentPatient.setAge(age);
-                currentPatient.setEmail(email);
-                patientRepo.update(currentPatient);
+                Patient modifyPatient = Patient(name,age,email,currentPatient.getCredentials());
+                MedicSystemService medicService = new MedicSystemService();
+            boolean isUpdated = medicService.updatePatient(modifyPatient);
+            if (!isUpdated) {
                 JOptionPane.showMessageDialog(this, "Datos del paciente actualizados");
                 this.dispose();
+            }   else {
+                JOptionPane.showMessageDialog(this, "Error al actualizar los datos del paciente");
             }
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(this, "La edad debe ser un numero entero sin puntos ni comas");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Error al actualizar el usuario");
+                catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "La edad debe ser un numero entero sin puntos ni comas");
+            }   catch(Exception e){
+                JOptionPane.showMessageDialog(this, "Error al actualizar el usuario");
         }
     }//GEN-LAST:event_jbtnModificarActionPerformed
 
@@ -243,7 +244,7 @@ public class FrmModify extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Patient tempPatient = new Patient ("Nombre de Prueba",30,"Email@prueba",12345);
+                Patient tempPatient = new Patient("Nombre de Prueba",30,"Email@prueba",12345);
                 new FrmModify(tempPatient).setVisible(true);
             }
         });
