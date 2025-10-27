@@ -3,19 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package PatientActions;
-
+import javax.swing.JOptionPane;
+import Services.MedicSystemService;
+import models.Patient;
 /**
  *
  * @author WINDOWS 11
  */
 public class FrmDelete extends javax.swing.JFrame {
-
+    private final MedicSystemService medicSystemService;
+    private final Patient currPatient;
     /**
      * Creates new form FrmDelete
      */
-    public FrmDelete() {
+    public FrmDelete(MedicSystemService medicSystemService, Patient patient) {
+        this.medicSystemService = medicSystemService;
+        this.currPatient = Patient;
         initComponents();
+        loadPatientData();
     }
+    
+    private void loadPatientData(){
+        jtextNombreCompleto.setText(currPatient.getFullName());
+        jtextNombreCompleto.setEnabled(false);
+        
+        jtextNumeroDocumento.setText(String.valueOf(currPatient.getCredentials()));
+        jtextNumeroDocumento.setEnabled(false);
+        
+        jtextEdad.setText(String.valueOf(currPatient.getAge()));
+        jtextEdad.setEnabled(false);
+        
+        jtextEmail.setText(currPatient.getEmail());
+        jtextEmail.setEnabled(false);
+        }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -28,48 +49,183 @@ public class FrmDelete extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jlblEliminarPaciente = new javax.swing.JLabel();
+        jlblNombreCompleto = new javax.swing.JLabel();
+        jtextNombreCompleto = new javax.swing.JTextField();
+        jlblEdad = new javax.swing.JLabel();
+        jtextEdad = new javax.swing.JTextField();
+        jlblEmail = new javax.swing.JLabel();
+        jtextEmail = new javax.swing.JTextField();
+        jlblNumeroDocumento = new javax.swing.JLabel();
+        jtextNumeroDocumento = new javax.swing.JTextField();
+        jbtnEliminar = new javax.swing.JButton();
+        jbtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Usuario");
         setResizable(false);
 
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 350));
+
         jlblEliminarPaciente.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jlblEliminarPaciente.setText("Eliminar Paciente");
+        jlblEliminarPaciente.setText(" Eliminar Paciente");
         jlblEliminarPaciente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jlblNombreCompleto.setText("  Nombre Completo");
+        jlblNombreCompleto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jlblEdad.setText("            Edad");
+        jlblEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jlblEmail.setText("           Email");
+        jlblEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jlblNumeroDocumento.setText(" Numero Documento");
+        jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jtextNumeroDocumento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtextNumeroDocumentoActionPerformed(evt);
+            }
+        });
+
+        jbtnEliminar.setText("Eliminar");
+        jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnEliminarActionPerformed(evt);
+            }
+        });
+
+        jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jlblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtextNombreCompleto)
+                            .addComponent(jtextEdad)
+                            .addComponent(jtextEmail)
+                            .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jbtnEliminar)
+                        .addGap(73, 73, 73)
+                        .addComponent(jbtnCancelar)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(22, 22, 22)
                 .addComponent(jlblEliminarPaciente)
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNombreCompleto)
+                    .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNumeroDocumento)
+                    .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblEdad)
+                    .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblEmail)
+                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnEliminar)
+                    .addComponent(jbtnCancelar))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         jlblEliminarPaciente.getAccessibleContext().setAccessibleDescription("");
         jlblEliminarPaciente.getAccessibleContext().setAccessibleParent(jlblEliminarPaciente);
+        jlblNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
+        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jtextNombreCompleto);
+        jlblEdad.getAccessibleContext().setAccessibleParent(jlblEdad);
+        jtextEdad.getAccessibleContext().setAccessibleDescription("");
+        jtextEdad.getAccessibleContext().setAccessibleParent(jtextEdad);
+        jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
+        jtextEmail.getAccessibleContext().setAccessibleDescription("");
+        jtextEmail.getAccessibleContext().setAccessibleParent(jtextEmail);
+        jlblNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
+        jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
+        jtextNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
+        jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
+        jbtnEliminar.getAccessibleContext().setAccessibleParent(jbtnEliminar);
+        jbtnCancelar.getAccessibleContext().setAccessibleParent(jbtnCancelar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.dispose();
+    }
+
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de eliminar este paciente?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                medicSystemService.deletePatient(currPatient.getCredentials());
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Paciente eliminado exitosamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                this.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Error al eliminar el paciente: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,6 +264,16 @@ public class FrmDelete extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jbtnCancelar;
+    private javax.swing.JButton jbtnEliminar;
+    private javax.swing.JLabel jlblEdad;
     private javax.swing.JLabel jlblEliminarPaciente;
+    private javax.swing.JLabel jlblEmail;
+    private javax.swing.JLabel jlblNombreCompleto;
+    private javax.swing.JLabel jlblNumeroDocumento;
+    private javax.swing.JTextField jtextEdad;
+    private javax.swing.JTextField jtextEmail;
+    private javax.swing.JTextField jtextNombreCompleto;
+    private javax.swing.JTextField jtextNumeroDocumento;
     // End of variables declaration//GEN-END:variables
 }
