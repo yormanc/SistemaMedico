@@ -16,7 +16,6 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();

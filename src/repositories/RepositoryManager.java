@@ -27,7 +27,6 @@ public class RepositoryManager {
         this.doctorRepository = new DoctorRepository();
         this.specialityRepository = new SpecialityRepository();
         
-        System.out.println("✅ RepositoryManager inicializado");
     }
     
     /**
@@ -81,9 +80,9 @@ public class RepositoryManager {
      */
     public void printStats() {
         System.out.println("\n=== ESTADÍSTICAS DEL SISTEMA ===");
-        System.out.println("📊 Pacientes registrados: " + patientRepository.getAll().size());
-        System.out.println("📊 Doctores registrados: " + doctorRepository.getAll().size());
-        System.out.println("📊 Citas registradas: " + appointmentRepository.getAll().size());
+        System.out.println(" Pacientes registrados: " + patientRepository.getAll().size());
+        System.out.println(" Doctores registrados: " + doctorRepository.getAll().size());
+        System.out.println(" Citas registradas: " + appointmentRepository.getAll().size());
         System.out.println("================================\n");
     }
     
@@ -92,6 +91,6 @@ public class RepositoryManager {
      */
     public void clearAll() {
         // Implementar según la estructura de tus repositorios
-        System.out.println("⚠️ Todos los datos han sido eliminados");
+        System.out.println(" Todos los datos han sido eliminados");
     }
 }

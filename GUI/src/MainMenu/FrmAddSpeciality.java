@@ -1,5 +1,4 @@
 import javax.swing.*;
-import java.awt.*;
 import services.MedicSystemService;
 
 /**
@@ -28,7 +27,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    @SuppressWarnings("unchecked")
+    
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();

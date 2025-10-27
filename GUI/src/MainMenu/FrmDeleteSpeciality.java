@@ -60,8 +60,6 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
         jbtnEliminar.setEnabled(true);
         jbtnBuscar.setEnabled(false); // Deshabilitar el botón buscar ya que ya se tiene la especialidad
     }
-
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();

@@ -38,7 +38,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         jtextAreaDescripcion.setText(currentSpeciality.getDescription());
     }
 
-    @SuppressWarnings("unchecked")
+
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();

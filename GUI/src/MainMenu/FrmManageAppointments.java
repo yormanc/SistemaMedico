@@ -6,8 +6,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import enumerations.AppoinmnetStatus;
 import models.Appointment;
-import models.Doctor;
-import models.Patient;
 import services.MedicSystemService;
 
 /**

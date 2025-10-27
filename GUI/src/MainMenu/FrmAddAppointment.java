@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -175,19 +174,19 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             boolean success = medicService.scheduleAppointment(dateTime, selectedPatient, selectedDoctor, diagnostic);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, "✅ Cita agendada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Cita agendada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al agendar la cita. Verifique la disponibilidad.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Error al agendar la cita. Verifique la disponibilidad.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.", 
+                " Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.", 
                 "Error de Formato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ Ocurrió un error inesperado: " + e.getMessage(), 
+                " Ocurrió un error inesperado: " + e.getMessage(), 
                 "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }

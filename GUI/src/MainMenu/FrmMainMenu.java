@@ -55,7 +55,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
         setTitle("Sistema de Gestión Médica");
     }
 
-    @SuppressWarnings("unchecked")
+   
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();
