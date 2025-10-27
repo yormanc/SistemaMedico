@@ -1,10 +1,9 @@
-package services;
+package Services;
 import java.time.LocalDateTime;
 import java.util.List;
 import enumerations.*;
 import models.*;
 import repositories.*;
- main
 public class MedicSystemService {
 
     private final UserRepository userRepository;
