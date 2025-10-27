@@ -1,4 +1,4 @@
-package services;
+package Services;
 import java.time.LocalDateTime;
 import java.util.List;
 import enumerations.*;
@@ -9,8 +9,8 @@ public class MedicSystemService {
     private final UserRepository userRepository;
     private final AppoinmentRepository appointmentRepository;
     private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
-    private final SpecialityRepository specialityRepository;
+    public final DoctorRepository doctorRepository;
+    public final SpecialityRepository specialityRepository;
     private final AuthenticationService authService;
     public User authenticatedUser;
     public MedicSystemService() {
