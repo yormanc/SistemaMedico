@@ -14,8 +14,6 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
         this.medicService = medicService;
         setLocationRelativeTo(null);
     }
-
-    @SuppressWarnings("unchecked")
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();

@@ -237,9 +237,19 @@ public class MedicSystemService {
     public boolean addSpeciality(int id, String name, String description) {
         try {
             Speciality speciality = new Speciality(id, name, description);
-            return specialityRepository.add(speciality);
+            boolean added = specialityRepository.add(speciality);
+            
+            if (added) {
+                System.out.println("✅ Especialidad agregada: " + name + " (ID: " + id + ")");
+                System.out.println("📊 Total de especialidades: " + specialityRepository.getAll().size());
+            } else {
+                System.out.println("❌ No se pudo agregar la especialidad: " + name);
+            }
+            
+            return added;
         } catch (Exception e) {
             System.err.println("❌ Error al agregar especialidad: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
@@ -248,14 +258,40 @@ public class MedicSystemService {
      * Actualiza una especialidad existente
      */
     public boolean updateSpeciality(Speciality speciality) {
-        return specialityRepository.update(speciality);
+        boolean updated = specialityRepository.update(speciality);
+        if (updated) {
+            System.out.println("✅ Especialidad actualizada: " + speciality.getName());
+        }
+        return updated;
     }
     
     /**
      * Elimina una especialidad
      */
     public boolean removeSpeciality(Speciality speciality) {
-        return specialityRepository.remove(speciality);
+        boolean removed = specialityRepository.remove(speciality);
+        if (removed) {
+            System.out.println("✅ Especialidad eliminada: " + speciality.getName());
+            System.out.println("📊 Total de especialidades: " + specialityRepository.getAll().size());
+        }
+        return removed;
+    }
+    
+    /**
+     * Obtiene todas las especialidades registradas
+     */
+    public List<Speciality> viewAllSpecialities() {
+        List<Speciality> specialities = specialityRepository.getAll();
+        System.out.println("📋 Obteniendo especialidades. Total: " + 
+            (specialities != null ? specialities.size() : 0));
+        return specialities;
+    }
+    
+    /**
+     * Busca una especialidad por ID
+     */
+    public Speciality findSpecialityById(int id) {
+        return specialityRepository.searchById(id);
     }
     
     /**
@@ -284,5 +320,12 @@ public class MedicSystemService {
      */
     public PatientRepository getPatientRepository() {
         return patientRepository;
+    }
+    
+    /**
+     * Obtiene el repositorio de especialidades (para uso interno)
+     */
+    public SpecialityRepository getSpecialityRepository() {
+        return specialityRepository;
     }
 }
