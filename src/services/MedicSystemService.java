@@ -285,4 +285,11 @@ public class MedicSystemService {
     public PatientRepository getPatientRepository() {
         return patientRepository;
     }
+    public DoctorRepository getDoctorRepository() {
+        return doctorRepository;
+    }
+
+    public AppoinmentRepository getAppointmentRepository(){
+        return appointmentRepository;
+    }
 }

@@ -5,12 +5,14 @@
 import javax.swing.*;
 import java.awt.*;
 import services.MedicSystemService;
+// IMPORTACIÓN ASUMIDA PARA LA VENTANA DE LOGIN
+// Debes asegurarte de que esta clase exista en tu proyecto
+// import ui.FrmLogin; 
 
 /**
  * Formulario del Menú Principal que conecta todas las funcionalidades
  * del sistema de gestión médica
- * 
- * @author WINDOWS 11
+ * * @author WINDOWS 11
  */
 public class FrmMainMenu extends javax.swing.JFrame {
 
@@ -20,10 +22,10 @@ public class FrmMainMenu extends javax.swing.JFrame {
      * Constructor por defecto
      */
     public FrmMainMenu() {
-        initComponents();
-        
-        // El servicio maneja todo internamente a través de RepositoryManager
+        // Inicializa el servicio primero
         this.medicService = new MedicSystemService();
+        
+        initComponents();
         
         // Centrar la ventana en la pantalla
         setLocationRelativeTo(null);
@@ -38,8 +40,9 @@ public class FrmMainMenu extends javax.swing.JFrame {
      * Constructor con inyección de dependencias (para testing)
      */
     public FrmMainMenu(MedicSystemService medicService) {
-        initComponents();
         this.medicService = medicService;
+        
+        initComponents();
         
         setLocationRelativeTo(null);
         customizeAppearance();
@@ -63,8 +66,10 @@ public class FrmMainMenu extends javax.swing.JFrame {
         jbtnMenuPacientes = new javax.swing.JButton();
         jbtnMenuDoctores = new javax.swing.JButton();
         jbtnMenuEspecialidades = new javax.swing.JButton();
+        jbtnMenuCitas = new javax.swing.JButton(); 
         jSeparator2 = new javax.swing.JSeparator();
-        jbtnSalir = new javax.swing.JButton();
+        jbtnLogout = new javax.swing.JButton();
+        jbtnSalir = new javax.swing.JButton(); 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de Gestión Médica");
@@ -89,7 +94,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
 
         jbtnMenuPacientes.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jbtnMenuPacientes.setIcon(createIcon("👤"));
-        jbtnMenuPacientes.setText("  Menú de Pacientes");
+        jbtnMenuPacientes.setText("  Menú de Pacientes");
         jbtnMenuPacientes.setFocusPainted(false);
         jbtnMenuPacientes.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jbtnMenuPacientes.setIconTextGap(15);
@@ -97,7 +102,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
 
         jbtnMenuDoctores.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jbtnMenuDoctores.setIcon(createIcon("⚕️"));
-        jbtnMenuDoctores.setText("  Menú de Doctores");
+        jbtnMenuDoctores.setText("  Menú de Doctores");
         jbtnMenuDoctores.setFocusPainted(false);
         jbtnMenuDoctores.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jbtnMenuDoctores.setIconTextGap(15);
@@ -105,15 +110,31 @@ public class FrmMainMenu extends javax.swing.JFrame {
 
         jbtnMenuEspecialidades.setFont(new java.awt.Font("Segoe UI", 0, 14));
         jbtnMenuEspecialidades.setIcon(createIcon("📋"));
-        jbtnMenuEspecialidades.setText("  Menú de Especialidades");
+        jbtnMenuEspecialidades.setText("  Menú de Especialidades");
         jbtnMenuEspecialidades.setFocusPainted(false);
         jbtnMenuEspecialidades.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jbtnMenuEspecialidades.setIconTextGap(15);
         jbtnMenuEspecialidades.addActionListener(evt -> jbtnMenuEspecialidadesActionPerformed(evt));
 
+        // Configuración del botón de Citas
+        jbtnMenuCitas.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jbtnMenuCitas.setIcon(createIcon("📅"));
+        jbtnMenuCitas.setText("  Menú de Citas");
+        jbtnMenuCitas.setFocusPainted(false);
+        jbtnMenuCitas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jbtnMenuCitas.setIconTextGap(15);
+        jbtnMenuCitas.addActionListener(evt -> jbtnMenuCitasActionPerformed(evt));
+
+        // Configuración del nuevo botón de Cerrar Sesión (Logout)
+        jbtnLogout.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jbtnLogout.setForeground(new java.awt.Color(231, 76, 60)); // Color rojo suave
+        jbtnLogout.setText("🚪 Cerrar Sesión (Logout)");
+        jbtnLogout.setFocusPainted(false);
+        jbtnLogout.addActionListener(evt -> jbtnLogoutActionPerformed(evt));
+        
         jbtnSalir.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jbtnSalir.setForeground(new java.awt.Color(204, 0, 0));
-        jbtnSalir.setText("Salir del Sistema");
+        jbtnSalir.setText("Salir del Sistema (Cerrar App)");
         jbtnSalir.setFocusPainted(false);
         jbtnSalir.addActionListener(evt -> jbtnSalirActionPerformed(evt));
 
@@ -131,7 +152,9 @@ public class FrmMainMenu extends javax.swing.JFrame {
                     .addComponent(jbtnMenuPacientes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtnMenuDoctores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtnMenuEspecialidades, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbtnMenuCitas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator2)
+                    .addComponent(jbtnLogout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
@@ -152,9 +175,13 @@ public class FrmMainMenu extends javax.swing.JFrame {
                 .addComponent(jbtnMenuDoctores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jbtnMenuEspecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jbtnMenuCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(25, 25, 25)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jbtnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -238,15 +265,78 @@ public class FrmMainMenu extends javax.swing.JFrame {
         }
     }
 
+    private void jbtnMenuCitasActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            FrmAppointmentMenu frmAppointmentMenu = new FrmAppointmentMenu(medicService);
+            frmAppointmentMenu.setVisible(true);
+            frmAppointmentMenu.setLocationRelativeTo(this);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir el menú de citas: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Maneja el evento de cerrar sesión:
+     * 1. Confirma la acción.
+     * 2. Llama al servicio de logout.
+     * 3. Muestra la ventana de login (simulada).
+     * 4. Cierra la ventana principal.
+     */
+    private void jbtnLogoutActionPerformed(java.awt.event.ActionEvent evt) {
+        int confirm = JOptionPane.showConfirmDialog(this,
+            "¿Está seguro que desea cerrar la sesión actual y volver al login?",
+            "Confirmar Cierre de Sesión",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE);
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            // 1. Cierra la sesión en el servicio
+            if (medicService.authenticatedUser != null) {
+                int userId = medicService.authenticatedUser.getCredentials().getId();
+                medicService.logoutUser(userId);
+                System.out.println("👋 Sesión cerrada para usuario ID: " + userId);
+            } else {
+                 System.out.println("👋 No había sesión activa que cerrar.");
+            }
+            
+            // 2. Muestra la ventana de Login (Simulación)
+            // *** REEMPLAZA ESTO CON LA INSTANCIACIÓN REAL DE TU VENTANA DE LOGIN ***
+            try {
+                // Asumimos que tienes una clase FrmLogin
+                // FrmLogin frmLogin = new FrmLogin(medicService); 
+                // frmLogin.setVisible(true);
+                // frmLogin.setLocationRelativeTo(null);
+                
+                JOptionPane.showMessageDialog(this,
+                    "Sesión cerrada. Volviendo a la pantalla de Login.",
+                    "Cierre de Sesión Exitoso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception e) {
+                 JOptionPane.showMessageDialog(this,
+                    "Error al intentar cargar la pantalla de Login: " + e.getMessage(),
+                    "Error Fatal",
+                    JOptionPane.ERROR_MESSAGE);
+            }
+            // *************************************************************************
+            
+            // 3. Cierra la ventana principal
+            this.dispose(); 
+        }
+    }
+    
     private void jbtnSalirActionPerformed(java.awt.event.ActionEvent evt) {
         int confirm = JOptionPane.showConfirmDialog(this,
-            "¿Está seguro que desea salir del sistema?",
+            "¿Está seguro que desea salir completamente del sistema?",
             "Confirmar Salida",
             JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE);
         
         if (confirm == JOptionPane.YES_OPTION) {
-            System.out.println("👋 Cerrando el sistema...");
+            System.out.println("👋 Cerrando la aplicación...");
             System.exit(0);
         }
     }
@@ -263,13 +353,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmMainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmMainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmMainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmMainMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
 
@@ -290,7 +374,9 @@ public class FrmMainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jbtnMenuPacientes;
     private javax.swing.JButton jbtnMenuDoctores;
     private javax.swing.JButton jbtnMenuEspecialidades;
+    private javax.swing.JButton jbtnMenuCitas;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JButton jbtnLogout;
     private javax.swing.JButton jbtnSalir;
     // End of variables declaration
 }
