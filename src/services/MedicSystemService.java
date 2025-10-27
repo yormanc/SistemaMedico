@@ -58,12 +58,12 @@ public class MedicSystemService {
         return userRepository.add(admin);
     }
     public void loginUser(int id, String password) {
-       authenticatedUser=authService.login(id, password);
+       authenticatedUser = authService.login(id, password);
     }
     public boolean logoutUser(int id) {
-        boolean result=authService.logout(id);
+        boolean result = authService.logout(id);
         if(result){
-            authenticatedUser=null;
+            authenticatedUser = null;
         }
         return result;
     }
