@@ -2,7 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package PatientActions;
+
+import javax.swing.JOptionPane;
+import services.MedicSystemService;
+import models.Patient;
+import repositories.PatientRepository;
 
 /**
  *
@@ -10,11 +14,26 @@ package PatientActions;
  */
 public class FrmDelete extends javax.swing.JFrame {
 
+    private MedicSystemService medicService;
+    private PatientRepository patientRepository;
+    private Patient currentPatient = null;
+
     /**
      * Creates new form FrmDelete
      */
     public FrmDelete() {
         initComponents();
+        this.medicService = new MedicSystemService();
+        this.patientRepository = new PatientRepository();
+    }
+    
+    /**
+     * Constructor con inyección de dependencias
+     */
+    public FrmDelete(MedicSystemService medicService, PatientRepository patientRepository) {
+        initComponents();
+        this.medicService = medicService;
+        this.patientRepository = patientRepository;
     }
 
     /**
@@ -28,30 +47,101 @@ public class FrmDelete extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jlblEliminarPaciente = new javax.swing.JLabel();
+        jlblNumeroDocumento = new javax.swing.JLabel();
+        jtextNumeroDocumento = new javax.swing.JTextField();
+        jbtBuscar = new javax.swing.JButton();
+        jlblInfoPaciente = new javax.swing.JLabel();
+        jtextAreaInfo = new javax.swing.JScrollPane();
+        jtextInfo = new javax.swing.JTextArea();
+        jbtEliminar = new javax.swing.JButton();
+        jbtCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Eliminar Usuario");
+        setTitle("Eliminar Paciente");
         setResizable(false);
 
-        jlblEliminarPaciente.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jlblEliminarPaciente.setText("Eliminar Paciente");
+        jlblEliminarPaciente.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        jlblEliminarPaciente.setText(" ELIMINAR PACIENTE");
         jlblEliminarPaciente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jlblNumeroDocumento.setText("   Número Documento");
+        jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jbtBuscar.setText("Buscar");
+        jbtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtBuscarActionPerformed(evt);
+            }
+        });
+
+        jlblInfoPaciente.setText("Información del Paciente:");
+
+        jtextInfo.setEditable(false);
+        jtextInfo.setColumns(20);
+        jtextInfo.setRows(5);
+        jtextInfo.setBackground(new java.awt.Color(240, 240, 240));
+        jtextAreaInfo.setViewportView(jtextInfo);
+
+        jbtEliminar.setText("Eliminar");
+        jbtEliminar.setEnabled(false);
+        jbtEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtEliminarActionPerformed(evt);
+            }
+        });
+
+        jbtCancelar.setText("Cancelar");
+        jbtCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbtCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(181, 181, 181)
-                .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jlblInfoPaciente)
+                            .addComponent(jtextAreaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jbtBuscar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jbtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(50, 50, 50)
+                                .addComponent(jbtCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 25, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(26, 26, 26)
                 .addComponent(jlblEliminarPaciente)
-                .addContainerGap(230, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNumeroDocumento)
+                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jbtBuscar))
+                .addGap(26, 26, 26)
+                .addComponent(jlblInfoPaciente)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtextAreaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtEliminar)
+                    .addComponent(jbtCancelar))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         jlblEliminarPaciente.getAccessibleContext().setAccessibleDescription("");
@@ -70,6 +160,155 @@ public class FrmDelete extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    /**
+     * Método para establecer un paciente ya buscado desde otra ventana
+     */
+    public void setPatientToDelete(Patient patient) {
+        if (patient == null) {
+            return;
+        }
+        
+        this.currentPatient = patient;
+        
+        // Llenar el campo de documento
+        jtextNumeroDocumento.setText(String.valueOf(patient.getCredentials().getId()));
+        jtextNumeroDocumento.setEnabled(false);
+        
+        // Mostrar información del paciente automáticamente
+        StringBuilder info = new StringBuilder();
+        info.append("Nombre: ").append(patient.getFullName()).append("\n");
+        info.append("Documento: ").append(patient.getCredentials().getId()).append("\n");
+        info.append("Edad: ").append(patient.getAge()).append(" años\n");
+        info.append("Email: ").append(patient.getEmail()).append("\n");
+        
+        jtextInfo.setText(info.toString());
+        jbtEliminar.setEnabled(true);
+        jbtBuscar.setEnabled(false); // Deshabilitar el botón buscar ya que ya se tiene el paciente
+    }
+
+    private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
+        try {
+            String idInput = jtextNumeroDocumento.getText().trim();
+            
+            // Validar que el campo no esté vacío
+            if (idInput.isEmpty()) {
+                JOptionPane.showMessageDialog(this, 
+                    "Debe ingresar un número de documento", 
+                    "Campo Vacío", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Parsear el ID
+            int id = Integer.parseInt(idInput);
+            
+            // Validar que sea positivo
+            if (id <= 0) {
+                JOptionPane.showMessageDialog(this, 
+                    "El número de documento debe ser un número positivo", 
+                    "Documento Inválido", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Buscar el paciente
+            currentPatient = patientRepository.searchById(id);
+            
+            if (currentPatient == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "No se encontró ningún paciente con el documento: " + id, 
+                    "Paciente No Encontrado", 
+                    JOptionPane.INFORMATION_MESSAGE);
+                jtextInfo.setText("");
+                jbtEliminar.setEnabled(false);
+                return;
+            }
+            
+            // Mostrar información del paciente
+            StringBuilder info = new StringBuilder();
+            info.append("Nombre: ").append(currentPatient.getFullName()).append("\n");
+            info.append("Documento: ").append(currentPatient.getCredentials().getId()).append("\n");
+            info.append("Edad: ").append(currentPatient.getAge()).append(" años\n");
+            info.append("Email: ").append(currentPatient.getEmail()).append("\n");
+            
+            jtextInfo.setText(info.toString());
+            jbtEliminar.setEnabled(true);
+            
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "El número de documento debe contener solo números válidos", 
+                "Error de Formato", 
+                JOptionPane.ERROR_MESSAGE);
+            jtextInfo.setText("");
+            jbtEliminar.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error al buscar el paciente: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            jtextInfo.setText("");
+            jbtEliminar.setEnabled(false);
+        }
+    }//GEN-LAST:event_jbtBuscarActionPerformed
+
+    private void jbtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEliminarActionPerformed
+        try {
+            if (currentPatient == null) {
+                JOptionPane.showMessageDialog(this, 
+                    "No hay ningún paciente seleccionado", 
+                    "Error", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            // Confirmar la eliminación
+            int confirm = JOptionPane.showConfirmDialog(this, 
+                "¿Está seguro que desea eliminar al paciente:\n" + 
+                currentPatient.getFullName() + " (Doc: " + currentPatient.getCredentials().getId() + ")?\n\n" +
+                "Esta acción no se puede deshacer.", 
+                "Confirmar Eliminación", 
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+            
+            if (confirm != JOptionPane.YES_OPTION) {
+                return;
+            }
+            
+            // Eliminar el paciente
+            boolean isDeleted = medicService.removePatient(currentPatient);
+            
+            if (!isDeleted) {
+                JOptionPane.showMessageDialog(this, 
+                    "Error al eliminar el paciente. Puede que tenga citas asociadas.", 
+                    "Error al Eliminar", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            JOptionPane.showMessageDialog(this, 
+                "Paciente eliminado exitosamente", 
+                "Éxito", 
+                JOptionPane.INFORMATION_MESSAGE);
+            
+            // Limpiar el formulario
+            jtextNumeroDocumento.setText("");
+            jtextInfo.setText("");
+            jbtEliminar.setEnabled(false);
+            currentPatient = null;
+            jtextNumeroDocumento.requestFocus();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, 
+                "Error inesperado: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_jbtEliminarActionPerformed
+
+    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jbtCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,6 +347,14 @@ public class FrmDelete extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jbtBuscar;
+    private javax.swing.JButton jbtCancelar;
+    private javax.swing.JButton jbtEliminar;
     private javax.swing.JLabel jlblEliminarPaciente;
+    private javax.swing.JLabel jlblInfoPaciente;
+    private javax.swing.JLabel jlblNumeroDocumento;
+    private javax.swing.JTextArea jtextInfo;
+    private javax.swing.JScrollPane jtextAreaInfo;
+    private javax.swing.JTextField jtextNumeroDocumento;
     // End of variables declaration//GEN-END:variables
 }
