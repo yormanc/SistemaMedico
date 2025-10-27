@@ -53,6 +53,8 @@ public class FrmModify extends javax.swing.JFrame {
         jtextNumeroDocumento = new javax.swing.JTextField();
         jbtnModificar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
+        jlblContrasenna = new javax.swing.JLabel();
+        jtextContrasenna = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar Usuario");
@@ -69,6 +71,12 @@ public class FrmModify extends javax.swing.JFrame {
 
         jlblEdad.setText("            Edad");
         jlblEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jtextEdad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtextEdadActionPerformed(evt);
+            }
+        });
 
         jlblEmail.setText("            Email");
         jlblEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -93,39 +101,41 @@ public class FrmModify extends javax.swing.JFrame {
             }
         });
 
+        jlblContrasenna.setText("       Contraseña");
+        jlblContrasenna.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
         javax.swing.GroupLayout jpnlModifcarLayout = new javax.swing.GroupLayout(jpnlModifcar);
         jpnlModifcar.setLayout(jpnlModifcarLayout);
         jpnlModifcarLayout.setHorizontalGroup(
             jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnlModifcarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(101, Short.MAX_VALUE)
                 .addComponent(jlblModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(99, 99, 99))
             .addGroup(jpnlModifcarLayout.createSequentialGroup()
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                                .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
-                            .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jlblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jtextNombreCompleto)
-                                    .addComponent(jtextEdad)
-                                    .addComponent(jtextEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)))))
-                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addGap(83, 83, 83)
+                        .addGap(81, 81, 81)
                         .addComponent(jbtnModificar)
                         .addGap(68, 68, 68)
-                        .addComponent(jbtnCancelar)))
-                .addContainerGap(59, Short.MAX_VALUE))
+                        .addComponent(jbtnCancelar))
+                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
+                        .addGap(59, 59, 59)
+                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addComponent(jlblContrasenna, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtextNombreCompleto)
+                            .addComponent(jtextContrasenna)
+                            .addComponent(jtextNumeroDocumento)
+                            .addComponent(jtextEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addComponent(jtextEmail))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpnlModifcarLayout.setVerticalGroup(
             jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,21 +148,25 @@ public class FrmModify extends javax.swing.JFrame {
                     .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNumeroDocumento)
+                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblContrasenna)
+                    .addComponent(jtextContrasenna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEdad)
                     .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEmail)
                     .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblNumeroDocumento)
-                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnModificar)
                     .addComponent(jbtnCancelar))
-                .addContainerGap(101, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
         jlblModificarUsuario.getAccessibleContext().setAccessibleParent(jlblModificarUsuario);
@@ -165,6 +179,7 @@ public class FrmModify extends javax.swing.JFrame {
         jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
         jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
         jbtnModificar.getAccessibleContext().setAccessibleParent(jbtnModificar);
+        jtextContrasenna.getAccessibleContext().setAccessibleParent(jtextContrasenna);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,6 +228,10 @@ public class FrmModify extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jbtnCancelarActionPerformed
 
+    private void jtextEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextEdadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtextEdadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -252,12 +271,14 @@ public class FrmModify extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnModificar;
+    private javax.swing.JLabel jlblContrasenna;
     private javax.swing.JLabel jlblEdad;
     private javax.swing.JLabel jlblEmail;
     private javax.swing.JLabel jlblModificarUsuario;
     private javax.swing.JLabel jlblNombreCompleto;
     private javax.swing.JLabel jlblNumeroDocumento;
     private javax.swing.JPanel jpnlModifcar;
+    private javax.swing.JTextField jtextContrasenna;
     private javax.swing.JTextField jtextEdad;
     private javax.swing.JTextField jtextEmail;
     private javax.swing.JTextField jtextNombreCompleto;
