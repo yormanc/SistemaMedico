@@ -7,6 +7,11 @@
         <Property name="text" type="java.lang.String" value="jButton1"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+      </Properties>
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
@@ -47,40 +52,43 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace max="32767" attributes="0"/>
-                  <Component id="jlblCrearPaciente" min="-2" pref="205" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
-              </Group>
               <Group type="102" attributes="0">
-                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jlblNumeroDocumento" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="jlblContrasenaa" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="jlblEdad" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="jlblEmail" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
-                              <Component id="jbtGuardar" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jtextEdad" min="-2" pref="190" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jtextNumeroDocumento" pref="190" max="32767" attributes="0"/>
-                                  <Component id="jtextContrasenna" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jlblNumeroDocumento" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="jlblContrasenaa" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="jlblEdad" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="jlblEmail" alignment="1" min="-2" pref="130" max="-2" attributes="0"/>
+                                      <Component id="jbtGuardar" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jtextEdad" min="-2" pref="190" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jtextNumeroDocumento" pref="190" max="32767" attributes="0"/>
+                                          <Component id="jtextContrasenna" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="jtextEmail" alignment="0" min="-2" pref="190" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jbtCancelar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
                               </Group>
-                              <Component id="jtextEmail" alignment="0" min="-2" pref="190" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jbtCancelar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jlblNombreCompleto" min="-2" pref="130" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jtextNombreCompleto" min="-2" pref="190" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jlblNombreCompleto" min="-2" pref="130" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jtextNombreCompleto" min="-2" pref="190" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                          <Component id="jlblCrearPaciente" min="-2" pref="205" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace pref="37" max="32767" attributes="0"/>
