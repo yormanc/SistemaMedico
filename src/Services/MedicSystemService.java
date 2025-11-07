@@ -4,11 +4,7 @@ import java.util.List;
 import enumerations.*;
 import models.*;
 import repositories.*;
-
-/**
- * Servicio principal del sistema médico
- * Usa RepositoryManager para garantizar que todos usen los mismos repositorios
- */
+ main
 public class MedicSystemService {
 
     private final UserRepository userRepository;
