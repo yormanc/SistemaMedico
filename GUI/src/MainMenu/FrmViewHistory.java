@@ -9,7 +9,7 @@ import enumerations.UserRole;
 import models.Appointment;
 import models.Patient;
 import models.Doctor;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 
 /**
  * Formulario genérico para ver el historial de citas de un Paciente o un Doctor.

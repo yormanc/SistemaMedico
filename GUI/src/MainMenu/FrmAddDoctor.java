@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 import models.Speciality;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 
 /**
  * Formulario para agregar un nuevo Doctor al sistema.

@@ -4,7 +4,7 @@
  */
 import javax.swing.*;
 import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 // IMPORTACIÓN ASUMIDA PARA LA VENTANA DE LOGIN
 // Debes asegurarte de que esta clase exista en tu proyecto
 // import ui.FrmLogin; 

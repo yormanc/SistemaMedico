@@ -1,4 +1,4 @@
-package services;
+package Services;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,13 +12,13 @@ import repositories.*;
  */
 public class MedicSystemService {
 
-    private final UserRepository userRepository;
-    private final AppoinmentRepository appointmentRepository;
-    private final PatientRepository patientRepository;
-    private final DoctorRepository doctorRepository;
-    private final SpecialityRepository specialityRepository;
-    private final AuthenticationService authService;
-    public User authenticatedUser;
+    public final UserRepository userRepository;
+    public final AppoinmentRepository appointmentRepository;
+    public final PatientRepository patientRepository;
+    public final DoctorRepository doctorRepository;
+    public final SpecialityRepository specialityRepository;
+    public final AuthenticationService authService;
+    public  User authenticatedUser;
     
     /**
      * Constructor por defecto - USA REPOSITORYMANAGER

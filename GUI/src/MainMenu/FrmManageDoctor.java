@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.List;
 import models.Doctor;
 import models.Speciality;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import repositories.SpecialityRepository; // Necesario para cargar las especialidades
 
 

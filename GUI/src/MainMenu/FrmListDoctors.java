@@ -4,7 +4,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.List;
 import models.Doctor;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 
 /**
  * Formulario para listar todos los doctores registrados en el sistema.

@@ -1,5 +1,5 @@
 import javax.swing.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import models.Speciality;
 import repositories.SpecialityRepository;
 

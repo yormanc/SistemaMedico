@@ -4,7 +4,7 @@
  */
 
 import javax.swing.JOptionPane;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import models.Patient;
 import repositories.PatientRepository;
 
