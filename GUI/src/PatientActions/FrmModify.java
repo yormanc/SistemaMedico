@@ -1,62 +1,39 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 import javax.swing.JOptionPane;
-
 import models.Patient;
-import repositories.PatientRepository;
-import services.MedicSystemService;
+import services.MedicSystemFacade;
 
 /**
- *
- * @author WINDOWS 11
+ * Formulario para modificar un paciente
+ * ACTUALIZADO para usar MedicSystemFacade
  */
 public class FrmModify extends javax.swing.JFrame {
 
     private final Patient currentPatient;
-    private final MedicSystemService medicService;
+    private final MedicSystemFacade systemFacade;
     
-    /**
-     * Creates new form FrmModify
-     */
-    public FrmModify(Patient patient) {
+    public FrmModify(MedicSystemFacade systemFacade, Patient patient) {
+        if (systemFacade == null) {
+            throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
+        }
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient no puede ser nulo");
+        }
+        
         this.currentPatient = patient;
-        this.medicService = new MedicSystemService();
-        initComponents();
-        loadPatientData();
-    }
-    
-    /**
-     * Constructor con inyección de dependencias
-     */
-    public FrmModify(Patient patient, MedicSystemService medicService, PatientRepository patientRepo) {
-        this.currentPatient = patient;
-        this.medicService = medicService;
+        this.systemFacade = systemFacade;
         initComponents();
         loadPatientData();
     }
     
     private void loadPatientData() {
-        if (currentPatient == null) {
-            JOptionPane.showMessageDialog(this, 
-                "Error: No se proporcionó un paciente válido", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-            return;
-        }
-        
         jtextNombreCompleto.setText(currentPatient.getFullName());
         jtextEdad.setText(String.valueOf(currentPatient.getAge()));
         jtextEmail.setText(currentPatient.getEmail());
         jtextNumeroDocumento.setText(String.valueOf(currentPatient.getCredentials().getId()));
-        jtextNumeroDocumento.setEnabled(false); // El documento no se puede modificar
+        jtextNumeroDocumento.setEnabled(false);
     }
     
-
     private void initComponents() {
-
         jpnlModifcar = new javax.swing.JPanel();
         jlblModificarUsuario = new javax.swing.JLabel();
         jlblNumeroDocumento = new javax.swing.JLabel();
@@ -76,20 +53,19 @@ public class FrmModify extends javax.swing.JFrame {
         setTitle("Modificar Paciente");
         setResizable(false);
 
-        jlblModificarUsuario.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jlblModificarUsuario.setText(" MODIFICAR PACIENTE");
-        jlblModificarUsuario.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jlblModificarUsuario.setFont(new java.awt.Font("Segoe UI", 0, 24));
+        jlblModificarUsuario.setText(" Modificar Usuario");
 
-        jlblNumeroDocumento.setText("   Número Documento");
+        jlblNumeroDocumento.setText(" Numero Documento");
         jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblNombreCompleto.setText("    Nombre Completo");
+        jlblNombreCompleto.setText(" Nombre Completo");
         jlblNombreCompleto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblEdad.setText("             Edad");
+        jlblEdad.setText("            Edad");
         jlblEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblEmail.setText("             Email");
+        jlblEmail.setText("            Email");
         jlblEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jtextNumeroDocumento.setBackground(new java.awt.Color(240, 240, 240));
@@ -116,48 +92,44 @@ public class FrmModify extends javax.swing.JFrame {
         jpnlModifcarLayout.setHorizontalGroup(
             jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpnlModifcarLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlblModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75))
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(jlblModificarUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(99, 99, 99))
             .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(81, 81, 81)
+                        .addComponent(jbtnModificar)
+                        .addGap(68, 68, 68)
+                        .addComponent(jbtnCancelar))
                     .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addComponent(jlblEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addComponent(jlblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                        .addComponent(jbtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                        .addGap(59, 59, 59)
+                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                            .addComponent(jlblContrasenna, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jlblEmail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtextNombreCompleto)
+                            .addComponent(jtextContrasenna)
+                            .addComponent(jtextNumeroDocumento)
+                            .addComponent(jtextEdad, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE)
+                            .addComponent(jtextEmail))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jpnlModifcarLayout.setVerticalGroup(
             jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnlModifcarLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(34, 34, 34)
                 .addComponent(jlblModificarUsuario)
                 .addGap(18, 18, 18)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblNombreCompleto)
                     .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblNumeroDocumento)
-                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblNumeroDocumento)
                     .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -169,28 +141,16 @@ public class FrmModify extends javax.swing.JFrame {
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEdad)
                     .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblEmail)
                     .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
+                .addGap(27, 27, 27)
                 .addGroup(jpnlModifcarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jbtnModificar)
                     .addComponent(jbtnCancelar))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
-
-        jlblModificarUsuario.getAccessibleContext().setAccessibleParent(jlblModificarUsuario);
-        jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
-        jlblNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
-        jtextNombreCompleto.getAccessibleContext().setAccessibleName("");
-        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
-        jlblEdad.getAccessibleContext().setAccessibleParent(jlblEdad);
-        jtextEdad.getAccessibleContext().setAccessibleParent(jtextEdad);
-        jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
-        jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
-        jbtnModificar.getAccessibleContext().setAccessibleParent(jbtnModificar);
-        jtextContrasenna.getAccessibleContext().setAccessibleParent(jtextContrasenna);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -203,40 +163,34 @@ public class FrmModify extends javax.swing.JFrame {
             .addComponent(jpnlModifcar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        jpnlModifcar.getAccessibleContext().setAccessibleParent(jpnlModifcar);
-
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }
 
-    private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnModificarActionPerformed
+    private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener y validar campos
             String nameInput = jtextNombreCompleto.getText().trim();
             String ageInput = jtextEdad.getText().trim();
             String emailInput = jtextEmail.getText().trim();
+            String password = jtextContrasenna.getText().trim();
             
-            // Validar que no estén vacíos
             if (nameInput.isEmpty() || ageInput.isEmpty() || emailInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "Debe llenar todos los campos", 
+                    "Debe llenar todos los campos obligatorios", 
                     "Campos Vacíos", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
-            // Parsear la edad
             int age = Integer.parseInt(ageInput);
             
-            // Validar que la edad sea positiva y realista
             if (age <= 0 || age > 150) {
                 JOptionPane.showMessageDialog(this, 
-                    "La edad debe ser un número entre 1 y 150", 
+                    "La edad debe estar entre 1 y 150", 
                     "Edad Inválida", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
-            // Validar formato básico de email
             if (!emailInput.contains("@") || !emailInput.contains(".")) {
                 JOptionPane.showMessageDialog(this, 
                     "El email no tiene un formato válido", 
@@ -245,7 +199,6 @@ public class FrmModify extends javax.swing.JFrame {
                 return;
             }
             
-            // Validar que el nombre no contenga solo números
             if (nameInput.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this, 
                     "El nombre no puede contener solo números", 
@@ -254,54 +207,65 @@ public class FrmModify extends javax.swing.JFrame {
                 return;
             }
             
-            // Verificar si hay cambios
+            if (!password.isEmpty() && password.length() < 4) {
+                JOptionPane.showMessageDialog(this, 
+                    "La contraseña debe tener al menos 4 caracteres", 
+                    "Contraseña Inválida", 
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
             boolean hasChanges = !nameInput.equals(currentPatient.getFullName()) ||
                                 age != currentPatient.getAge() ||
-                                !emailInput.equals(currentPatient.getEmail());
+                                !emailInput.equals(currentPatient.getEmail()) ||
+                                !password.isEmpty();
             
             if (!hasChanges) {
                 JOptionPane.showMessageDialog(this, 
-                    "No se han realizado cambios en los datos del paciente", 
+                    "No se han realizado cambios", 
                     "Sin Cambios", 
                     JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
             
-            // Crear paciente modificado con las credenciales originales
-            Patient modifyPatient = new Patient(nameInput, age, emailInput, currentPatient.getCredentials());
+            currentPatient.setFullName(nameInput);
+            currentPatient.setAge(age);
+            currentPatient.setEmail(emailInput);
             
-            // Actualizar el paciente
-            boolean isUpdated = medicService.updatePatient(modifyPatient);
+            if (!password.isEmpty()) {
+                currentPatient.getCredentials().setPassword(password);
+            }
+            
+            boolean isUpdated = systemFacade.updatePatient(currentPatient);
             
             if (isUpdated) {
                 JOptionPane.showMessageDialog(this, 
-                    "Datos del paciente actualizados exitosamente", 
+                    "Paciente actualizado exitosamente", 
                     "Éxito", 
                     JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
-                    "Error al actualizar los datos del paciente", 
+                    "Error al actualizar el paciente", 
                     "Error", 
                     JOptionPane.ERROR_MESSAGE);
             }
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "La edad debe ser un número entero válido (sin puntos ni comas)", 
+                "La edad debe ser un número válido", 
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "Error inesperado al actualizar el paciente: " + e.getMessage(), 
+                "Error inesperado: " + e.getMessage(), 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
-    }//GEN-LAST:event_jbtnModificarActionPerformed
+    }
 
-    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-        // Preguntar si desea descartar los cambios
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
         int confirm = JOptionPane.showConfirmDialog(this, 
             "¿Está seguro que desea cancelar?\nSe perderán los cambios no guardados.", 
             "Confirmar Cancelación", 
@@ -311,51 +275,9 @@ public class FrmModify extends javax.swing.JFrame {
         if (confirm == JOptionPane.YES_OPTION) {
             this.dispose();
         }
-    }//GEN-LAST:event_jbtnCancelarActionPerformed
-
-    private void jtextEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextEdadActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-      
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmModify.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmModify.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmModify.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmModify.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                // Nota: Para testing, necesitas crear un Patient válido con Credentials
-                // Patient tempPatient = new Patient("Nombre de Prueba", 30, "email@prueba.com", credentials);
-                // new FrmModify(tempPatient).setVisible(true);
-                JOptionPane.showMessageDialog(null, 
-                    "Este formulario requiere un objeto Patient válido.\n" +
-                    "Debe ser llamado desde otra ventana con un paciente existente.", 
-                    "Información", 
-                    JOptionPane.INFORMATION_MESSAGE);
-            }
-        });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JButton jbtnModificar;
     private javax.swing.JLabel jlblContrasenna;
@@ -370,5 +292,4 @@ public class FrmModify extends javax.swing.JFrame {
     private javax.swing.JTextField jtextEmail;
     private javax.swing.JTextField jtextNombreCompleto;
     private javax.swing.JTextField jtextNumeroDocumento;
-    // End of variables declaration//GEN-END:variables
 }
