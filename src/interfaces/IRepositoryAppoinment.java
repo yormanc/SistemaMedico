@@ -1,7 +1,8 @@
 package interfaces;
 import java.util.ArrayList;
+
+import enums.*;
 import models.Appointment;
-import enumerations.*;
 import models.Doctor;
 import models.Patient; 
 
