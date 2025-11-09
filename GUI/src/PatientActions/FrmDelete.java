@@ -1,111 +1,99 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-
 import javax.swing.JOptionPane;
-
 import models.Patient;
-import repositories.PatientRepository;
-import services.MedicSystemService;
+import services.MedicSystemFacade;
 
 /**
- *
- * @author WINDOWS 11
+ * Formulario para eliminar un paciente
+ * ACTUALIZADO para usar MedicSystemFacade
  */
 public class FrmDelete extends javax.swing.JFrame {
 
-    private MedicSystemService medicService;
-    private PatientRepository patientRepository;
-    private Patient currentPatient = null;
+    private final MedicSystemFacade systemFacade;
+    private final Patient currentPatient;
 
-    /**
-     * Creates new form FrmDelete
-     */
-    public FrmDelete(MedicSystemService medicSystemService, Patient patient) {
-        this.medicSystemService = medicSystemService;
-        this.currPatient = Patient;
+    public FrmDelete(MedicSystemFacade systemFacade, Patient patient) {
+        if (systemFacade == null) {
+            throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
+        }
+        if (patient == null) {
+            throw new IllegalArgumentException("Patient no puede ser nulo");
+        }
+        
+        this.systemFacade = systemFacade;
+        this.currentPatient = patient;
         initComponents();
-        this.medicService = new MedicSystemService();
-        this.patientRepository = new PatientRepository();
+        loadPatientData();
     }
     
-    /**
-     * Constructor con inyección de dependencias
-     */
-    public FrmDelete(MedicSystemService medicService, PatientRepository patientRepository) {
-        initComponents();
-        this.medicService = medicService;
-        this.patientRepository = patientRepository;
-    }
-    
-    private void loadPatientData(){
-        jtextNombreCompleto.setText(currPatient.getFullName());
+    private void loadPatientData() {
+        jtextNombreCompleto.setText(currentPatient.getFullName());
         jtextNombreCompleto.setEnabled(false);
         
-        jtextNumeroDocumento.setText(String.valueOf(currPatient.getCredentials()));
+        jtextNumeroDocumento.setText(String.valueOf(currentPatient.getCredentials().getId()));
         jtextNumeroDocumento.setEnabled(false);
         
-        jtextEdad.setText(String.valueOf(currPatient.getAge()));
+        jtextEdad.setText(String.valueOf(currentPatient.getAge()));
         jtextEdad.setEnabled(false);
         
-        jtextEmail.setText(currPatient.getEmail());
+        jtextEmail.setText(currentPatient.getEmail());
         jtextEmail.setEnabled(false);
-        }
-    
-
+    }
     
     private void initComponents() {
-
         jPanel1 = new javax.swing.JPanel();
         jlblEliminarPaciente = new javax.swing.JLabel();
+        jlblNombreCompleto = new javax.swing.JLabel();
+        jtextNombreCompleto = new javax.swing.JTextField();
+        jlblEdad = new javax.swing.JLabel();
+        jtextEdad = new javax.swing.JTextField();
+        jlblEmail = new javax.swing.JLabel();
+        jtextEmail = new javax.swing.JTextField();
         jlblNumeroDocumento = new javax.swing.JLabel();
         jtextNumeroDocumento = new javax.swing.JTextField();
-        jbtBuscar = new javax.swing.JButton();
-        jlblInfoPaciente = new javax.swing.JLabel();
-        jtextAreaInfo = new javax.swing.JScrollPane();
-        jtextInfo = new javax.swing.JTextArea();
-        jbtEliminar = new javax.swing.JButton();
-        jbtCancelar = new javax.swing.JButton();
+        jbtnEliminar = new javax.swing.JButton();
+        jbtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Eliminar Paciente");
         setResizable(false);
 
-        jlblEliminarPaciente.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
-        jlblEliminarPaciente.setText(" ELIMINAR PACIENTE");
+        jPanel1.setPreferredSize(new java.awt.Dimension(400, 350));
+
+        jlblEliminarPaciente.setFont(new java.awt.Font("Segoe UI", 0, 24));
+        jlblEliminarPaciente.setText(" Eliminar Paciente");
         jlblEliminarPaciente.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jlblNumeroDocumento.setText("   Número Documento");
+        jlblNombreCompleto.setText("  Nombre Completo");
+        jlblNombreCompleto.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jtextNombreCompleto.setBackground(new java.awt.Color(240, 240, 240));
+
+        jlblEdad.setText("            Edad");
+        jlblEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jtextEdad.setBackground(new java.awt.Color(240, 240, 240));
+
+        jlblEmail.setText("           Email");
+        jlblEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        jtextEmail.setBackground(new java.awt.Color(240, 240, 240));
+
+        jlblNumeroDocumento.setText(" Numero Documento");
         jlblNumeroDocumento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jbtBuscar.setText("Buscar");
-        jbtBuscar.addActionListener(new java.awt.event.ActionListener() {
+        jtextNumeroDocumento.setBackground(new java.awt.Color(240, 240, 240));
+
+        jbtnEliminar.setText("Eliminar");
+        jbtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtBuscarActionPerformed(evt);
+                jbtnEliminarActionPerformed(evt);
             }
         });
 
-        jlblInfoPaciente.setText("Información del Paciente:");
-
-        jtextInfo.setEditable(false);
-        jtextInfo.setColumns(20);
-        jtextInfo.setRows(5);
-        jtextInfo.setBackground(new java.awt.Color(240, 240, 240));
-        jtextAreaInfo.setViewportView(jtextInfo);
-
-        jbtEliminar.setText("Eliminar");
-        jbtEliminar.setEnabled(false);
-        jbtEliminar.addActionListener(new java.awt.event.ActionListener() {
+        jbtnCancelar.setText("Cancelar");
+        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtEliminarActionPerformed(evt);
-            }
-        });
-
-        jbtCancelar.setText("Cancelar");
-        jbtCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtCancelarActionPerformed(evt);
+                jbtnCancelarActionPerformed(evt);
             }
         });
 
@@ -114,64 +102,57 @@ public class FrmDelete extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(91, 91, 91)
+                        .addComponent(jlblEliminarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jlblInfoPaciente)
-                            .addComponent(jtextAreaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jbtBuscar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jbtEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(50, 50, 50)
-                                .addComponent(jbtCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 25, Short.MAX_VALUE))))
+                        .addGap(65, 65, 65)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jlblNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(jlblEmail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jlblNombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtextNombreCompleto)
+                            .addComponent(jtextEdad)
+                            .addComponent(jtextEmail)
+                            .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(86, 86, 86)
+                        .addComponent(jbtnEliminar)
+                        .addGap(73, 73, 73)
+                        .addComponent(jbtnCancelar)))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
+                .addGap(22, 22, 22)
                 .addComponent(jlblEliminarPaciente)
-                .addGap(26, 26, 26)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblNombreCompleto)
+                    .addComponent(jtextNombreCompleto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jlblNumeroDocumento)
-                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jbtBuscar))
-                .addGap(26, 26, 26)
-                .addComponent(jlblInfoPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtextAreaInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                    .addComponent(jtextNumeroDocumento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtEliminar)
-                    .addComponent(jbtCancelar))
-                .addContainerGap(30, Short.MAX_VALUE))
+                    .addComponent(jlblEdad)
+                    .addComponent(jtextEdad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlblEmail)
+                    .addComponent(jtextEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbtnEliminar)
+                    .addComponent(jbtnCancelar))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
-
-        jlblEliminarPaciente.getAccessibleContext().setAccessibleDescription("");
-        jlblEliminarPaciente.getAccessibleContext().setAccessibleParent(jlblEliminarPaciente);
-        jlblNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
-        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jtextNombreCompleto);
-        jlblEdad.getAccessibleContext().setAccessibleParent(jlblEdad);
-        jtextEdad.getAccessibleContext().setAccessibleDescription("");
-        jtextEdad.getAccessibleContext().setAccessibleParent(jtextEdad);
-        jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
-        jtextEmail.getAccessibleContext().setAccessibleDescription("");
-        jtextEmail.getAccessibleContext().setAccessibleParent(jtextEmail);
-        jlblNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
-        jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
-        jtextNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
-        jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
-        jbtnEliminar.getAccessibleContext().setAccessibleParent(jbtnEliminar);
-        jbtnCancelar.getAccessibleContext().setAccessibleParent(jbtnCancelar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -185,239 +166,68 @@ public class FrmDelete extends javax.swing.JFrame {
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
-    /**
-     * Método para establecer un paciente ya buscado desde otra ventana
-     */
-    public void setPatientToDelete(Patient patient) {
-        if (patient == null) {
-            return;
-        }
-        
-        this.currentPatient = patient;
-        
-        // Llenar el campo de documento
-        jtextNumeroDocumento.setText(String.valueOf(patient.getCredentials().getId()));
-        jtextNumeroDocumento.setEnabled(false);
-        
-        // Mostrar información del paciente automáticamente
-        StringBuilder info = new StringBuilder();
-        info.append("Nombre: ").append(patient.getFullName()).append("\n");
-        info.append("Documento: ").append(patient.getCredentials().getId()).append("\n");
-        info.append("Edad: ").append(patient.getAge()).append(" años\n");
-        info.append("Email: ").append(patient.getEmail()).append("\n");
-        
-        jtextInfo.setText(info.toString());
-        jbtEliminar.setEnabled(true);
-        jbtBuscar.setEnabled(false); // Deshabilitar el botón buscar ya que ya se tiene el paciente
     }
 
-    private void jbtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtBuscarActionPerformed
-        try {
-            String idInput = jtextNumeroDocumento.getText().trim();
-            
-            // Validar que el campo no esté vacío
-            if (idInput.isEmpty()) {
-                JOptionPane.showMessageDialog(this, 
-                    "Debe ingresar un número de documento", 
-                    "Campo Vacío", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Parsear el ID
-            int id = Integer.parseInt(idInput);
-            
-            // Validar que sea positivo
-            if (id <= 0) {
-                JOptionPane.showMessageDialog(this, 
-                    "El número de documento debe ser un número positivo", 
-                    "Documento Inválido", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Buscar el paciente
-            currentPatient = patientRepository.searchById(id);
-            
-            if (currentPatient == null) {
-                JOptionPane.showMessageDialog(this, 
-                    "No se encontró ningún paciente con el documento: " + id, 
-                    "Paciente No Encontrado", 
-                    JOptionPane.INFORMATION_MESSAGE);
-                jtextInfo.setText("");
-                jbtEliminar.setEnabled(false);
-                return;
-            }
-            
-            // Mostrar información del paciente
-            StringBuilder info = new StringBuilder();
-            info.append("Nombre: ").append(currentPatient.getFullName()).append("\n");
-            info.append("Documento: ").append(currentPatient.getCredentials().getId()).append("\n");
-            info.append("Edad: ").append(currentPatient.getAge()).append(" años\n");
-            info.append("Email: ").append(currentPatient.getEmail()).append("\n");
-            
-            jtextInfo.setText(info.toString());
-            jbtEliminar.setEnabled(true);
-            
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "El número de documento debe contener solo números válidos", 
-                "Error de Formato", 
-                JOptionPane.ERROR_MESSAGE);
-            jtextInfo.setText("");
-            jbtEliminar.setEnabled(false);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error al buscar el paciente: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            jtextInfo.setText("");
-            jbtEliminar.setEnabled(false);
-        }
-    }//GEN-LAST:event_jbtBuscarActionPerformed
-
-    private void jbtEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtEliminarActionPerformed
-        try {
-            if (currentPatient == null) {
-                JOptionPane.showMessageDialog(this, 
-                    "No hay ningún paciente seleccionado", 
-                    "Error", 
-                    JOptionPane.WARNING_MESSAGE);
-                return;
-            }
-            
-            // Confirmar la eliminación
-            int confirm = JOptionPane.showConfirmDialog(this, 
-                "¿Está seguro que desea eliminar al paciente:\n" + 
-                currentPatient.getFullName() + " (Doc: " + currentPatient.getCredentials().getId() + ")?\n\n" +
-                "Esta acción no se puede deshacer.", 
-                "Confirmar Eliminación", 
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
-            
-            if (confirm != JOptionPane.YES_OPTION) {
-                return;
-            }
-            
-            // Eliminar el paciente
-            boolean isDeleted = medicService.removePatient(currentPatient);
-            
-            if (!isDeleted) {
-                JOptionPane.showMessageDialog(this, 
-                    "Error al eliminar el paciente. Puede que tenga citas asociadas.", 
-                    "Error al Eliminar", 
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            
-            JOptionPane.showMessageDialog(this, 
-                "Paciente eliminado exitosamente", 
-                "Éxito", 
-                JOptionPane.INFORMATION_MESSAGE);
-            
-            // Limpiar el formulario
-            jtextNumeroDocumento.setText("");
-            jtextInfo.setText("");
-            jbtEliminar.setEnabled(false);
-            currentPatient = null;
-            jtextNumeroDocumento.requestFocus();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error inesperado: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-            e.printStackTrace();
-        }
-    }//GEN-LAST:event_jbtEliminarActionPerformed
-
-    private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_jbtCancelarActionPerformed
-
-    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
-
-    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
-        this.dispose();
-    }
-
-    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {
         int confirm = JOptionPane.showConfirmDialog(
             this,
-            "¿Está seguro de eliminar este paciente?",
+            "¿Está seguro de eliminar este paciente?\n\n" +
+            "Nombre: " + currentPatient.getFullName() + "\n" +
+            "Documento: " + currentPatient.getCredentials().getId() + "\n\n" +
+            "Esta acción no se puede deshacer.",
             "Confirmar eliminación",
-            JOptionPane.YES_NO_OPTION
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
         );
         
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                medicSystemService.deletePatient(currPatient.getCredentials());
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Paciente eliminado exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
-                this.dispose();
+                boolean success = systemFacade.deletePatient(currentPatient);
+                
+                if (success) {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Paciente eliminado exitosamente",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE
+                    );
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(
+                        this,
+                        "Error al eliminar el paciente.\n" +
+                        "Puede que tenga citas asociadas.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE
+                    );
+                }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(
                     this,
-                    "Error al eliminar el paciente: " + e.getMessage(),
+                    "Error inesperado: " + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE
                 );
+                e.printStackTrace();
             }
         }
-    }//GEN-LAST:event_jbtnEliminarActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDelete.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmDelete().setVisible(true);
-            }
-        });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
+        this.dispose();
+    }
+
+    // Variables declaration
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JButton jbtBuscar;
-    private javax.swing.JButton jbtCancelar;
-    private javax.swing.JButton jbtEliminar;
+    private javax.swing.JButton jbtnCancelar;
+    private javax.swing.JButton jbtnEliminar;
+    private javax.swing.JLabel jlblEdad;
     private javax.swing.JLabel jlblEliminarPaciente;
-    private javax.swing.JLabel jlblInfoPaciente;
+    private javax.swing.JLabel jlblEmail;
+    private javax.swing.JLabel jlblNombreCompleto;
     private javax.swing.JLabel jlblNumeroDocumento;
-    private javax.swing.JTextArea jtextInfo;
-    private javax.swing.JScrollPane jtextAreaInfo;
+    private javax.swing.JTextField jtextEdad;
+    private javax.swing.JTextField jtextEmail;
+    private javax.swing.JTextField jtextNombreCompleto;
     private javax.swing.JTextField jtextNumeroDocumento;
-    // End of variables declaration//GEN-END:variables
 }
