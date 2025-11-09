@@ -1,7 +1,8 @@
 package repositories;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
-import enumerations.AppoinmnetStatus;
+
+import enums.AppoinmnetStatus;
 import models.Doctor;
 import interfaces.IRepositoryAppoinment;
 import models.Patient;

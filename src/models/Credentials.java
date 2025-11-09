@@ -1,5 +1,5 @@
 package models;
-import enumerations.UserRole;
+import enums.UserRole;
 
 public class Credentials {
     private int Id;

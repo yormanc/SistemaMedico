@@ -1,6 +1,7 @@
 package models;
 import java.time.LocalDateTime;
-import enumerations.AppoinmnetStatus;
+
+import enums.AppoinmnetStatus;
 
 public class Appointment {
 
