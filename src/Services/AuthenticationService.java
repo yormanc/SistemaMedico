@@ -1,76 +1,142 @@
-package Services;
+package services;
 
 import interfaces.IAuthenticationService;
 import interfaces.IRepositoryUser;
-import interfaces.IRepositoryPatient;
 import interfaces.IRepositoryDoctor;
+import interfaces.IRepositoryPatient;
+import interfaces.ISessionManager;
+import interfaces.IPasswordService;
+import interfaces.IUserRegistrationService;
 import models.User;
 import models.Credentials;
 import models.Doctor;
 import models.Patient;
+import validators.CredentialsValidator;
+import exceptions.AuthenticationException;
+import exceptions.PasswordException;
+import exceptions.RegistrationException;
+import exceptions.ValidationException;
 
 /**
- * Servicio de autenticación
- * Maneja login, logout, registro y cambio de contraseña
+ * Servicio de autenticación REFACTORIZADO
+ * Ahora cumple con todos los principios SOLID:
+ * - S: Solo maneja login/logout (delega otras responsabilidades)
+ * - O: Extensible mediante estrategias
+ * - L: Todas las dependencias son obligatorias (no null)
+ * - I: Interfaces pequeñas y segregadas
+ * - D: Depende de abstracciones, no implementaciones
  */
 public class AuthenticationService implements IAuthenticationService {
 
-    private IRepositoryUser userRepository;
-    private IRepositoryDoctor doctorRepository;
-    private IRepositoryPatient patientRepository;
-    private User currentUser; // Usuario actualmente autenticado
+    private final IRepositoryUser userRepository;
+    private final ISessionManager sessionManager;
+    private final IPasswordService passwordService;
+    private final IUserRegistrationService registrationService;
 
     /**
-     * Constructor que recibe solo el repositorio de usuarios
-     * (Para mantener compatibilidad con código existente)
-     */
-    public AuthenticationService(IRepositoryUser userRepository) {
-        this.userRepository = userRepository;
-        this.doctorRepository = null;
-        this.patientRepository = null;
-        this.currentUser = null;
-    }
-
-    /**
-     * Constructor completo que recibe todos los repositorios
-     * (Recomendado para usar con RepositoryManager)
+     * Constructor con todas las dependencias obligatorias
+     * Principio: Dependency Inversion - Depende de interfaces
+     * Principio: Liskov Substitution - No acepta nulls
      */
     public AuthenticationService(
         IRepositoryUser userRepository,
         IRepositoryDoctor doctorRepository,
         IRepositoryPatient patientRepository
     ) {
+        // Validar que ninguna dependencia sea null (Liskov)
+        if (userRepository == null) {
+            throw new IllegalArgumentException("El repositorio de usuarios no puede ser nulo");
+        }
+        if (doctorRepository == null) {
+            throw new IllegalArgumentException("El repositorio de doctores no puede ser nulo");
+        }
+        if (patientRepository == null) {
+            throw new IllegalArgumentException("El repositorio de pacientes no puede ser nulo");
+        }
+        
         this.userRepository = userRepository;
-        this.doctorRepository = doctorRepository;
-        this.patientRepository = patientRepository;
-        this.currentUser = null;
+        
+        // Crear servicios especializados (Single Responsibility)
+        this.sessionManager = new SessionManager();
+        this.passwordService = new PasswordService(userRepository);
+        this.registrationService = new UserRegistrationService(
+            userRepository, 
+            doctorRepository, 
+            patientRepository
+        );
     }
 
+    /**
+     * Login de usuario
+     * Responsabilidad: Solo autenticar y establecer sesión
+     */
     @Override
     public User login(int id, String password) {
         try {
-            User user = userRepository.searchById(id);
-            if (user != null && user.authenticate(password)) {
-                currentUser = user;
-                System.out.println("✅ Usuario autenticado: " + user.getFullName());
-                return user;
+            // Validar entrada
+            CredentialsValidator.validateId(id);
+            CredentialsValidator.validatePassword(password);
+            
+            // Buscar usuario
+            User user = null;
+            try {
+                user = userRepository.searchById(id);
+            } catch (Exception e) {
+                System.err.println("❌ Usuario no encontrado con ID: " + id);
+                return null;
             }
-            System.out.println("❌ Credenciales inválidas para ID: " + id);
+            
+            if (user == null) {
+                System.err.println("❌ Usuario no encontrado con ID: " + id);
+                return null;
+            }
+            
+            // Verificar contraseña
+            if (!user.authenticate(password)) {
+                System.err.println("❌ Credenciales inválidas para ID: " + id);
+                return null;
+            }
+            
+            // Establecer sesión
+            try {
+                sessionManager.setCurrentUser(user);
+                return user;
+            } catch (AuthenticationException e) {
+                System.err.println("❌ " + e.getMessage());
+                return null;
+            }
+            
+        } catch (ValidationException e) {
+            System.err.println("❌ Validación fallida: " + e.getMessage());
             return null;
         } catch (Exception e) {
-            System.err.println("❌ Error en login: " + e.getMessage());
+            System.err.println("❌ Error inesperado en login: " + e.getMessage());
             return null;
         }
     }
 
+    /**
+     * Logout de usuario
+     * Responsabilidad: Solo cerrar sesión
+     */
     @Override
     public boolean logout(int id) {
         try {
-            if (currentUser != null && currentUser.getCredentials().getId() == id) {
-                System.out.println("✅ Usuario desconectado: " + currentUser.getFullName());
-                currentUser = null;
-                return true;
+            // Validar entrada
+            CredentialsValidator.validateId(id);
+            
+            // Verificar que sea el usuario actual
+            if (!sessionManager.isCurrentUser(id)) {
+                System.err.println("❌ El ID no corresponde al usuario autenticado");
+                return false;
             }
+            
+            // Cerrar sesión
+            sessionManager.clearSession();
+            return true;
+            
+        } catch (ValidationException e) {
+            System.err.println("❌ " + e.getMessage());
             return false;
         } catch (Exception e) {
             System.err.println("❌ Error en logout: " + e.getMessage());
@@ -78,95 +144,108 @@ public class AuthenticationService implements IAuthenticationService {
         }
     }
 
+    /**
+     * Registrar doctor
+     * Delega a UserRegistrationService (Single Responsibility)
+     */
     @Override
     public boolean registerDoctor(Doctor doctor, Credentials credentials) {
         try {
-            if (userRepository.searchById(credentials.getId()) == null) {
-                userRepository.add(doctor);
-                
-                // Solo agregar al repositorio de doctores si está disponible
-                if (doctorRepository != null) {
-                    doctorRepository.add(doctor);
-                }
-                
-                System.out.println("✅ Doctor registrado: " + doctor.getFullName());
-                return true;
-            }
-            System.out.println("❌ Ya existe un usuario con ID: " + credentials.getId());
+            return registrationService.registerDoctor(doctor, credentials);
+        } catch (RegistrationException | ValidationException e) {
+            System.err.println("❌ " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar doctor: " + e.getMessage());
+            System.err.println("❌ Error inesperado al registrar doctor: " + e.getMessage());
             return false;
         }
     }
 
-    @Override
-    public boolean changePassword(int userId, String oldPass, String newPass) {
-        try {
-            User user = userRepository.searchById(userId);
-            if (user != null && user.getCredentials().verifyPassword(oldPass)) {
-                user.getCredentials().setPassword(newPass);
-                userRepository.update(user);
-                System.out.println("✅ Contraseña actualizada para usuario ID: " + userId);
-                return true;
-            }
-            System.out.println("❌ Contraseña actual incorrecta para usuario ID: " + userId);
-            return false;
-        } catch (Exception e) {
-            System.err.println("❌ Error al cambiar contraseña: " + e.getMessage());
-            return false;
-        }
-    }
-
+    /**
+     * Registrar paciente
+     * Delega a UserRegistrationService (Single Responsibility)
+     */
     @Override
     public boolean registerPatient(Patient patient, Credentials credentials) {
         try {
-            if (userRepository.searchById(credentials.getId()) == null) {
-                userRepository.add(patient);
-                
-                // Solo agregar al repositorio de pacientes si está disponible
-                if (patientRepository != null) {
-                    patientRepository.add(patient);
-                }
-                
-                System.out.println("✅ Paciente registrado en auth: " + patient.getFullName());
-                return true;
-            }
-            System.out.println("❌ Ya existe un usuario con ID: " + credentials.getId());
+            return registrationService.registerPatient(patient, credentials);
+        } catch (RegistrationException | ValidationException e) {
+            System.err.println("❌ " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar paciente en auth: " + e.getMessage());
+            System.err.println("❌ Error inesperado al registrar paciente: " + e.getMessage());
             return false;
         }
     }
 
+    /**
+     * Registrar usuario genérico
+     * Delega a UserRegistrationService (Single Responsibility)
+     */
     @Override
     public boolean registerUser(User user, Credentials credentials) {
         try {
-            if (userRepository.searchById(credentials.getId()) == null) {
-                userRepository.add(user);
-                System.out.println("✅ Usuario registrado: " + user.getFullName());
-                return true;
-            }
-            System.out.println("❌ Ya existe un usuario con ID: " + credentials.getId());
+            return registrationService.registerUser(user, credentials);
+        } catch (RegistrationException | ValidationException e) {
+            System.err.println("❌ " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar usuario: " + e.getMessage());
+            System.err.println("❌ Error inesperado al registrar usuario: " + e.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Cambiar contraseña
+     * Delega a PasswordService (Single Responsibility)
+     */
+    @Override
+    public boolean changePassword(int userId, String oldPassword, String newPassword) {
+        try {
+            return passwordService.changePassword(userId, oldPassword, newPassword);
+        } catch (PasswordException | AuthenticationException e) {
+            System.err.println("❌ " + e.getMessage());
+            return false;
+        } catch (Exception e) {
+            System.err.println("❌ Error inesperado al cambiar contraseña: " + e.getMessage());
             return false;
         }
     }
 
     /**
      * Obtiene el usuario actualmente autenticado
+     * Delega a SessionManager
      */
     public User getCurrentUser() {
-        return currentUser;
+        return sessionManager.getCurrentUser();
     }
 
     /**
      * Verifica si hay un usuario autenticado
+     * Delega a SessionManager
      */
     public boolean isAuthenticated() {
-        return currentUser != null;
+        return sessionManager.isAuthenticated();
+    }
+    
+    /**
+     * Obtiene el gestor de sesión (para uso avanzado)
+     */
+    public ISessionManager getSessionManager() {
+        return sessionManager;
+    }
+    
+    /**
+     * Obtiene el servicio de contraseñas (para uso avanzado)
+     */
+    public IPasswordService getPasswordService() {
+        return passwordService;
+    }
+    
+    /**
+     * Obtiene el servicio de registro (para uso avanzado)
+     */
+    public IUserRegistrationService getRegistrationService() {
+        return registrationService;
     }
 }
