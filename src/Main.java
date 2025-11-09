@@ -1,6 +1,4 @@
-/**
- * Clase principal para iniciar el Sistema de Gestión Médica
- */
+
 public class Main {
     
     public static void main(String[] args) {

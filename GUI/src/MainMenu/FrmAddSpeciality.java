@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 
 /**
  * Formulario para agregar nueva especialidad
@@ -27,7 +26,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
     }
-
+    
     private void initComponents() {
         jPanelMain = new javax.swing.JPanel();
         jPanelHeader = new javax.swing.JPanel();

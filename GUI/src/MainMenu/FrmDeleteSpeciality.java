@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import models.Speciality;
 
 /**
@@ -42,7 +41,6 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
         jbtnEliminar.setEnabled(true);
         jbtnBuscar.setEnabled(false);
     }
-
     private void initComponents() {
         jPanelMain = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();

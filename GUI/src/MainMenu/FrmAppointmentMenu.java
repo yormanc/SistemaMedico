@@ -1,16 +1,18 @@
 import javax.swing.*;
+
+import enumerations.UserRole;
+
 import java.awt.*;
 import Services.MedicSystemService;
-import repositories.SpecialityRepository;
 
 /**
- * Menú de gestión de especialidades
+ * Menú de gestión de citas médicas
  */
-public class FrmSpecialityMenu extends javax.swing.JFrame {
+public class FrmAppointmentMenu extends javax.swing.JFrame {
 
     private final MedicSystemService medicService;
     
-    public FrmSpecialityMenu(MedicSystemService medicService) {
+    public FrmAppointmentMenu(MedicSystemService medicService) {
         this.medicService = medicService;
         initComponents();
         setLocationRelativeTo(null);
@@ -23,13 +25,15 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         jlblTitulo = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanelButtons = new javax.swing.JPanel();
-        jbtnAgregar = new javax.swing.JButton();
+        jbtnAgendar = new javax.swing.JButton();
         jbtnBuscar = new javax.swing.JButton();
         jbtnListar = new javax.swing.JButton();
+        jbtnHistorialPaciente = new javax.swing.JButton();
+        jbtnHistorialDoctor = new javax.swing.JButton();
         jbtnVolver = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Gestión de Especialidades");
+        setTitle("Gestión de Citas Médicas");
         setResizable(false);
 
         jPanelMain.setBackground(new java.awt.Color(245, 245, 245));
@@ -41,8 +45,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 28));
         jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("GESTIÓN DE ESPECIALIDADES");
-        jlblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/medical.png"))); // Opcional
+        jlblTitulo.setText("📅 GESTIÓN DE CITAS MÉDICAS");
         
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
@@ -62,34 +65,34 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         // Panel de botones
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
         
-        // Botón Agregar
-        jbtnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnAgregar.setText("➕ Agregar Nueva Especialidad");
-        jbtnAgregar.setBackground(new java.awt.Color(46, 204, 113));
-        jbtnAgregar.setForeground(Color.WHITE);
-        jbtnAgregar.setFocusPainted(false);
-        jbtnAgregar.setBorderPainted(false);
-        jbtnAgregar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        jbtnAgregar.setToolTipText("Registrar una nueva especialidad médica");
-        jbtnAgregar.addActionListener(evt -> jbtnAgregarActionPerformed(evt));
-        jbtnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+        // Botón Agendar
+        jbtnAgendar.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        jbtnAgendar.setText("➕ Agendar Nueva Cita");
+        jbtnAgendar.setBackground(new java.awt.Color(46, 204, 113));
+        jbtnAgendar.setForeground(Color.WHITE);
+        jbtnAgendar.setFocusPainted(false);
+        jbtnAgendar.setBorderPainted(false);
+        jbtnAgendar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnAgendar.setToolTipText("Programar una nueva cita médica");
+        jbtnAgendar.addActionListener(evt -> jbtnAgendarActionPerformed(evt));
+        jbtnAgendar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jbtnAgregar.setBackground(new java.awt.Color(39, 174, 96));
+                jbtnAgendar.setBackground(new java.awt.Color(39, 174, 96));
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jbtnAgregar.setBackground(new java.awt.Color(46, 204, 113));
+                jbtnAgendar.setBackground(new java.awt.Color(46, 204, 113));
             }
         });
 
         // Botón Buscar
         jbtnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnBuscar.setText("🔍 Buscar/Modificar/Eliminar");
+        jbtnBuscar.setText("🔍 Buscar/Modificar/Cancelar");
         jbtnBuscar.setBackground(new java.awt.Color(52, 152, 219));
         jbtnBuscar.setForeground(Color.WHITE);
         jbtnBuscar.setFocusPainted(false);
         jbtnBuscar.setBorderPainted(false);
         jbtnBuscar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        jbtnBuscar.setToolTipText("Buscar y gestionar especialidades existentes");
+        jbtnBuscar.setToolTipText("Buscar y gestionar citas existentes");
         jbtnBuscar.addActionListener(evt -> jbtnBuscarActionPerformed(evt));
         jbtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -102,13 +105,13 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
 
         // Botón Listar
         jbtnListar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnListar.setText("📋 Ver Todas las Especialidades");
+        jbtnListar.setText("📋 Ver Todas las Citas");
         jbtnListar.setBackground(new java.awt.Color(155, 89, 182));
         jbtnListar.setForeground(Color.WHITE);
         jbtnListar.setFocusPainted(false);
         jbtnListar.setBorderPainted(false);
         jbtnListar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        jbtnListar.setToolTipText("Mostrar listado completo de especialidades");
+        jbtnListar.setToolTipText("Mostrar listado completo de citas");
         jbtnListar.addActionListener(evt -> jbtnListarActionPerformed(evt));
         jbtnListar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -116,6 +119,44 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jbtnListar.setBackground(new java.awt.Color(155, 89, 182));
+            }
+        });
+
+        // Botón Historial Paciente
+        jbtnHistorialPaciente.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        jbtnHistorialPaciente.setText("👤 Historial de Paciente");
+        jbtnHistorialPaciente.setBackground(new java.awt.Color(230, 126, 34));
+        jbtnHistorialPaciente.setForeground(Color.WHITE);
+        jbtnHistorialPaciente.setFocusPainted(false);
+        jbtnHistorialPaciente.setBorderPainted(false);
+        jbtnHistorialPaciente.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnHistorialPaciente.setToolTipText("Ver historial de citas de un paciente");
+        jbtnHistorialPaciente.addActionListener(evt -> jbtnHistorialPacienteActionPerformed(evt));
+        jbtnHistorialPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnHistorialPaciente.setBackground(new java.awt.Color(211, 84, 0));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnHistorialPaciente.setBackground(new java.awt.Color(230, 126, 34));
+            }
+        });
+
+        // Botón Historial Doctor
+        jbtnHistorialDoctor.setFont(new java.awt.Font("Segoe UI", 0, 16));
+        jbtnHistorialDoctor.setText("⚕️ Historial de Doctor");
+        jbtnHistorialDoctor.setBackground(new java.awt.Color(26, 188, 156));
+        jbtnHistorialDoctor.setForeground(Color.WHITE);
+        jbtnHistorialDoctor.setFocusPainted(false);
+        jbtnHistorialDoctor.setBorderPainted(false);
+        jbtnHistorialDoctor.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnHistorialDoctor.setToolTipText("Ver historial de citas de un doctor");
+        jbtnHistorialDoctor.addActionListener(evt -> jbtnHistorialDoctorActionPerformed(evt));
+        jbtnHistorialDoctor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnHistorialDoctor.setBackground(new java.awt.Color(22, 160, 133));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnHistorialDoctor.setBackground(new java.awt.Color(26, 188, 156));
             }
         });
 
@@ -142,19 +183,25 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         jPanelButtons.setLayout(jPanelButtonsLayout);
         jPanelButtonsLayout.setHorizontalGroup(
             jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jbtnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+            .addComponent(jbtnAgendar, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
             .addComponent(jbtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jbtnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jbtnHistorialPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jbtnHistorialDoctor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jbtnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelButtonsLayout.setVerticalGroup(
             jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelButtonsLayout.createSequentialGroup()
-                .addComponent(jbtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnAgendar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(jbtnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jbtnHistorialPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(jbtnHistorialDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jbtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -193,13 +240,14 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         pack();
     }
 
-    private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jbtnAgendarActionPerformed(java.awt.event.ActionEvent evt) {
+        // Abrir el nuevo formulario para agendar la cita
         try {
-            FrmAddSpeciality frm = new FrmAddSpeciality(medicService);
-            frm.setVisible(true);
+            FrmAddAppointment frmAddAppointment = new FrmAddAppointment(medicService);
+            frmAddAppointment.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al abrir el formulario: " + e.getMessage(),
+                "Error al abrir el formulario de Agendar Cita: " + e.getMessage(),
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -207,12 +255,13 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
     }
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
+        // Abrir el nuevo formulario para gestionar (buscar, modificar, eliminar) la cita
         try {
-            FrmSearchSpeciality frm = new FrmSearchSpeciality(medicService);
-            frm.setVisible(true);
+            FrmManageAppointments frmManage = new FrmManageAppointments(medicService);
+            frmManage.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al abrir el formulario: " + e.getMessage(),
+                "Error al abrir el módulo de Gestión de Citas: " + e.getMessage(),
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -220,80 +269,42 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
     }
 
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
+        // Abrir el nuevo formulario para listar todas las citas
         try {
-            // ✅ USAR EL MÉTODO PÚBLICO DEL SERVICIO
-            List<Speciality> specialities = medicService.viewAllSpecialities();
-            
-            if (specialities == null || specialities.isEmpty()) {
-                JOptionPane.showMessageDialog(this,
-                    "No hay especialidades registradas en el sistema.\n\n" +
-                    "Por favor, agregue especialidades primero.",
-                    "Lista Vacía",
-                    JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
-            // Crear diálogo para mostrar la lista
-            JDialog dialog = new JDialog(this, "Lista de Especialidades Médicas", true);
-            dialog.setSize(750, 450);
-            dialog.setLocationRelativeTo(this);
-            
-            // Crear tabla con los datos
-            String[] columnNames = {"ID", "Nombre", "Descripción"};
-            Object[][] data = new Object[specialities.size()][3];
-            
-            for (int i = 0; i < specialities.size(); i++) {
-                Speciality s = specialities.get(i);
-                data[i][0] = s.getSpecialityId();
-                data[i][1] = s.getName();
-                data[i][2] = s.getDescription();
-            }
-            
-            JTable table = new JTable(data, columnNames);
-            table.setEnabled(false);
-            table.setRowHeight(30);
-            table.setFont(new java.awt.Font("Segoe UI", 0, 13));
-            table.getTableHeader().setFont(new java.awt.Font("Segoe UI", 1, 14));
-            table.getTableHeader().setBackground(new java.awt.Color(0, 102, 204));
-            table.getTableHeader().setForeground(Color.WHITE);
-            table.setSelectionBackground(new java.awt.Color(230, 240, 255));
-            
-            // Ajustar ancho de columnas
-            table.getColumnModel().getColumn(0).setPreferredWidth(60);   // ID
-            table.getColumnModel().getColumn(1).setPreferredWidth(180);  // Nombre
-            table.getColumnModel().getColumn(2).setPreferredWidth(400);  // Descripción
-            
-            // Centrar el contenido de la columna ID
-            javax.swing.table.DefaultTableCellRenderer centerRenderer = 
-                new javax.swing.table.DefaultTableCellRenderer();
-            centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-            table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-            
-            JScrollPane scrollPane = new JScrollPane(table);
-            scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            
-            JPanel panel = new JPanel(new BorderLayout());
-            panel.setBackground(Color.WHITE);
-            panel.add(scrollPane, BorderLayout.CENTER);
-            
-            // Panel inferior con información
-            JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-            bottomPanel.setBackground(new java.awt.Color(240, 248, 255));
-            bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-            
-            JLabel lblTotal = new JLabel("📊 Total de especialidades registradas: " + specialities.size());
-            lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 15));
-            lblTotal.setForeground(new java.awt.Color(0, 102, 204));
-            bottomPanel.add(lblTotal);
-            
-            panel.add(bottomPanel, BorderLayout.SOUTH);
-            
-            dialog.add(panel);
-            dialog.setVisible(true);
-            
+            // Asegúrate de que FrmListAppointments está disponible en el mismo paquete o importado
+            FrmListAppointments frmListAppointments = new FrmListAppointments(medicService);
+            frmListAppointments.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al listar especialidades:\n" + e.getMessage(),
+                "Error al abrir el módulo de Listado de Citas: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void jbtnHistorialPacienteActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Abrir el formulario de historial configurado para Pacientes
+            FrmViewHistory frmHistory = new FrmViewHistory(medicService, UserRole.PATIENT);
+            frmHistory.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir el módulo de Historial de Pacientes: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+
+    private void jbtnHistorialDoctorActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            // Abrir el formulario de historial configurado para Doctores
+            FrmViewHistory frmHistory = new FrmViewHistory(medicService, UserRole.DOCTOR);
+            frmHistory.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir el módulo de Historial de Doctores: " + e.getMessage(),
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -306,24 +317,10 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelButtons;
     private javax.swing.JLabel jlblTitulo;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JButton jbtnAgregar;
+    private javax.swing.JButton jbtnAgendar;
     private javax.swing.JButton jbtnBuscar;
     private javax.swing.JButton jbtnListar;
+    private javax.swing.JButton jbtnHistorialPaciente;
+    private javax.swing.JButton jbtnHistorialDoctor;
     private javax.swing.JButton jbtnVolver;
-    
-    /**
-     * Método main para testing independiente
-     */
-    public static void main(String[] args) {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        java.awt.EventQueue.invokeLater(() -> {
-            MedicSystemService service = new MedicSystemService();
-            new FrmSpecialityMenu(service).setVisible(true);
-        });
-    }
 }

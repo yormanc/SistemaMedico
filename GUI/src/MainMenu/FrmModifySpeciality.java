@@ -1,6 +1,5 @@
 import javax.swing.*;
-import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 import models.Speciality;
 
 /**
@@ -30,6 +29,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
             jtextAreaDescripcion.setText(originalSpeciality.getDescription());
         }
     }
+
 
     private void initComponents() {
         jPanelMain = new javax.swing.JPanel();

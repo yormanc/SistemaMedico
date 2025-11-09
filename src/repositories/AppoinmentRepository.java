@@ -230,6 +230,18 @@ public boolean update(Appointment updatedAppointment) {
             throw new RuntimeException("Error al obtener las citas del doctor: " + e.getMessage());
         }
     }
+    public Appointment searchById(int id) {
+        try {
+            for (Appointment appointment : appointments) {
+                if (appointment.getAppointmentId() == id) {
+                    return appointment;
+                }
+            }
+            return null; // No se encontró la cita con el ID dado
+        } catch (Exception e) {
+            throw new RuntimeException("Error al buscar la cita por ID: " + e.getMessage());
+        }
+    }
         
 
 }

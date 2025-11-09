@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
+
 
 /**
  * Menú de gestión de pacientes
@@ -14,6 +15,7 @@ public class FrmPatientMenu extends javax.swing.JFrame {
         this.medicService = medicService;
         setLocationRelativeTo(null);
     }
+
 
     private void initComponents() {
 
