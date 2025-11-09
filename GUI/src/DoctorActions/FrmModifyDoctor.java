@@ -3,10 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 import javax.swing.JOptionPane;
-import Services.MedicSystemService;
+
 import models.Doctor;
 import models.Speciality;
 import repositories.DoctorRepository;
+import services.MedicSystemService;
 
 /**
  *

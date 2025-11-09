@@ -1,4 +1,4 @@
-package Services;
+package services;
 
 import enumerations.AppoinmnetStatus;
 import enumerations.UserRole;
