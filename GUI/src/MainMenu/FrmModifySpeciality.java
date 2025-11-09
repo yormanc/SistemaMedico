@@ -4,44 +4,39 @@ import models.Speciality;
 
 /**
  * Formulario para modificar especialidad
- * USA MedicSystemService.updateSpeciality()
  */
 public class FrmModifySpeciality extends javax.swing.JFrame {
 
-    private final Speciality currentSpeciality;
     private final MedicSystemService medicService;
-    
-    /**
-     * Constructor principal
-     */
+    private final Speciality originalSpeciality;
+
     public FrmModifySpeciality(Speciality speciality, MedicSystemService medicService) {
-        this.currentSpeciality = speciality;
+        this.originalSpeciality = speciality;
         this.medicService = medicService;
         initComponents();
         loadSpecialityData();
         setLocationRelativeTo(null);
     }
-    
+
+    /**
+     * Carga los datos de la especialidad en los campos
+     */
     private void loadSpecialityData() {
-        if (currentSpeciality == null) {
-            JOptionPane.showMessageDialog(this,
-                "Error: No se proporcionó una especialidad válida",
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
-            this.dispose();
-            return;
+        if (originalSpeciality != null) {
+            jtextId.setText(String.valueOf(originalSpeciality.getSpecialityId()));
+            jtextId.setEnabled(false); // El ID no se puede modificar
+            jtextNombre.setText(originalSpeciality.getName());
+            jtextAreaDescripcion.setText(originalSpeciality.getDescription());
         }
-        
-        jtextId.setText(String.valueOf(currentSpeciality.getSpecialityId()));
-        jtextId.setEnabled(false);
-        jtextNombre.setText(currentSpeciality.getName());
-        jtextAreaDescripcion.setText(currentSpeciality.getDescription());
     }
 
 
     private void initComponents() {
-        jPanel1 = new javax.swing.JPanel();
+        jPanelMain = new javax.swing.JPanel();
+        jPanelHeader = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanelForm = new javax.swing.JPanel();
         jlblId = new javax.swing.JLabel();
         jtextId = new javax.swing.JTextField();
         jlblNombre = new javax.swing.JLabel();
@@ -49,209 +44,353 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         jlblDescripcion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jtextAreaDescripcion = new javax.swing.JTextArea();
-        jbtnModificar = new javax.swing.JButton();
+        jPanelButtons = new javax.swing.JPanel();
+        jbtnGuardar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Modificar Especialidad");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanelMain.setBackground(new java.awt.Color(245, 245, 245));
+        jPanelMain.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        jlblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24));
-        jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
+        // Panel de encabezado
+        jPanelHeader.setBackground(new java.awt.Color(245, 245, 245));
+        
+        jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 26));
+        jlblTitulo.setForeground(new java.awt.Color(52, 152, 219));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("MODIFICAR ESPECIALIDAD");
-        jlblTitulo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jlblTitulo.setText("✏️ MODIFICAR ESPECIALIDAD");
+        
+        javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
+        jPanelHeader.setLayout(jPanelHeaderLayout);
+        jPanelHeaderLayout.setHorizontalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+        );
+        jPanelHeaderLayout.setVerticalGroup(
+            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
 
-        jlblId.setText("   ID de Especialidad");
-        jlblId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        // Panel del formulario
+        jPanelForm.setBackground(Color.WHITE);
+        jPanelForm.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
 
-        jtextId.setBackground(new java.awt.Color(240, 240, 240));
+        jlblId.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jlblId.setForeground(new java.awt.Color(52, 73, 94));
+        jlblId.setText("ID de Especialidad:");
 
-        jlblNombre.setText("   Nombre");
-        jlblNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jtextId.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jtextId.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        jtextId.setEnabled(false);
+        jtextId.setBackground(new java.awt.Color(230, 230, 230));
+        jtextId.setToolTipText("El ID no se puede modificar");
 
-        jlblDescripcion.setText("   Descripción");
-        jlblDescripcion.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jlblNombre.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jlblNombre.setForeground(new java.awt.Color(52, 73, 94));
+        jlblNombre.setText("Nombre de la Especialidad:");
+
+        jtextNombre.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jtextNombre.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        jtextNombre.setToolTipText("Modifique el nombre de la especialidad");
+
+        jlblDescripcion.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jlblDescripcion.setForeground(new java.awt.Color(52, 73, 94));
+        jlblDescripcion.setText("Descripción:");
 
         jtextAreaDescripcion.setColumns(20);
         jtextAreaDescripcion.setRows(5);
         jtextAreaDescripcion.setLineWrap(true);
         jtextAreaDescripcion.setWrapStyleWord(true);
+        jtextAreaDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 13));
+        jtextAreaDescripcion.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
+            BorderFactory.createEmptyBorder(8, 10, 8, 10)
+        ));
+        jtextAreaDescripcion.setToolTipText("Modifique la descripción de la especialidad");
         jScrollPane1.setViewportView(jtextAreaDescripcion);
+        jScrollPane1.setBorder(null);
 
-        jbtnModificar.setText("Modificar");
-        jbtnModificar.addActionListener(evt -> jbtnModificarActionPerformed(evt));
-
-        jbtnCancelar.setText("Cancelar");
-        jbtnCancelar.addActionListener(evt -> jbtnCancelarActionPerformed(evt));
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jlblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlblId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextId))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextNombre))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlblDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbtnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(50, 50, 50)
-                        .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(25, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanelFormLayout = new javax.swing.GroupLayout(jPanelForm);
+        jPanelForm.setLayout(jPanelFormLayout);
+        jPanelFormLayout.setHorizontalGroup(
+            jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlblId)
+            .addComponent(jtextId)
+            .addComponent(jlblNombre)
+            .addComponent(jtextNombre)
+            .addComponent(jlblDescripcion)
+            .addComponent(jScrollPane1)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jlblTitulo)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblId)
-                    .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        jPanelFormLayout.setVerticalGroup(
+            jPanelFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFormLayout.createSequentialGroup()
+                .addComponent(jlblId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblNombre)
-                    .addComponent(jtextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jlblDescripcion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        // Panel de botones
+        jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
+
+        jbtnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 15));
+        jbtnGuardar.setText("💾 Guardar Cambios");
+        jbtnGuardar.setBackground(new java.awt.Color(46, 204, 113));
+        jbtnGuardar.setForeground(Color.WHITE);
+        jbtnGuardar.setFocusPainted(false);
+        jbtnGuardar.setBorderPainted(false);
+        jbtnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnGuardar.setToolTipText("Guardar los cambios realizados");
+        jbtnGuardar.addActionListener(evt -> jbtnGuardarActionPerformed(evt));
+        jbtnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnGuardar.setBackground(new java.awt.Color(39, 174, 96));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnGuardar.setBackground(new java.awt.Color(46, 204, 113));
+            }
+        });
+
+        jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 15));
+        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setBackground(new java.awt.Color(231, 76, 60));
+        jbtnCancelar.setForeground(Color.WHITE);
+        jbtnCancelar.setFocusPainted(false);
+        jbtnCancelar.setBorderPainted(false);
+        jbtnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnCancelar.setToolTipText("Cancelar sin guardar cambios");
+        jbtnCancelar.addActionListener(evt -> dispose());
+        jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCancelar.setBackground(new java.awt.Color(192, 57, 43));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnCancelar.setBackground(new java.awt.Color(231, 76, 60));
+            }
+        });
+
+        javax.swing.GroupLayout jPanelButtonsLayout = new javax.swing.GroupLayout(jPanelButtons);
+        jPanelButtons.setLayout(jPanelButtonsLayout);
+        jPanelButtonsLayout.setHorizontalGroup(
+            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelButtonsLayout.createSequentialGroup()
+                .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlblDescripcion)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnModificar)
-                    .addComponent(jbtnCancelar))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelButtonsLayout.setVerticalGroup(
+            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+
+        // Layout principal
+        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
+        jPanelMain.setLayout(jPanelMainLayout);
+        jPanelMainLayout.setHorizontalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanelMainLayout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jPanelForm, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+        jPanelMainLayout.setVerticalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMainLayout.createSequentialGroup()
+                .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }
 
-    private void jbtnModificarActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener y validar campos
             String nombreInput = jtextNombre.getText().trim();
             String descripcionInput = jtextAreaDescripcion.getText().trim();
 
-            // Validar que no estén vacíos
+            // ✅ Validación 1: Campos vacíos
             if (nombreInput.isEmpty() || descripcionInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                    "Debe llenar todos los campos",
-                    "Campos Vacíos",
+                    "⚠️ Todos los campos son obligatorios.\n\n" +
+                    "Por favor, complete:\n" +
+                    "• Nombre\n" +
+                    "• Descripción",
+                    "Campos Incompletos",
                     JOptionPane.WARNING_MESSAGE);
+                
+                if (nombreInput.isEmpty()) {
+                    jtextNombre.requestFocus();
+                } else {
+                    jtextAreaDescripcion.requestFocus();
+                }
                 return;
             }
 
-            // Validar que el nombre no contenga solo números
+            // ✅ Validación 2: Nombre no solo números
             if (nombreInput.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this,
-                    "El nombre no puede contener solo números",
+                    "❌ El nombre no puede contener solo números.\n\n" +
+                    "Ingrese un nombre descriptivo como:\n" +
+                    "• Cardiología\n" +
+                    "• Pediatría\n" +
+                    "• Dermatología",
                     "Nombre Inválido",
                     JOptionPane.WARNING_MESSAGE);
+                jtextNombre.requestFocus();
+                jtextNombre.selectAll();
                 return;
             }
             
-            // Validar longitud mínima del nombre
+            // ✅ Validación 3: Longitud mínima del nombre
             if (nombreInput.length() < 3) {
                 JOptionPane.showMessageDialog(this,
-                    "El nombre debe tener al menos 3 caracteres",
-                    "Nombre Inválido",
+                    "❌ El nombre debe tener al menos 3 caracteres.\n\n" +
+                    "Caracteres actuales: " + nombreInput.length(),
+                    "Nombre Muy Corto",
                     JOptionPane.WARNING_MESSAGE);
+                jtextNombre.requestFocus();
+                jtextNombre.selectAll();
                 return;
             }
             
-            // Validar longitud mínima de la descripción
+            // ✅ Validación 4: Longitud máxima del nombre
+            if (nombreInput.length() > 100) {
+                JOptionPane.showMessageDialog(this,
+                    "❌ El nombre es demasiado largo (máximo 100 caracteres).\n\n" +
+                    "Caracteres actuales: " + nombreInput.length(),
+                    "Nombre Muy Largo",
+                    JOptionPane.WARNING_MESSAGE);
+                jtextNombre.requestFocus();
+                return;
+            }
+            
+            // ✅ Validación 5: Longitud mínima de la descripción
             if (descripcionInput.length() < 10) {
                 JOptionPane.showMessageDialog(this,
-                    "La descripción debe tener al menos 10 caracteres",
-                    "Descripción Inválida",
+                    "❌ La descripción debe tener al menos 10 caracteres.\n\n" +
+                    "Caracteres actuales: " + descripcionInput.length(),
+                    "Descripción Muy Corta",
                     JOptionPane.WARNING_MESSAGE);
+                jtextAreaDescripcion.requestFocus();
+                return;
+            }
+            
+            // ✅ Validación 6: Longitud máxima de la descripción
+            if (descripcionInput.length() > 500) {
+                JOptionPane.showMessageDialog(this,
+                    "❌ La descripción es demasiado larga (máximo 500 caracteres).\n\n" +
+                    "Caracteres actuales: " + descripcionInput.length(),
+                    "Descripción Muy Larga",
+                    JOptionPane.WARNING_MESSAGE);
+                jtextAreaDescripcion.requestFocus();
                 return;
             }
 
-            // Verificar si hay cambios
-            boolean hasChanges = !nombreInput.equals(currentSpeciality.getName()) ||
-                                !descripcionInput.equals(currentSpeciality.getDescription());
-
+            // ✅ Verificar si hay cambios
+            boolean hasChanges = !nombreInput.equals(originalSpeciality.getName()) ||
+                                !descripcionInput.equals(originalSpeciality.getDescription());
+            
             if (!hasChanges) {
                 JOptionPane.showMessageDialog(this,
-                    "No se han realizado cambios en los datos de la especialidad",
+                    "ℹ️ No se detectaron cambios en los datos.\n\n" +
+                    "Modifique al menos un campo para guardar.",
                     "Sin Cambios",
                     JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
 
-            // Crear especialidad modificada manteniendo el mismo ID
-            Speciality modifiedSpeciality = new Speciality(
-                currentSpeciality.getSpecialityId(),
-                nombreInput,
-                descripcionInput
-            );
+            // ✅ ACTUALIZAR LA ESPECIALIDAD
+            System.out.println("\n=== MODIFICANDO ESPECIALIDAD ===");
+            System.out.println("ID: " + originalSpeciality.getSpecialityId());
+            System.out.println("Nombre anterior: " + originalSpeciality.getName());
+            System.out.println("Nombre nuevo: " + nombreInput);
+            
+            // Actualizar los datos del objeto
+            originalSpeciality.setName(nombreInput);
+            originalSpeciality.setDescription(descripcionInput);
+            
+            // Guardar en el repositorio
+            boolean isUpdated = medicService.updateSpeciality(originalSpeciality);
 
-            // ✅ USAR EL MÉTODO DE MedicSystemService
-            boolean isUpdated = medicService.updateSpeciality(modifiedSpeciality);
-
-            if (isUpdated) {
+            if (!isUpdated) {
+                System.out.println("❌ NO SE PUDO ACTUALIZAR LA ESPECIALIDAD");
                 JOptionPane.showMessageDialog(this,
-                    "Datos de la especialidad actualizados exitosamente",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this,
-                    "Error al actualizar los datos de la especialidad",
-                    "Error",
+                    "❌ No se pudo actualizar la especialidad.\n\n" +
+                    "Por favor, intente nuevamente.",
+                    "Error al Actualizar",
                     JOptionPane.ERROR_MESSAGE);
+                return;
             }
 
-        } catch (Exception e) {
+            // ✅ ÉXITO
+            System.out.println("✅ ESPECIALIDAD ACTUALIZADA EXITOSAMENTE");
             JOptionPane.showMessageDialog(this,
-                "Error inesperado al actualizar la especialidad: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                "✅ Especialidad actualizada exitosamente\n\n" +
+                "ID: " + originalSpeciality.getSpecialityId() + "\n" +
+                "Nombre: " + nombreInput + "\n\n" +
+                "Los cambios han sido guardados en el sistema.",
+                "Actualización Exitosa",
+                JOptionPane.INFORMATION_MESSAGE);
+
+            // Cerrar el formulario
+            dispose();
+
+        } catch (Exception e) {
+            System.err.println("❌ ERROR INESPERADO: " + e.getMessage());
             e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                "❌ Error inesperado al guardar:\n\n" + 
+                e.getMessage() + "\n\n" +
+                "Por favor, contacte al administrador del sistema.",
+                "Error Crítico",
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
-    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-        // Preguntar si desea descartar los cambios
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "¿Está seguro que desea cancelar?\nSe perderán los cambios no guardados.",
-            "Confirmar Cancelación",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE);
-
-        if (confirm == JOptionPane.YES_OPTION) {
-            this.dispose();
-        }
-    }
-
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelHeader;
+    private javax.swing.JPanel jPanelForm;
+    private javax.swing.JPanel jPanelButtons;
     private javax.swing.JLabel jlblTitulo;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel jlblId;
     private javax.swing.JTextField jtextId;
     private javax.swing.JLabel jlblNombre;
@@ -259,6 +398,6 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
     private javax.swing.JLabel jlblDescripcion;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jtextAreaDescripcion;
-    private javax.swing.JButton jbtnModificar;
+    private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnCancelar;
 }

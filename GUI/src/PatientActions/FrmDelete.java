@@ -21,7 +21,9 @@ public class FrmDelete extends javax.swing.JFrame {
     /**
      * Creates new form FrmDelete
      */
-    public FrmDelete() {
+    public FrmDelete(MedicSystemService medicSystemService, Patient patient) {
+        this.medicSystemService = medicSystemService;
+        this.currPatient = Patient;
         initComponents();
         this.medicService = new MedicSystemService();
         this.patientRepository = new PatientRepository();
@@ -35,6 +37,21 @@ public class FrmDelete extends javax.swing.JFrame {
         this.medicService = medicService;
         this.patientRepository = patientRepository;
     }
+    
+    private void loadPatientData(){
+        jtextNombreCompleto.setText(currPatient.getFullName());
+        jtextNombreCompleto.setEnabled(false);
+        
+        jtextNumeroDocumento.setText(String.valueOf(currPatient.getCredentials()));
+        jtextNumeroDocumento.setEnabled(false);
+        
+        jtextEdad.setText(String.valueOf(currPatient.getAge()));
+        jtextEdad.setEnabled(false);
+        
+        jtextEmail.setText(currPatient.getEmail());
+        jtextEmail.setEnabled(false);
+        }
+    
 
     
     private void initComponents() {
@@ -140,16 +157,30 @@ public class FrmDelete extends javax.swing.JFrame {
 
         jlblEliminarPaciente.getAccessibleContext().setAccessibleDescription("");
         jlblEliminarPaciente.getAccessibleContext().setAccessibleParent(jlblEliminarPaciente);
+        jlblNombreCompleto.getAccessibleContext().setAccessibleParent(jlblNombreCompleto);
+        jtextNombreCompleto.getAccessibleContext().setAccessibleParent(jtextNombreCompleto);
+        jlblEdad.getAccessibleContext().setAccessibleParent(jlblEdad);
+        jtextEdad.getAccessibleContext().setAccessibleDescription("");
+        jtextEdad.getAccessibleContext().setAccessibleParent(jtextEdad);
+        jlblEmail.getAccessibleContext().setAccessibleParent(jlblEmail);
+        jtextEmail.getAccessibleContext().setAccessibleDescription("");
+        jtextEmail.getAccessibleContext().setAccessibleParent(jtextEmail);
+        jlblNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
+        jlblNumeroDocumento.getAccessibleContext().setAccessibleParent(jlblNumeroDocumento);
+        jtextNumeroDocumento.getAccessibleContext().setAccessibleDescription("");
+        jtextNumeroDocumento.getAccessibleContext().setAccessibleParent(jtextNumeroDocumento);
+        jbtnEliminar.getAccessibleContext().setAccessibleParent(jbtnEliminar);
+        jbtnCancelar.getAccessibleContext().setAccessibleParent(jbtnCancelar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -303,6 +334,43 @@ public class FrmDelete extends javax.swing.JFrame {
     private void jbtCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_jbtCancelarActionPerformed
+
+    private void jtextNumeroDocumentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtextNumeroDocumentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtextNumeroDocumentoActionPerformed
+
+    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnCancelarActionPerformed
+        this.dispose();
+    }
+
+    private void jbtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnEliminarActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "¿Está seguro de eliminar este paciente?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION
+        );
+        
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                medicSystemService.deletePatient(currPatient.getCredentials());
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Paciente eliminado exitosamente",
+                    "Éxito",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+                this.dispose();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Error al eliminar el paciente: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+                );
+            }
+        }
+    }//GEN-LAST:event_jbtnEliminarActionPerformed
 
     /**
      * @param args the command line arguments

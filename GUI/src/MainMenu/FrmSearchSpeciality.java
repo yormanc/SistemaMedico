@@ -1,53 +1,35 @@
 import javax.swing.*;
 import Services.MedicSystemService;
 import models.Speciality;
-import repositories.SpecialityRepository;
 
 /**
  * Formulario de búsqueda de especialidades
- * Patrón igual a FrmSearch de pacientes
  */
 public class FrmSearchSpeciality extends javax.swing.JFrame {
 
-    private final SpecialityRepository specialityRepo;
     private final MedicSystemService medicService;
     
-    /**
-     * Constructor por defecto
-     */
     public FrmSearchSpeciality() {
-        initComponents();
         this.medicService = new MedicSystemService();
-        // ✅ Obtener el repositorio desde el servicio compartido
-        try {
-            this.specialityRepo = (SpecialityRepository) medicService.getClass()
-                .getDeclaredField("specialityRepository").get(medicService);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al obtener repositorio de especialidades", e);
-        }
+        initComponents();
+        setLocationRelativeTo(null);
     }
     
-    /**
-     * Constructor con inyección de dependencias
-     */
     public FrmSearchSpeciality(MedicSystemService medicService) {
-        initComponents();
         this.medicService = medicService;
-        // ✅ Obtener el repositorio desde el servicio compartido
-        try {
-            this.specialityRepo = (SpecialityRepository) medicService.getClass()
-                .getDeclaredField("specialityRepository").get(medicService);
-        } catch (Exception e) {
-            throw new RuntimeException("Error al obtener repositorio de especialidades", e);
-        }
+        initComponents();
+        setLocationRelativeTo(null);
     }
 
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelMain = new javax.swing.JPanel();
         jlblTitulo = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jPanelSearch = new javax.swing.JPanel();
         jlblId = new javax.swing.JLabel();
         jtextId = new javax.swing.JTextField();
+        jPanelButtons = new javax.swing.JPanel();
         jbtnBuscarModificar = new javax.swing.JButton();
         jbtnBuscarEliminar = new javax.swing.JButton();
         jbtnCancelar = new javax.swing.JButton();
@@ -56,159 +38,213 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
         setTitle("Buscar Especialidad");
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(245, 245, 245));
+        jPanelMain.setBackground(new java.awt.Color(245, 245, 245));
+        jPanelMain.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
-        jlblTitulo.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24));
+        jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 26));
         jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("BUSCAR ESPECIALIDAD");
+        jlblTitulo.setText("🔍 BUSCAR ESPECIALIDAD");
 
-        jlblId.setText("   ID de Especialidad");
-        jlblId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        // Panel de búsqueda
+        jPanelSearch.setBackground(Color.WHITE);
+        jPanelSearch.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(20, 20, 20, 20)
+        ));
 
-        jbtnBuscarModificar.setText("Buscar y Modificar");
-        jbtnBuscarModificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarModificarActionPerformed(evt);
-            }
-        });
+        jlblId.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jlblId.setForeground(new java.awt.Color(52, 73, 94));
+        jlblId.setText("ID de Especialidad:");
 
-        jbtnBuscarEliminar.setText("Buscar y Eliminar");
-        jbtnBuscarEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnBuscarEliminarActionPerformed(evt);
-            }
-        });
+        jtextId.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jtextId.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
+            BorderFactory.createEmptyBorder(5, 10, 5, 10)
+        ));
+        jtextId.setToolTipText("Ingrese el ID de la especialidad a buscar");
 
-        jbtnCancelar.setText("Cancelar");
-        jbtnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbtnCancelarActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jlblId, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jbtnBuscarModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jbtnBuscarEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+        javax.swing.GroupLayout jPanelSearchLayout = new javax.swing.GroupLayout(jPanelSearch);
+        jPanelSearch.setLayout(jPanelSearchLayout);
+        jPanelSearchLayout.setHorizontalGroup(
+            jPanelSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlblId)
+            .addComponent(jtextId, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addComponent(jlblTitulo)
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlblId)
-                    .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbtnBuscarModificar)
-                    .addComponent(jbtnBuscarEliminar))
-                .addGap(26, 26, 26)
-                .addComponent(jbtnCancelar)
-                .addContainerGap(30, Short.MAX_VALUE))
+        jPanelSearchLayout.setVerticalGroup(
+            jPanelSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelSearchLayout.createSequentialGroup()
+                .addComponent(jlblId)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jlblTitulo.getAccessibleContext().setAccessibleParent(jlblTitulo);
-        jlblId.getAccessibleContext().setAccessibleParent(jlblId);
-        jtextId.getAccessibleContext().setAccessibleDescription("");
-        jtextId.getAccessibleContext().setAccessibleParent(jlblId);
-        jbtnBuscarModificar.getAccessibleContext().setAccessibleParent(jbtnBuscarModificar);
-        jbtnCancelar.getAccessibleContext().setAccessibleParent(jbtnCancelar);
-        jbtnBuscarEliminar.getAccessibleContext().setAccessibleParent(jbtnBuscarEliminar);
+        // Panel de botones
+        jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
+
+        jbtnBuscarModificar.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jbtnBuscarModificar.setText("✏️ Buscar y Modificar");
+        jbtnBuscarModificar.setBackground(new java.awt.Color(52, 152, 219));
+        jbtnBuscarModificar.setForeground(Color.WHITE);
+        jbtnBuscarModificar.setFocusPainted(false);
+        jbtnBuscarModificar.setBorderPainted(false);
+        jbtnBuscarModificar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnBuscarModificar.setToolTipText("Buscar especialidad para modificar");
+        jbtnBuscarModificar.addActionListener(evt -> jbtnBuscarModificarActionPerformed(evt));
+        jbtnBuscarModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnBuscarModificar.setBackground(new java.awt.Color(41, 128, 185));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnBuscarModificar.setBackground(new java.awt.Color(52, 152, 219));
+            }
+        });
+
+        jbtnBuscarEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jbtnBuscarEliminar.setText("🗑️ Buscar y Eliminar");
+        jbtnBuscarEliminar.setBackground(new java.awt.Color(231, 76, 60));
+        jbtnBuscarEliminar.setForeground(Color.WHITE);
+        jbtnBuscarEliminar.setFocusPainted(false);
+        jbtnBuscarEliminar.setBorderPainted(false);
+        jbtnBuscarEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnBuscarEliminar.setToolTipText("Buscar especialidad para eliminar");
+        jbtnBuscarEliminar.addActionListener(evt -> jbtnBuscarEliminarActionPerformed(evt));
+        jbtnBuscarEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnBuscarEliminar.setBackground(new java.awt.Color(192, 57, 43));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnBuscarEliminar.setBackground(new java.awt.Color(231, 76, 60));
+            }
+        });
+
+        jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setBackground(new java.awt.Color(189, 195, 199));
+        jbtnCancelar.setForeground(new java.awt.Color(52, 73, 94));
+        jbtnCancelar.setFocusPainted(false);
+        jbtnCancelar.setBorderPainted(false);
+        jbtnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        jbtnCancelar.addActionListener(evt -> dispose());
+        jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jbtnCancelar.setBackground(new java.awt.Color(149, 165, 166));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jbtnCancelar.setBackground(new java.awt.Color(189, 195, 199));
+            }
+        });
+
+        javax.swing.GroupLayout jPanelButtonsLayout = new javax.swing.GroupLayout(jPanelButtons);
+        jPanelButtons.setLayout(jPanelButtonsLayout);
+        jPanelButtonsLayout.setHorizontalGroup(
+            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jbtnBuscarModificar, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
+            .addComponent(jbtnBuscarEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jbtnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanelButtonsLayout.setVerticalGroup(
+            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelButtonsLayout.createSequentialGroup()
+                .addComponent(jbtnBuscarModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jbtnBuscarEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        // Layout principal
+        javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
+        jPanelMain.setLayout(jPanelMainLayout);
+        jPanelMainLayout.setHorizontalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jlblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jSeparator1)
+            .addGroup(jPanelMainLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jPanelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
+        jPanelMainLayout.setVerticalGroup(
+            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMainLayout.createSequentialGroup()
+                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanelSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }
 
-    private void jbtnCancelarActionPerformed(java.awt.event.ActionEvent evt) {
-        this.dispose();
-    }
-
     private void jbtnBuscarModificarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener y validar el campo
             String idInput = jtextId.getText().trim();
             
-            // Validar que no esté vacío
             if (idInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "Debe ingresar un ID de especialidad", 
+                    "⚠️ Debe ingresar un ID de especialidad", 
                     "Campo Vacío", 
                     JOptionPane.WARNING_MESSAGE);
+                jtextId.requestFocus();
                 return;
             }
             
-            // Parsear el ID
             int id = Integer.parseInt(idInput);
             
-            // Validar que sea positivo
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, 
-                    "El ID debe ser un número positivo", 
+                    "⚠️ El ID debe ser un número positivo", 
                     "ID Inválido", 
                     JOptionPane.WARNING_MESSAGE);
+                jtextId.selectAll();
+                jtextId.requestFocus();
                 return;
             }
             
-            // Buscar la especialidad
-            Speciality speciality = specialityRepo.searchById(id);
+            // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
+            Speciality speciality = medicService.findSpecialityById(id);
             
             if (speciality != null) {
-                // Abrir FrmModifySpeciality con la especialidad encontrada
                 FrmModifySpeciality frmModify = new FrmModifySpeciality(speciality, medicService);
                 frmModify.setVisible(true);
-                frmModify.setLocationRelativeTo(this); // Centrar respecto a esta ventana
-                this.dispose(); // Cerrar FrmSearchSpeciality
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
-                    "No se encontró ninguna especialidad con el ID: " + id, 
-                    "Especialidad No Encontrada", 
+                    "❌ No se encontró especialidad con ID: " + id, 
+                    "No Encontrada", 
                     JOptionPane.INFORMATION_MESSAGE);
-                jtextId.selectAll(); // Seleccionar el texto para facilitar corrección
+                jtextId.selectAll();
                 jtextId.requestFocus();
             }
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "El ID debe contener solo números válidos (sin puntos ni comas)", 
+                "❌ El ID debe ser un número válido", 
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
             jtextId.selectAll();
             jtextId.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "Error al buscar la especialidad: " + e.getMessage(), 
+                "❌ Error al buscar: " + e.getMessage(), 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -217,44 +253,41 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
     
     private void jbtnBuscarEliminarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener y validar el campo
             String idInput = jtextId.getText().trim();
             
-            // Validar que no esté vacío
             if (idInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "Debe ingresar un ID de especialidad", 
+                    "⚠️ Debe ingresar un ID de especialidad", 
                     "Campo Vacío", 
                     JOptionPane.WARNING_MESSAGE);
+                jtextId.requestFocus();
                 return;
             }
             
-            // Parsear el ID
             int id = Integer.parseInt(idInput);
             
-            // Validar que sea positivo
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, 
-                    "El ID debe ser un número positivo", 
+                    "⚠️ El ID debe ser un número positivo", 
                     "ID Inválido", 
                     JOptionPane.WARNING_MESSAGE);
+                jtextId.selectAll();
+                jtextId.requestFocus();
                 return;
             }
             
-            // Buscar la especialidad
-            Speciality speciality = specialityRepo.searchById(id);
+            // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
+            Speciality speciality = medicService.findSpecialityById(id);
             
             if (speciality != null) {
-                // Abrir FrmDeleteSpeciality con la especialidad encontrada
-                FrmDeleteSpeciality frmDelete = new FrmDeleteSpeciality(medicService, specialityRepo);
-                frmDelete.setSpecialityToDelete(speciality); // Cargar la especialidad encontrada
+                FrmDeleteSpeciality frmDelete = new FrmDeleteSpeciality();
+                frmDelete.setSpecialityToDelete(speciality);
                 frmDelete.setVisible(true);
-                frmDelete.setLocationRelativeTo(this); // Centrar respecto a esta ventana
-                this.dispose(); // Cerrar FrmSearchSpeciality
+                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
-                    "No se encontró ninguna especialidad con el ID: " + id, 
-                    "Especialidad No Encontrada", 
+                    "❌ No se encontró especialidad con ID: " + id, 
+                    "No Encontrada", 
                     JOptionPane.INFORMATION_MESSAGE);
                 jtextId.selectAll();
                 jtextId.requestFocus();
@@ -262,57 +295,28 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "El ID debe contener solo números válidos (sin puntos ni comas)", 
+                "❌ El ID debe ser un número válido", 
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
             jtextId.selectAll();
             jtextId.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "Error al buscar la especialidad: " + e.getMessage(), 
+                "❌ Error al buscar: " + e.getMessage(), 
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmSearchSpeciality.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmSearchSpeciality.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmSearchSpeciality.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmSearchSpeciality.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmSearchSpeciality().setVisible(true);
-            }
-        });
-    }
-
-    // Variables declaration - do not modify
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelMain;
+    private javax.swing.JPanel jPanelSearch;
+    private javax.swing.JPanel jPanelButtons;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JButton jbtnBuscarEliminar;
     private javax.swing.JButton jbtnBuscarModificar;
     private javax.swing.JButton jbtnCancelar;
     private javax.swing.JLabel jlblId;
     private javax.swing.JLabel jlblTitulo;
     private javax.swing.JTextField jtextId;
-    // End of variables declaration
 }

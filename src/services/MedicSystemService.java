@@ -329,6 +329,7 @@ public class MedicSystemService {
             return added;
         } catch (Exception e) {
             System.err.println("❌ Error al agregar especialidad: " + e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
