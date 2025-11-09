@@ -1,12 +1,12 @@
-package services;
+package services.auth;
 
-import interfaces.IAuthenticationService;
-import interfaces.IRepositoryUser;
-import interfaces.IRepositoryDoctor;
-import interfaces.IRepositoryPatient;
-import interfaces.ISessionManager;
-import interfaces.IPasswordService;
-import interfaces.IUserRegistrationService;
+import interfaces.repositories.IRepositoryDoctor;
+import interfaces.repositories.IRepositoryPatient;
+import interfaces.repositories.IRepositoryUser;
+import interfaces.services.IAuthenticationService;
+import interfaces.services.IPasswordService;
+import interfaces.services.ISessionManager;
+import interfaces.services.IUserRegistrationService;
 import models.User;
 import models.Credentials;
 import models.Doctor;
@@ -82,18 +82,18 @@ public class AuthenticationService implements IAuthenticationService {
             try {
                 user = userRepository.searchById(id);
             } catch (Exception e) {
-                System.err.println("❌ Usuario no encontrado con ID: " + id);
+                System.err.println("Usuario no encontrado con ID: " + id);
                 return null;
             }
             
             if (user == null) {
-                System.err.println("❌ Usuario no encontrado con ID: " + id);
+                System.err.println("Usuario no encontrado con ID: " + id);
                 return null;
             }
             
             // Verificar contraseña
             if (!user.authenticate(password)) {
-                System.err.println("❌ Credenciales inválidas para ID: " + id);
+                System.err.println("Credenciales inválidas para ID: " + id);
                 return null;
             }
             
@@ -102,15 +102,15 @@ public class AuthenticationService implements IAuthenticationService {
                 sessionManager.setCurrentUser(user);
                 return user;
             } catch (AuthenticationException e) {
-                System.err.println("❌ " + e.getMessage());
+                System.err.println(" " + e.getMessage());
                 return null;
             }
             
         } catch (ValidationException e) {
-            System.err.println("❌ Validación fallida: " + e.getMessage());
+            System.err.println("Validación fallida: " + e.getMessage());
             return null;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado en login: " + e.getMessage());
+            System.err.println("Error inesperado en login: " + e.getMessage());
             return null;
         }
     }
@@ -127,7 +127,7 @@ public class AuthenticationService implements IAuthenticationService {
             
             // Verificar que sea el usuario actual
             if (!sessionManager.isCurrentUser(id)) {
-                System.err.println("❌ El ID no corresponde al usuario autenticado");
+                System.err.println("El ID no corresponde al usuario autenticado");
                 return false;
             }
             
@@ -136,10 +136,10 @@ public class AuthenticationService implements IAuthenticationService {
             return true;
             
         } catch (ValidationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error en logout: " + e.getMessage());
+            System.err.println("Error en logout: " + e.getMessage());
             return false;
         }
     }
@@ -153,10 +153,10 @@ public class AuthenticationService implements IAuthenticationService {
         try {
             return registrationService.registerDoctor(doctor, credentials);
         } catch (RegistrationException | ValidationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado al registrar doctor: " + e.getMessage());
+            System.err.println("Error inesperado al registrar doctor: " + e.getMessage());
             return false;
         }
     }
@@ -170,10 +170,10 @@ public class AuthenticationService implements IAuthenticationService {
         try {
             return registrationService.registerPatient(patient, credentials);
         } catch (RegistrationException | ValidationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado al registrar paciente: " + e.getMessage());
+            System.err.println("Error inesperado al registrar paciente: " + e.getMessage());
             return false;
         }
     }
@@ -187,10 +187,10 @@ public class AuthenticationService implements IAuthenticationService {
         try {
             return registrationService.registerUser(user, credentials);
         } catch (RegistrationException | ValidationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado al registrar usuario: " + e.getMessage());
+            System.err.println("Error inesperado al registrar usuario: " + e.getMessage());
             return false;
         }
     }
@@ -204,10 +204,10 @@ public class AuthenticationService implements IAuthenticationService {
         try {
             return passwordService.changePassword(userId, oldPassword, newPassword);
         } catch (PasswordException | AuthenticationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             return false;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado al cambiar contraseña: " + e.getMessage());
+            System.err.println("Error inesperado al cambiar contraseña: " + e.getMessage());
             return false;
         }
     }

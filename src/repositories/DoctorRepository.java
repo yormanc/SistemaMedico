@@ -1,7 +1,8 @@
 package repositories;
 
 import java.util.ArrayList;
-import interfaces.IRepositoryDoctor;
+
+import interfaces.repositories.IRepositoryDoctor;
 import models.Doctor;
 
 

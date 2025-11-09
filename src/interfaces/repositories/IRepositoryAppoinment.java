@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.repositories;
 import java.util.ArrayList;
 
 import enums.*;
@@ -12,11 +12,11 @@ public interface IRepositoryAppoinment extends IRepository<Appointment> {
     boolean update(Appointment appointment);
     boolean remove(Appointment appointment);
     ArrayList<Appointment> getAll(); 
-    ArrayList<Appointment> getByStatus(AppoinmnetStatus status);
+    ArrayList<Appointment> getByStatus(AppointmentStatus status);
     ArrayList<Appointment> getByPatient(Patient patient);   
     ArrayList<Appointment> getByDoctor(Doctor doctor);
-    ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppoinmnetStatus status);
-    ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppoinmnetStatus status);
+    ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppointmentStatus status);
+    ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppointmentStatus status);
 
 
 }

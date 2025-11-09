@@ -1,7 +1,8 @@
 package repositories;
 
 import java.util.ArrayList;
-import interfaces.IRepositorySpeciality;
+
+import interfaces.repositories.IRepositorySpeciality;
 import models.Speciality;
 
 public class SpecialityRepository implements IRepositorySpeciality {

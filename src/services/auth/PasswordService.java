@@ -1,7 +1,7 @@
-package services;
+package services.auth;
 
-import interfaces.IPasswordService;
-import interfaces.IRepositoryUser;
+import interfaces.repositories.IRepositoryUser;
+import interfaces.services.IPasswordService;
 import models.User;
 import exceptions.PasswordException;
 import exceptions.AuthenticationException;

@@ -1,7 +1,8 @@
 package repositories;
 
 import java.util.ArrayList;
-import interfaces.IRepositoryPatient;
+
+import interfaces.repositories.IRepositoryPatient;
 import models.Patient;
 
 public class PatientRepository implements IRepositoryPatient {

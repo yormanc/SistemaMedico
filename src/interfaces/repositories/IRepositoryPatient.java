@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.repositories;
 import models.Patient;
 
 

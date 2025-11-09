@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.repositories;
 import models.Speciality;
 public interface IRepositorySpeciality extends IRepository<Speciality> {
     boolean add(Speciality speciality);
