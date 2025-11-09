@@ -1,4 +1,4 @@
-package interfaces;
+package interfaces.repositories;
 import models.User;
 
 public interface IRepositoryUser extends IRepository<User> {

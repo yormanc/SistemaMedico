@@ -1,6 +1,6 @@
 package enums;
 
-public enum AppoinmnetStatus {
+public enum AppointmentStatus {
     SCHEDULED,
     COMPLETED,
     CANCELED

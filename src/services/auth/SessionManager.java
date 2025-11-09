@@ -1,8 +1,8 @@
-package services;
+package services.auth;
 
-import interfaces.ISessionManager;
 import models.User;
 import exceptions.AuthenticationException;
+import interfaces.services.ISessionManager;
 
 /**
  * Gestor de sesión de usuario

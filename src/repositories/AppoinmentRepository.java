@@ -2,9 +2,9 @@ package repositories;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import enums.AppoinmnetStatus;
+import enums.AppointmentStatus;
+import interfaces.repositories.IRepositoryAppoinment;
 import models.Doctor;
-import interfaces.IRepositoryAppoinment;
 import models.Patient;
 import models.Appointment;
 import java.time.LocalDateTime;  
@@ -128,7 +128,7 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
     }
 
     @Override
-    public ArrayList<Appointment> getByStatus(AppoinmnetStatus status) {
+    public ArrayList<Appointment> getByStatus(AppointmentStatus status) {
        try {
             if (status == null) {
                 throw new Exception("El estado no puede ser nulo");
@@ -195,7 +195,7 @@ public boolean update(Appointment updatedAppointment) {
     }
 
     @Override
-    public ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppoinmnetStatus status){
+    public ArrayList<Appointment> getByDoctorAndStatus(Doctor doctor,AppointmentStatus status){
         try {
             if (doctor == null || status == null) {
                 throw new Exception("El doctor o el estado no puede ser nulo");
@@ -214,7 +214,7 @@ public boolean update(Appointment updatedAppointment) {
     }
 
     @Override
-    public ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppoinmnetStatus status){
+    public ArrayList<Appointment> getByPatientAndStatus(Patient patient,AppointmentStatus status){
         try {
             if (patient == null || status == null) {
                 throw new Exception("El paciente o el estado no puede ser nulo");

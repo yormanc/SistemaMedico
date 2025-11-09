@@ -1,11 +1,12 @@
-package services;
+package services.auth;
 
-import interfaces.IUserRegistrationService;
-import interfaces.IUserRegistrationStrategy;
-import interfaces.IRepositoryUser;
-import interfaces.IRepositoryDoctor;
-import interfaces.IRepositoryPatient;
+import interfaces.repositories.IRepositoryDoctor;
+import interfaces.repositories.IRepositoryPatient;
+import interfaces.repositories.IRepositoryUser;
+import interfaces.services.IUserRegistrationService;
+import interfaces.services.IUserRegistrationStrategy;
 import models.User;
+import services.strategies.UserRegistrationStrategyFactory;
 import models.Doctor;
 import models.Patient;
 import models.Credentials;
