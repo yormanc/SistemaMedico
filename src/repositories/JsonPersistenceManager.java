@@ -12,27 +12,22 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 /**
- * Gestor de persistencia JSON para el sistema médico
- * ACTUALIZADO: Usa DTOs externos del paquete dto/
+ * Gestor de persistencia JSON MEJORADO
+ * Ahora sincroniza correctamente los IDs auto-incrementales
  */
 public class JsonPersistenceManager {
 
     private final Gson gson;
 
     public JsonPersistenceManager() {
-        // Configurar Gson con adaptador para LocalDateTime
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .setPrettyPrinting()
                 .create();
 
-        // Crear directorio de datos si no existe
         createDataDirectory();
     }
 
-    /**
-     * Crea el directorio de datos si no existe
-     */
     private void createDataDirectory() {
         try {
             Path dataPath = Paths.get(Constants.DATA_DIR);
@@ -47,12 +42,8 @@ public class JsonPersistenceManager {
 
     // ==================== PACIENTES ====================
 
-    /**
-     * Guarda la lista de pacientes en JSON
-     */
     public void savePatients(List<Patient> patients) {
         try {
-            // Convertir pacientes a DTOs
             List<PatientDTO> patientDTOs = new ArrayList<>();
             for (Patient patient : patients) {
                 patientDTOs.add(PatientDTO.fromPatient(patient));
@@ -66,9 +57,6 @@ public class JsonPersistenceManager {
         }
     }
 
-    /**
-     * Carga la lista de pacientes desde JSON
-     */
     public List<Patient> loadPatients() {
         List<Patient> patients = new ArrayList<>();
         try {
@@ -96,12 +84,8 @@ public class JsonPersistenceManager {
 
     // ==================== DOCTORES ====================
 
-    /**
-     * Guarda la lista de doctores en JSON
-     */
     public void saveDoctors(List<Doctor> doctors) {
         try {
-            // Convertir doctores a DTOs
             List<DoctorDTO> doctorDTOs = new ArrayList<>();
             for (Doctor doctor : doctors) {
                 doctorDTOs.add(DoctorDTO.fromDoctor(doctor));
@@ -115,9 +99,6 @@ public class JsonPersistenceManager {
         }
     }
 
-    /**
-     * Carga la lista de doctores desde JSON
-     */
     public List<Doctor> loadDoctors(Map<Integer, Speciality> specialitiesMap) {
         List<Doctor> doctors = new ArrayList<>();
         try {
@@ -145,9 +126,6 @@ public class JsonPersistenceManager {
 
     // ==================== ESPECIALIDADES ====================
 
-    /**
-     * Guarda la lista de especialidades en JSON
-     */
     public void saveSpecialities(List<Speciality> specialities) {
         try {
             String json = gson.toJson(specialities);
@@ -158,9 +136,6 @@ public class JsonPersistenceManager {
         }
     }
 
-    /**
-     * Carga la lista de especialidades desde JSON
-     */
     public List<Speciality> loadSpecialities() {
         List<Speciality> specialities = new ArrayList<>();
         try {
@@ -181,14 +156,10 @@ public class JsonPersistenceManager {
         return specialities;
     }
 
-    // ==================== CITAS ====================
+    // ==================== CITAS (MEJORADO) ====================
 
-    /**
-     * Guarda la lista de citas en JSON
-     */
     public void saveAppointments(List<Appointment> appointments) {
         try {
-            // Convertir citas a DTOs
             List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
             for (Appointment appointment : appointments) {
                 appointmentDTOs.add(AppointmentDTO.fromAppointment(appointment));
@@ -203,11 +174,13 @@ public class JsonPersistenceManager {
     }
 
     /**
-     * Carga la lista de citas desde JSON
+     * MEJORADO: Ahora sincroniza el contador de IDs automáticamente
      */
     public List<Appointment> loadAppointments(Map<Integer, Patient> patientsMap,
                                               Map<Integer, Doctor> doctorsMap) {
         List<Appointment> appointments = new ArrayList<>();
+        int maxId = 0;
+        
         try {
             if (!Files.exists(Paths.get(Constants.APPOINTMENTS_FILE))) {
                 System.out.println("No existe archivo de citas, iniciando vacío");
@@ -219,15 +192,118 @@ public class JsonPersistenceManager {
                     new TypeToken<List<AppointmentDTO>>(){}.getType());
 
             if (appointmentDTOs != null) {
+                // Primero, detectar duplicados por ID
+                Set<Integer> seenIds = new HashSet<>();
+                List<AppointmentDTO> uniqueDTOs = new ArrayList<>();
+                
                 for (AppointmentDTO dto : appointmentDTOs) {
-                    appointments.add(dto.toAppointment(patientsMap, doctorsMap));
+                    if (!seenIds.contains(dto.getAppointmentId())) {
+                        seenIds.add(dto.getAppointmentId());
+                        uniqueDTOs.add(dto);
+                        
+                        // Rastrear el ID más alto
+                        if (dto.getAppointmentId() > maxId) {
+                            maxId = dto.getAppointmentId();
+                        }
+                    } else {
+                        System.out.println("⚠️  Cita duplicada detectada y omitida - ID: " + 
+                                         dto.getAppointmentId());
+                    }
+                }
+                
+                // Convertir DTOs únicos a Appointments
+                for (AppointmentDTO dto : uniqueDTOs) {
+                    try {
+                        Appointment appointment = dto.toAppointment(patientsMap, doctorsMap);
+                        appointments.add(appointment);
+                    } catch (Exception e) {
+                        System.err.println("⚠️  Error al cargar cita ID " + 
+                                         dto.getAppointmentId() + ": " + e.getMessage());
+                    }
                 }
             }
 
+            // CRÍTICO: Sincronizar el contador de IDs
+            if (maxId > 0) {
+                // Usar reflexión para actualizar el nextId estático
+                syncAppointmentIdCounter(maxId + 1);
+                System.out.println("🔄 Contador de IDs sincronizado. Próximo ID: " + (maxId + 1));
+            }
+
             System.out.println("Citas cargadas: " + appointments.size());
+            
         } catch (IOException e) {
             System.err.println("Error al cargar citas: " + e.getMessage());
         }
+        
         return appointments;
+    }
+
+    /**
+     * NUEVO: Sincroniza el contador estático de IDs de Appointment
+     */
+    private void syncAppointmentIdCounter(int nextId) {
+        try {
+            // Usar el método estático de Appointment para resetear
+            // Primero resetear a 1
+            Appointment.resetIdCounter();
+            
+            // Luego crear citas dummy para llegar al ID correcto
+            for (int i = 1; i < nextId; i++) {
+                new Appointment(); // Esto incrementa el contador interno
+            }
+            
+            System.out.println("✅ Contador de citas sincronizado exitosamente");
+            
+        } catch (Exception e) {
+            System.err.println("⚠️  Advertencia: No se pudo sincronizar el contador de IDs: " + 
+                             e.getMessage());
+        }
+    }
+
+    /**
+     * NUEVO: Limpia citas duplicadas de un archivo
+     */
+    public void cleanDuplicateAppointments() {
+        try {
+            if (!Files.exists(Paths.get(Constants.APPOINTMENTS_FILE))) {
+                return;
+            }
+
+            String json = Files.readString(Paths.get(Constants.APPOINTMENTS_FILE));
+            List<AppointmentDTO> appointmentDTOs = gson.fromJson(json,
+                    new TypeToken<List<AppointmentDTO>>(){}.getType());
+
+            if (appointmentDTOs == null || appointmentDTOs.isEmpty()) {
+                return;
+            }
+
+            // Eliminar duplicados manteniendo el primero
+            Set<Integer> seenIds = new HashSet<>();
+            List<AppointmentDTO> cleanDTOs = new ArrayList<>();
+            int duplicatesRemoved = 0;
+
+            for (AppointmentDTO dto : appointmentDTOs) {
+                if (!seenIds.contains(dto.getAppointmentId())) {
+                    seenIds.add(dto.getAppointmentId());
+                    cleanDTOs.add(dto);
+                } else {
+                    duplicatesRemoved++;
+                }
+            }
+
+            if (duplicatesRemoved > 0) {
+                // Guardar archivo limpio
+                String cleanJson = gson.toJson(cleanDTOs);
+                Files.writeString(Paths.get(Constants.APPOINTMENTS_FILE), cleanJson);
+                System.out.println("🧹 Limpieza completada: " + duplicatesRemoved + 
+                                 " citas duplicadas eliminadas");
+            } else {
+                System.out.println("✅ No se encontraron citas duplicadas");
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error al limpiar duplicados: " + e.getMessage());
+        }
     }
 }
