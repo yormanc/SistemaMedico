@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -77,22 +75,23 @@ public class FrmViewHistory extends javax.swing.JFrame {
 
         // Combinar búsqueda e información
         JPanel jPanelTop = new JPanel(new BorderLayout());
+        jPanelTop.setBackground(new Color(245, 245, 245));
         jPanelTop.add(jPanelSearch, BorderLayout.NORTH);
         jPanelTop.add(jPanelInfo, BorderLayout.CENTER);
         jPanelTop.add(new JSeparator(), BorderLayout.SOUTH);
-        jPanelMain.add(jPanelTop, BorderLayout.CENTER);
         
         // --- Tabla de Historial ---
         jTableHistory = new JTable();
         jTableHistory.setRowHeight(25);
         jTableHistory.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        jTableHistory.setDefaultEditor(Object.class, null); // Tabla no editable
+        jTableHistory.setDefaultEditor(Object.class, null);
         
         JScrollPane jScrollPaneTable = new JScrollPane(jTableHistory);
         jScrollPaneTable.setBorder(BorderFactory.createTitledBorder("Citas Históricas"));
         
-        // Ajustar el layout principal para incluir la tabla
+        // Ajustar el layout principal
         JPanel jPanelContent = new JPanel(new BorderLayout(10, 10));
+        jPanelContent.setBackground(new Color(245, 245, 245));
         jPanelContent.add(jPanelTop, BorderLayout.NORTH);
         jPanelContent.add(jScrollPaneTable, BorderLayout.CENTER);
         jPanelMain.add(jPanelContent, BorderLayout.CENTER);
@@ -119,43 +118,55 @@ public class FrmViewHistory extends javax.swing.JFrame {
      */
     private void jbtnSearchActionPerformed() {
         jlblTargetName.setText("---");
-        int id;
+        
         try {
-            id = Integer.parseInt(jtfTargetId.getText().trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Por favor, ingrese un ID válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+            int id = Integer.parseInt(jtfTargetId.getText().trim());
+            List<Appointment> history = null;
+            String name = "No encontrado";
 
-        List<Appointment> history = null;
-        String name = "No encontrado";
-
-        if (targetRole == UserRole.PATIENT) {
-            Patient patient = medicService.getPatientRepository().searchById(id);
-            if (patient != null) {
-                history = medicService.viewPatientHistory(patient);
-                name = patient.getFullName();
+            if (targetRole == UserRole.PATIENT) {
+                // CORREGIDO: usar getPatientRepository()
+                Patient patient = medicService.getPatientRepository().searchById(id);
+                if (patient != null) {
+                    history = medicService.viewPatientHistory(patient);
+                    name = patient.getFullName();
+                }
+            } else if (targetRole == UserRole.DOCTOR) {
+                // CORREGIDO: usar getDoctorRepository()
+                Doctor doctor = medicService.getDoctorRepository().searchById(id);
+                if (doctor != null) {
+                    history = medicService.viewDoctorHistory(doctor);
+                    name = doctor.getFullName();
+                }
             }
-        } else if (targetRole == UserRole.DOCTOR) {
-            Doctor doctor = medicService.getDoctorRepository().searchById(id);
-            if (doctor != null) {
-                history = medicService.viewDoctorHistory(doctor);
-                name = doctor.getFullName();
-            }
-        }
-        
-        jlblTargetName.setText(name);
-        
-        if (history != null) {
-            loadTable(history);
-            if (history.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "ℹ️ " + name + " no tiene citas registradas.", "Historial Vacío", JOptionPane.INFORMATION_MESSAGE);
+            
+            jlblTargetName.setText(name);
+            
+            if (history != null) {
+                loadTable(history);
+                if (history.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, 
+                        " " + name + " no tiene citas registradas.", 
+                        "Historial Vacío", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, 
+                        "Historial de citas cargado para " + name + ".", 
+                        "Búsqueda Exitosa", 
+                        JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "✅ Historial de citas cargado para " + name + ".", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                loadTable(List.of());
+                JOptionPane.showMessageDialog(this, 
+                    "ID " + id + " de " + targetRole.toString() + " no encontrado.", 
+                    "Error de Búsqueda", 
+                    JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            loadTable(List.of()); // Vaciar la tabla
-            JOptionPane.showMessageDialog(this, "❌ ID " + id + " de " + targetRole.toString() + " no encontrado.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, ingrese un ID válido (número entero).", 
+                "Error de Entrada", 
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -182,7 +193,9 @@ public class FrmViewHistory extends javax.swing.JFrame {
         jTableHistory.getTableHeader().setReorderingAllowed(false);
         
         // Ajuste básico de columnas
-        jTableHistory.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTableHistory.getColumnModel().getColumn(1).setPreferredWidth(120);
+        if (jTableHistory.getColumnCount() > 0) {
+            jTableHistory.getColumnModel().getColumn(0).setPreferredWidth(50);
+            jTableHistory.getColumnModel().getColumn(1).setPreferredWidth(120);
+        }
     }
 }

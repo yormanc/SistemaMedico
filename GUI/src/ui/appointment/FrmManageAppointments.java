@@ -1,10 +1,9 @@
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import enumerations.AppoinmnetStatus;
+import enumerations.AppoinmnetStatus; // CORREGIDO: nombre correcto del enum
 import models.Appointment;
 import Services.MedicSystemService;
 
@@ -14,13 +13,13 @@ import Services.MedicSystemService;
 public class FrmManageAppointments extends javax.swing.JFrame {
 
     private final MedicSystemService medicService;
-    private Appointment currentAppointment = null; // Cita actualmente cargada
+    private Appointment currentAppointment = null;
     private final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     // Componentes del formulario
     private JTextField jtfAppointmentId;
     private JButton jbtnSearch;
-    private JComboBox<AppoinmnetStatus> jcbStatus;
+    private JComboBox<AppoinmnetStatus> jcbStatus; // CORREGIDO: tipo correcto
     private JTextArea jtaDiagnostic;
     private JLabel jlblPatientName;
     private JLabel jlblDoctorName;
@@ -34,7 +33,7 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Gestionar Citas Médicas");
-        setFieldsEditable(false); // Inicialmente, los campos están deshabilitados
+        setFieldsEditable(false);
     }
 
     private void initComponents() {
@@ -59,6 +58,8 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         jtfAppointmentId = new JTextField(10);
         jbtnSearch = new JButton("Buscar Cita");
         jbtnSearch.addActionListener(e -> jbtnSearchActionPerformed());
+        jbtnSearch.setBackground(new Color(52, 152, 219));
+        jbtnSearch.setForeground(Color.WHITE);
         
         jPanelSearch.add(new JLabel("ID de Cita:"));
         jPanelSearch.add(jtfAppointmentId);
@@ -129,9 +130,13 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         jPanelButtons.add(jbtnModify);
         
         // Armar el Main Panel
-        jPanelMain.add(jlblTitulo, BorderLayout.NORTH);
-        jPanelMain.add(jPanelSearch, BorderLayout.NORTH); // Reemplazamos el título por la búsqueda
-        jPanelMain.add(new JSeparator(), BorderLayout.CENTER);
+        JPanel jPanelTop = new JPanel(new BorderLayout());
+        jPanelTop.setBackground(new Color(245, 245, 245));
+        jPanelTop.add(jlblTitulo, BorderLayout.NORTH);
+        jPanelTop.add(new JSeparator(), BorderLayout.CENTER);
+        jPanelTop.add(jPanelSearch, BorderLayout.SOUTH);
+        
+        jPanelMain.add(jPanelTop, BorderLayout.NORTH);
         jPanelMain.add(jPanelDetails, BorderLayout.CENTER);
         jPanelMain.add(jPanelButtons, BorderLayout.SOUTH);
 
@@ -140,9 +145,6 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         pack();
     }
 
-    /**
-     * Habilita/Deshabilita los campos de modificación
-     */
     private void setFieldsEditable(boolean editable) {
         jcbStatus.setEnabled(editable);
         jtaDiagnostic.setEditable(editable);
@@ -151,9 +153,6 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         jbtnDelete.setEnabled(editable);
     }
     
-    /**
-     * Carga los datos de la cita en los campos
-     */
     private void loadAppointmentData(Appointment appointment) {
         if (appointment == null) {
             clearFields();
@@ -162,8 +161,10 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         }
         
         this.currentAppointment = appointment;
-        jlblPatientName.setText(appointment.getPatient().getFullName() + " (ID: " + appointment.getPatient().getCredentials().getId() + ")");
-        jlblDoctorName.setText(appointment.getDoctor().getFullName() + " (ID: " + appointment.getDoctor().getCredentials().getId() + ")");
+        jlblPatientName.setText(appointment.getPatient().getFullName() + 
+            " (ID: " + appointment.getPatient().getCredentials().getId() + ")");
+        jlblDoctorName.setText(appointment.getDoctor().getFullName() + 
+            " (ID: " + appointment.getDoctor().getCredentials().getId() + ")");
         jtfDateTime.setText(appointment.getDateTime().format(DATE_TIME_FORMATTER));
         jcbStatus.setSelectedItem(appointment.getStatus());
         jtaDiagnostic.setText(appointment.getDiagnostic());
@@ -171,9 +172,6 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         setFieldsEditable(true);
     }
 
-    /**
-     * Limpia todos los campos de detalle
-     */
     private void clearFields() {
         currentAppointment = null;
         jlblPatientName.setText("---");
@@ -186,67 +184,98 @@ public class FrmManageAppointments extends javax.swing.JFrame {
     // --- MANEJADORES DE ACCIONES ---
 
     private void jbtnSearchActionPerformed() {
+        clearFields();
+        setFieldsEditable(false);
+        
         try {
             int id = Integer.parseInt(jtfAppointmentId.getText().trim());
-            // Se asume que AppoinmentRepository tiene un método findById(int id)
-            Appointment foundAppointment = medicService.getAppointmentRepository().searchById(id); 
+            
+            // CORREGIDO: usar getAppointmentRepository()
+            Appointment foundAppointment = medicService.getAppointmentRepository().searchById(id);
 
             if (foundAppointment != null) {
                 loadAppointmentData(foundAppointment);
-                JOptionPane.showMessageDialog(this, "✅ Cita encontrada.", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Cita encontrada.", 
+                    "Búsqueda Exitosa", 
+                    JOptionPane.INFORMATION_MESSAGE);
             } else {
-                clearFields();
-                JOptionPane.showMessageDialog(this, "❌ Cita con ID " + id + " no encontrada.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Cita con ID " + id + " no encontrada.", 
+                    "Error de Búsqueda", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Por favor, ingrese un ID de cita válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Por favor, ingrese un ID de cita válido (número entero).", 
+                "Error de Entrada", 
+                JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void jbtnModifyActionPerformed() {
         if (currentAppointment == null) {
-            JOptionPane.showMessageDialog(this, "No hay una cita cargada para modificar.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "No hay una cita cargada para modificar.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         try {
-            // 1. Obtener nuevos valores
-            LocalDateTime newDateTime = LocalDateTime.parse(jtfDateTime.getText().trim(), DATE_TIME_FORMATTER);
+            // Obtener nuevos valores
+            LocalDateTime newDateTime = LocalDateTime.parse(
+                jtfDateTime.getText().trim(), DATE_TIME_FORMATTER);
             AppoinmnetStatus newStatus = (AppoinmnetStatus) jcbStatus.getSelectedItem();
             String newDiagnostic = jtaDiagnostic.getText().trim();
             
-            // 2. Actualizar el modelo (solo los campos modificables)
+            // Actualizar el modelo
             currentAppointment.setDateTime(newDateTime);
             currentAppointment.setStatus(newStatus);
-            currentAppointment.setDiagnostic(newDiagnostic); 
+            currentAppointment.setDiagnostic(newDiagnostic);
             
-            // 3. Llamar al servicio de actualización (se asume que update solo actualiza el registro en el repo)
-            boolean success = medicService.updateAppointment(currentAppointment, newStatus); 
+            // Llamar al servicio - CORREGIDO: usar updateAppointment con status
+            boolean success = medicService.updateAppointment(currentAppointment, newStatus);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, "✅ Cita modificada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                // Opcional: Recargar los datos para confirmar
+                JOptionPane.showMessageDialog(this, 
+                    "Cita modificada exitosamente.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
                 loadAppointmentData(currentAppointment);
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al modificar la cita en el sistema.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Error al modificar la cita en el sistema.", 
+                    "Error de Sistema", 
+                    JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (DateTimeParseException e) {
-             JOptionPane.showMessageDialog(this, "❌ Formato de Fecha/Hora inválido. Use YYYY-MM-DD HH:MM.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Formato de Fecha/Hora inválido. Use YYYY-MM-DD HH:MM.", 
+                "Error de Formato", 
+                JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "❌ Ocurrió un error inesperado al modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Ocurrió un error inesperado al modificar: " + e.getMessage(), 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
 
     private void jbtnDeleteActionPerformed() {
         if (currentAppointment == null) {
-            JOptionPane.showMessageDialog(this, "No hay una cita cargada para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "No hay una cita cargada para eliminar.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         int confirm = JOptionPane.showConfirmDialog(this, 
-            "⚠️ ¿Está seguro que desea eliminar la cita ID " + currentAppointment.getAppointmentId() + "? Esta acción es irreversible.", 
+            "¿Está seguro que desea eliminar la cita ID " + 
+            currentAppointment.getAppointmentId() + "?\nEsta acción es irreversible.", 
             "Confirmar Eliminación", 
             JOptionPane.YES_NO_OPTION, 
             JOptionPane.WARNING_MESSAGE);
@@ -255,12 +284,18 @@ public class FrmManageAppointments extends javax.swing.JFrame {
             boolean success = medicService.removeAppointment(currentAppointment);
             
             if (success) {
-                JOptionPane.showMessageDialog(this, "🗑️ Cita eliminada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Cita eliminada exitosamente.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
                 clearFields();
                 setFieldsEditable(false);
                 jtfAppointmentId.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al eliminar la cita.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Error al eliminar la cita.", 
+                    "Error de Sistema", 
+                    JOptionPane.ERROR_MESSAGE);
             }
         }
     }
