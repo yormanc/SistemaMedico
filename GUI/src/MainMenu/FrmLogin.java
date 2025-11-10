@@ -3,9 +3,10 @@
  * Formulario de Inicio de Sesión
  */
 import javax.swing.*;
-import java.awt.*;
-import services.MedicSystemService;
+
+
 import models.User;
+import Services.MedicSystemService;
 import enumerations.UserRole;
 
 /**
@@ -98,7 +99,7 @@ public class FrmLogin extends javax.swing.JFrame {
     /**
      * This method is called from within the constructor to initialize the form.
      */
-    @SuppressWarnings("unchecked")
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 

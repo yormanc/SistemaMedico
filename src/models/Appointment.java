@@ -1,6 +1,7 @@
 package models;
 import java.time.LocalDateTime;
-import enumerations.AppoinmnetStatus;
+
+import enums.AppointmentStatus;
 
 public class Appointment {
 
@@ -11,7 +12,7 @@ public class Appointment {
     private Patient patient;
     private Doctor doctor;
     private String diagnostic;
-    private AppoinmnetStatus status;
+    private AppointmentStatus status;
 
     // Constructor vacío - genera ID automáticamente
     public Appointment() {
@@ -24,12 +25,12 @@ public class Appointment {
         this.dateTime = dateTime;
         this.patient = patient;
         this.doctor = doctor;
-        this.status = AppoinmnetStatus.SCHEDULED;
+        this.status = AppointmentStatus.SCHEDULED;
         this.diagnostic = diagnostic;
     }
 
     // Constructor con todos los parámetros (para cargar datos existentes)
-    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic, AppoinmnetStatus status) {
+    public Appointment(int appointmentId, LocalDateTime dateTime, Patient patient, Doctor doctor, String diagnostic, AppointmentStatus status) {
         this.appointmentId = appointmentId;
         this.dateTime = dateTime;
         this.patient = patient;
@@ -71,11 +72,11 @@ public class Appointment {
         this.doctor = doctor;
     }
 
-    public AppoinmnetStatus getStatus() {
+    public AppointmentStatus getStatus() {
         return status;
     }
 
-    public void setStatus(AppoinmnetStatus status) {
+    public void setStatus(AppointmentStatus status) {
         this.status = status;
     }
 

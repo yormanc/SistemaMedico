@@ -2,7 +2,7 @@
     "java.project.sourcePaths": [
         "src",
         "GUI/src/PatientActions",
-        "GUI/src/MainMenu"
+        "GUI/src/DoctorActions"
     ],
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [

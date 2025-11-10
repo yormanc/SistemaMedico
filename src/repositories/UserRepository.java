@@ -1,7 +1,8 @@
 package repositories;
 
 import java.util.ArrayList;
-import interfaces.IRepositoryUser;
+
+import interfaces.repositories.IRepositoryUser;
 import models.User;
 
 public class UserRepository implements IRepositoryUser {

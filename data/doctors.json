@@ -1,0 +1,11 @@
+[
+  {
+    "fullName": "Santiago Acevedo",
+    "age": 40,
+    "email": "santiacevedo@udea.edu.co",
+    "id": 1122334455,
+    "password": "123456",
+    "role": "DOCTOR",
+    "specialityId": 123
+  }
+]

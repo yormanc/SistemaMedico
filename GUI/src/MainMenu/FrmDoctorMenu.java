@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import services.MedicSystemService;
+import Services.MedicSystemService;
 
 /**
  * Menú de gestión de doctores
@@ -15,7 +15,7 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    @SuppressWarnings("unchecked")
+
     private void initComponents() {
 
         jPanelMain = new javax.swing.JPanel();
@@ -101,20 +101,37 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
     }
 
     private void jbtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {
-        JOptionPane.showMessageDialog(this,
-            "Funcionalidad de agregar doctor próximamente",
-            "En desarrollo",
-            JOptionPane.INFORMATION_MESSAGE);
-        // TODO: Implementar FrmAddDoctor
-    }
+        try {
+            // Se asume que FrmAddDoctor está en el paquete 'ui' o importado correctamente
+            FrmAddDoctor frmAddDoctor = new FrmAddDoctor(medicService);
+            frmAddDoctor.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir el formulario para agregar doctor: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }   
+
+    // Fragmento de FrmDoctorMenu.java
+// ...
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        JOptionPane.showMessageDialog(this,
-            "Funcionalidad de buscar doctor próximamente",
-            "En desarrollo",
-            JOptionPane.INFORMATION_MESSAGE);
-        // TODO: Implementar FrmSearchDoctor
+        try {
+            // Abrir el formulario para buscar, modificar y eliminar doctor
+            FrmManageDoctor frmManageDoctor = new FrmManageDoctor(medicService);
+            frmManageDoctor.setVisible(true);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al abrir el módulo de Gestión de Doctores: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
     }
+    
+// ...
 
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
