@@ -30,7 +30,7 @@ public class SessionManager implements ISessionManager {
             }
             
             this.currentUser = user;
-            System.out.println("✅ Sesión iniciada: " + user.getFullName());
+            System.out.println(" Sesión iniciada: " + user.getFullName());
             
         } catch (AuthenticationException e) {
             throw e;
@@ -52,7 +52,7 @@ public class SessionManager implements ISessionManager {
     @Override
     public void clearSession() {
         if (currentUser != null) {
-            System.out.println("✅ Sesión cerrada: " + currentUser.getFullName());
+            System.out.println(" Sesión cerrada: " + currentUser.getFullName());
             currentUser = null;
         }
     }

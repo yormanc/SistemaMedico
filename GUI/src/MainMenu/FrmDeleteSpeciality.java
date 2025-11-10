@@ -88,7 +88,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
 
-        jbtnBuscar.setText("🔍 Buscar");
+        jbtnBuscar.setText(" Buscar");
         jbtnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 12));
         jbtnBuscar.setBackground(new java.awt.Color(52, 152, 219));
         jbtnBuscar.setForeground(Color.WHITE);
@@ -154,7 +154,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
         // Panel de botones
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
 
-        jbtnEliminar.setText("🗑️ Eliminar Especialidad");
+        jbtnEliminar.setText(" Eliminar Especialidad");
         jbtnEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jbtnEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jbtnEliminar.setForeground(Color.WHITE);
@@ -174,7 +174,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             }
         });
 
-        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setText(" Cancelar");
         jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jbtnCancelar.setBackground(new java.awt.Color(189, 195, 199));
         jbtnCancelar.setForeground(new java.awt.Color(52, 73, 94));
@@ -256,7 +256,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
             if (idInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ Debe ingresar un ID de especialidad", 
+                    "️ Debe ingresar un ID de especialidad",
                     "Campo Vacío", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
@@ -266,7 +266,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ El ID debe ser un número positivo", 
+                    " El ID debe ser un número positivo",
                     "ID Inválido", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
@@ -276,7 +276,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
             if (currentSpeciality == null) {
                 JOptionPane.showMessageDialog(this, 
-                    "❌ No se encontró especialidad con ID: " + id, 
+                    " No se encontró especialidad con ID: " + id,
                     "No Encontrada", 
                     JOptionPane.INFORMATION_MESSAGE);
                 jtextInfo.setText("");
@@ -294,7 +294,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ El ID debe ser un número válido", 
+                " El ID debe ser un número válido",
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
             jtextInfo.setText("");
@@ -306,14 +306,14 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
         try {
             if (currentSpeciality == null) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ No hay especialidad seleccionada", 
+                    " No hay especialidad seleccionada",
                     "Error", 
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
             
             int confirm = JOptionPane.showConfirmDialog(this, 
-                "⚠️ ¿Está seguro que desea eliminar esta especialidad?\n\n" + 
+                " ¿Está seguro que desea eliminar esta especialidad?\n\n" +
                 "ID: " + currentSpeciality.getSpecialityId() + "\n" +
                 "Nombre: " + currentSpeciality.getName() + "\n\n" +
                 "Esta acción NO se puede deshacer.", 
@@ -329,7 +329,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
             if (!isDeleted) {
                 JOptionPane.showMessageDialog(this, 
-                    "❌ No se pudo eliminar la especialidad.\n\n" +
+                    " No se pudo eliminar la especialidad.\n\n" +
                     "Posibles causas:\n" +
                     "• Tiene doctores asociados\n" +
                     "• Error en el sistema", 
@@ -339,7 +339,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             }
             
             JOptionPane.showMessageDialog(this, 
-                "✅ Especialidad eliminada exitosamente\n\n" +
+                " Especialidad eliminada exitosamente\n\n" +
                 "ID: " + currentSpeciality.getSpecialityId() + "\n" +
                 "Nombre: " + currentSpeciality.getName(), 
                 "Eliminación Exitosa", 
@@ -355,7 +355,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ Error inesperado: " + e.getMessage(), 
+                " Error inesperado: " + e.getMessage(),
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

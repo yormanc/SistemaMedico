@@ -173,7 +173,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         });
 
         jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 15));
-        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setText(" Cancelar");
         jbtnCancelar.setBackground(new java.awt.Color(231, 76, 60));
         jbtnCancelar.setForeground(Color.WHITE);
         jbtnCancelar.setFocusPainted(false);
@@ -251,7 +251,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             String nombreInput = jtextNombre.getText().trim();
             String descripcionInput = jtextAreaDescripcion.getText().trim();
 
-            // ✅ Validación 1: Campos vacíos
+            //  Validación 1: Campos vacíos
             if (idInput.isEmpty() || nombreInput.isEmpty() || descripcionInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                     "⚠️ Todos los campos son obligatorios.\n\n" +
@@ -273,23 +273,23 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 2: Servicio inicializado
+            //  Validación 2: Servicio inicializado
             if (medicService == null) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ Error crítico: El servicio no está inicializado.\n\n" +
+                    " Error crítico: El servicio no está inicializado.\n\n" +
                     "Por favor, reinicie la aplicación.",
                     "Error de Sistema",
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // ✅ Validación 3: ID numérico válido
+            //  Validación 3: ID numérico válido
             int id;
             try {
                 id = Integer.parseInt(idInput);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El ID debe ser un número entero válido.\n\n" +
+                    " El ID debe ser un número entero válido.\n\n" +
                     "Ejemplos válidos: 1, 2, 100, 999",
                     "ID Inválido",
                     JOptionPane.ERROR_MESSAGE);
@@ -298,10 +298,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
 
-            // ✅ Validación 4: ID positivo
+            //  Validación 4: ID positivo
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El ID debe ser un número positivo mayor a cero.\n\n" +
+                    " El ID debe ser un número positivo mayor a cero.\n\n" +
                     "ID ingresado: " + id,
                     "ID Inválido",
                     JOptionPane.WARNING_MESSAGE);
@@ -310,10 +310,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
 
-            // ✅ Validación 5: Nombre no solo números
+            //  Validación 5: Nombre no solo números
             if (!nombreInput.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
                 JOptionPane.showMessageDialog(this,
-                        "❌ El nombre solo puede contener letras y espacios.\n\n" +
+                        " El nombre solo puede contener letras y espacios.\n\n" +
                                 "No se permiten:\n" +
                                 "• Números\n" +
                                 "• Caracteres especiales (@, #, $, etc.)",
@@ -325,10 +325,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             }
 
             
-            // ✅ Validación 6: Longitud mínima del nombre
+            // Validación 6: Longitud mínima del nombre
             if (nombreInput.length() < 3) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El nombre debe tener al menos 3 caracteres.\n\n" +
+                    " El nombre debe tener al menos 3 caracteres.\n\n" +
                     "Caracteres actuales: " + nombreInput.length(),
                     "Nombre Muy Corto",
                     JOptionPane.WARNING_MESSAGE);
@@ -337,10 +337,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 7: Longitud máxima del nombre
+            //  Validación 7: Longitud máxima del nombre
             if (nombreInput.length() > 100) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El nombre es demasiado largo (máximo 100 caracteres).\n\n" +
+                    " El nombre es demasiado largo (máximo 100 caracteres).\n\n" +
                     "Caracteres actuales: " + nombreInput.length(),
                     "Nombre Muy Largo",
                     JOptionPane.WARNING_MESSAGE);
@@ -348,10 +348,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 8: Longitud mínima de la descripción
+            //  Validación 8: Longitud mínima de la descripción
             if (descripcionInput.length() < 10) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ La descripción debe tener al menos 10 caracteres.\n\n" +
+                    " La descripción debe tener al menos 10 caracteres.\n\n" +
                     "Caracteres actuales: " + descripcionInput.length(),
                     "Descripción Muy Corta",
                     JOptionPane.WARNING_MESSAGE);
@@ -359,10 +359,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 9: Longitud máxima de la descripción
+            //  Validación 9: Longitud máxima de la descripción
             if (descripcionInput.length() > 500) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ La descripción es demasiado larga (máximo 500 caracteres).\n\n" +
+                    " La descripción es demasiado larga (máximo 500 caracteres).\n\n" +
                     "Caracteres actuales: " + descripcionInput.length(),
                     "Descripción Muy Larga",
                     JOptionPane.WARNING_MESSAGE);
@@ -370,7 +370,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
 
-            // ✅ GUARDAR EN EL SISTEMA
+            //  GUARDAR EN EL SISTEMA
             System.out.println("\n=== INTENTANDO GUARDAR ESPECIALIDAD ===");
             System.out.println("ID: " + id);
             System.out.println("Nombre: " + nombreInput);
@@ -379,9 +379,9 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             boolean isAdded = medicService.addSpeciality(id, nombreInput, descripcionInput);
 
             if (!isAdded) {
-                System.out.println("❌ NO SE PUDO AGREGAR LA ESPECIALIDAD");
+                System.out.println(" NO SE PUDO AGREGAR LA ESPECIALIDAD");
                 JOptionPane.showMessageDialog(this,
-                    "❌ No se pudo agregar la especialidad.\n\n" +
+                    " No se pudo agregar la especialidad.\n\n" +
                     "Posibles causas:\n" +
                     "• El ID " + id + " ya está registrado\n" +
                     "• Error en la base de datos\n\n" +
@@ -393,10 +393,10 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
 
-            // ✅ ÉXITO
-            System.out.println("✅ ESPECIALIDAD AGREGADA EXITOSAMENTE");
+            //  ÉXITO
+            System.out.println(" ESPECIALIDAD AGREGADA EXITOSAMENTE");
             JOptionPane.showMessageDialog(this,
-                "✅ Especialidad agregada exitosamente\n\n" +
+                " Especialidad agregada exitosamente\n\n" +
                 "ID: " + id + "\n" +
                 "Nombre: " + nombreInput + "\n\n" +
                 "La especialidad ha sido registrada en el sistema.",
@@ -408,17 +408,17 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
 
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this,
-                "❌ El ID debe contener solo números válidos.\n\n" +
+                " El ID debe contener solo números válidos.\n\n" +
                 "Error: " + e.getMessage(),
                 "Error de Formato",
                 JOptionPane.ERROR_MESSAGE);
             jtextId.requestFocus();
             jtextId.selectAll();
         } catch (Exception e) {
-            System.err.println("❌ ERROR INESPERADO: " + e.getMessage());
+            System.err.println(" ERROR INESPERADO: " + e.getMessage());
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                "❌ Error inesperado al guardar:\n\n" + 
+                " Error inesperado al guardar:\n\n" +
                 e.getMessage() + "\n\n" +
                 "Por favor, contacte al administrador del sistema.",
                 "Error Crítico",

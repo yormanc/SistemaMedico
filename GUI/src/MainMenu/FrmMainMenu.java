@@ -33,7 +33,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
         // Personalizar el aspecto
         customizeAppearance();
         
-        System.out.println("✅ FrmMainMenu inicializado correctamente");
+        System.out.println(" FrmMainMenu inicializado correctamente");
     }
     
     /**
@@ -298,9 +298,9 @@ public class FrmMainMenu extends javax.swing.JFrame {
             if (medicService.authenticatedUser != null) {
                 int userId = medicService.authenticatedUser.getCredentials().getId();
                 medicService.logoutUser(userId);
-                System.out.println("👋 Sesión cerrada para usuario ID: " + userId);
+                System.out.println(" Sesión cerrada para usuario ID: " + userId);
             } else {
-                 System.out.println("👋 No había sesión activa que cerrar.");
+                 System.out.println("No había sesión activa que cerrar.");
             }
             
             // 2. Muestra la ventana de Login (Simulación)
@@ -336,7 +336,7 @@ public class FrmMainMenu extends javax.swing.JFrame {
             JOptionPane.QUESTION_MESSAGE);
         
         if (confirm == JOptionPane.YES_OPTION) {
-            System.out.println("👋 Cerrando la aplicación...");
+            System.out.println(" Cerrando la aplicación...");
             System.exit(0);
         }
     }

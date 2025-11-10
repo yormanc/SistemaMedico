@@ -135,12 +135,12 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
 
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // ✅ Usar método público en lugar de reflexión
+            //  Usar método público en lugar de reflexión
             java.util.List<models.Doctor> doctors = medicService.getDoctorRepository().getAll();
 
             if (doctors == null || doctors.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                        "📋 No hay doctores registrados en el sistema.",
+                        " No hay doctores registrados en el sistema.",
                         "Lista Vacía",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -182,7 +182,7 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
             panel.add(scrollPane, BorderLayout.CENTER);
 
             // Etiqueta de total
-            JLabel lblTotal = new JLabel("📊 Total de doctores registrados: " + doctors.size());
+            JLabel lblTotal = new JLabel(" Total de doctores registrados: " + doctors.size());
             lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 14));
             lblTotal.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
             panel.add(lblTotal, BorderLayout.SOUTH);
@@ -192,7 +192,7 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                    "❌ Error al listar doctores:\n\n" + e.getMessage(),
+                    " Error al listar doctores:\n\n" + e.getMessage(),
                     "Error",
                     JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

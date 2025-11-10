@@ -53,7 +53,7 @@ public class FrmViewHistory extends javax.swing.JFrame {
         String roleStr = targetRole == UserRole.PATIENT ? "Paciente" : "Doctor";
         String colorHex = targetRole == UserRole.PATIENT ? "#E67E22" : "#1ABC9C";
 
-        JLabel jlblTitulo = new JLabel("⚕️ Historial de Citas por " + roleStr);
+        JLabel jlblTitulo = new JLabel(" Historial de Citas por " + roleStr);
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(Color.decode(colorHex));
         jPanelMain.add(jlblTitulo, BorderLayout.NORTH);
@@ -123,7 +123,7 @@ public class FrmViewHistory extends javax.swing.JFrame {
         try {
             id = Integer.parseInt(jtfTargetId.getText().trim());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Por favor, ingrese un ID válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Por favor, ingrese un ID válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -149,13 +149,13 @@ public class FrmViewHistory extends javax.swing.JFrame {
         if (history != null) {
             loadTable(history);
             if (history.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "ℹ️ " + name + " no tiene citas registradas.", "Historial Vacío", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " " + name + " no tiene citas registradas.", "Historial Vacío", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                JOptionPane.showMessageDialog(this, "✅ Historial de citas cargado para " + name + ".", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Historial de citas cargado para " + name + ".", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
             }
         } else {
             loadTable(List.of()); // Vaciar la tabla
-            JOptionPane.showMessageDialog(this, "❌ ID " + id + " de " + targetRole.toString() + " no encontrado.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " ID " + id + " de " + targetRole.toString() + " no encontrado.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
         }
     }
 

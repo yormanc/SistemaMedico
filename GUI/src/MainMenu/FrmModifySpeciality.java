@@ -62,7 +62,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 26));
         jlblTitulo.setForeground(new java.awt.Color(52, 152, 219));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("✏️ MODIFICAR ESPECIALIDAD");
+        jlblTitulo.setText("MODIFICAR ESPECIALIDAD");
 
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
@@ -159,7 +159,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
 
         jbtnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 15));
-        jbtnGuardar.setText("💾 Guardar Cambios");
+        jbtnGuardar.setText("Guardar Cambios");
         jbtnGuardar.setBackground(new java.awt.Color(46, 204, 113));
         jbtnGuardar.setForeground(Color.WHITE);
         jbtnGuardar.setFocusPainted(false);
@@ -177,7 +177,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         });
 
         jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 15));
-        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setText(" Cancelar");
         jbtnCancelar.setBackground(new java.awt.Color(231, 76, 60));
         jbtnCancelar.setForeground(Color.WHITE);
         jbtnCancelar.setFocusPainted(false);
@@ -225,7 +225,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
                                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
-        // ✅ AQUÍ FALTABA ESTE VERTICAL GROUP
+        //  AQUÍ FALTABA ESTE VERTICAL GROUP
         jPanelMainLayout.setVerticalGroup(
                 jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanelMainLayout.createSequentialGroup()
@@ -259,7 +259,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (nombreInput.isEmpty() || descripcionInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                        "⚠️ Todos los campos son obligatorios.",
+                        " Todos los campos son obligatorios.",
                         "Campos Incompletos",
                         JOptionPane.WARNING_MESSAGE);
                 return;
@@ -267,7 +267,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (nombreInput.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this,
-                        "❌ El nombre no puede contener solo números.",
+                        " El nombre no puede contener solo números.",
                         "Nombre Inválido",
                         JOptionPane.WARNING_MESSAGE);
                 return;
@@ -275,7 +275,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (nombreInput.length() < 3 || nombreInput.length() > 100) {
                 JOptionPane.showMessageDialog(this,
-                        "❌ El nombre debe tener entre 3 y 100 caracteres.",
+                        " El nombre debe tener entre 3 y 100 caracteres.",
                         "Longitud Inválida",
                         JOptionPane.WARNING_MESSAGE);
                 return;
@@ -283,7 +283,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (descripcionInput.length() < 10 || descripcionInput.length() > 500) {
                 JOptionPane.showMessageDialog(this,
-                        "❌ La descripción debe tener entre 10 y 500 caracteres.",
+                        " La descripción debe tener entre 10 y 500 caracteres.",
                         "Longitud Inválida",
                         JOptionPane.WARNING_MESSAGE);
                 return;
@@ -294,7 +294,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (!hasChanges) {
                 JOptionPane.showMessageDialog(this,
-                        "ℹ️ No se detectaron cambios en los datos.",
+                        "No se detectaron cambios en los datos.",
                         "Sin Cambios",
                         JOptionPane.INFORMATION_MESSAGE);
                 return;
@@ -307,14 +307,14 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
 
             if (!isUpdated) {
                 JOptionPane.showMessageDialog(this,
-                        "❌ No se pudo actualizar la especialidad.",
+                        " No se pudo actualizar la especialidad.",
                         "Error al Actualizar",
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
             JOptionPane.showMessageDialog(this,
-                    "✅ Especialidad actualizada exitosamente",
+                    " Especialidad actualizada exitosamente",
                     "Actualización Exitosa",
                     JOptionPane.INFORMATION_MESSAGE);
 
@@ -323,7 +323,7 @@ public class FrmModifySpeciality extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "❌ Error inesperado: " + e.getMessage(),
+                    " Error inesperado: " + e.getMessage(),
                     "Error Crítico",
                     JOptionPane.ERROR_MESSAGE);
         }

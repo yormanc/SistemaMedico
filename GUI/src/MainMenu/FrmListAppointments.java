@@ -31,7 +31,7 @@ public class FrmListAppointments extends javax.swing.JFrame {
         jPanelMain.setBackground(new Color(245, 245, 245));
         
         // Título
-        JLabel jlblTitulo = new JLabel("📋 Listado de Todas las Citas");
+        JLabel jlblTitulo = new JLabel(" Listado de Todas las Citas");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(155, 89, 182)); // Color púrpura
         jPanelMain.add(jlblTitulo, BorderLayout.NORTH);

@@ -45,7 +45,7 @@ public class MedicSystemService {
         );
         this.authenticatedUser = null;
         
-        System.out.println("✅ MedicSystemService inicializado con repositorios compartidos");
+        System.out.println(" MedicSystemService inicializado con repositorios compartidos");
     }
 
     /**
@@ -80,16 +80,16 @@ public class MedicSystemService {
             boolean added = patientRepository.add(patient);
             
             if (added) {
-                System.out.println("✅ Paciente registrado: " + fullName + " (ID: " + id + ")");
-                System.out.println("📊 Total de pacientes: " + patientRepository.getAll().size());
+                System.out.println(" Paciente registrado: " + fullName + " (ID: " + id + ")");
+                System.out.println(" Total de pacientes: " + patientRepository.getAll().size());
             } else {
-                System.out.println("❌ No se pudo registrar el paciente: " + fullName);
+                System.out.println(" No se pudo registrar el paciente: " + fullName);
             }
             
             return added;
             
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar paciente: " + e.getMessage());
+            System.err.println(" Error al registrar paciente: " + e.getMessage());
             e.printStackTrace();
             return false;
         }
@@ -106,13 +106,13 @@ public class MedicSystemService {
             boolean added = doctorRepository.add(doctor);
             
             if (added) {
-                System.out.println("✅ Doctor registrado: " + fullName + " (ID: " + id + ")");
+                System.out.println(" Doctor registrado: " + fullName + " (ID: " + id + ")");
             }
             
             return added;
             
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar doctor: " + e.getMessage());
+            System.err.println(" Error al registrar doctor: " + e.getMessage());
             return false;
         }
     }
@@ -126,7 +126,7 @@ public class MedicSystemService {
             Patient admin = new Patient(fullName, age, email, credentials);
             return userRepository.add(admin);
         } catch (Exception e) {
-            System.err.println("❌ Error al registrar admin: " + e.getMessage());
+            System.err.println(" Error al registrar admin: " + e.getMessage());
             return false;
         }
     }
@@ -163,7 +163,7 @@ public class MedicSystemService {
     public boolean updateDoctor(Doctor doctor) {
         boolean updated = doctorRepository.update(doctor);
         if (updated) {
-            System.out.println("✅ Doctor actualizado: " + doctor.getFullName());
+            System.out.println(" Doctor actualizado: " + doctor.getFullName());
         }
         return updated;
     }
@@ -174,7 +174,7 @@ public class MedicSystemService {
     public boolean removeDoctor(Doctor doctor) {
         boolean removed = doctorRepository.remove(doctor);
         if (removed) {
-            System.out.println("✅ Doctor eliminado: " + doctor.getFullName());
+            System.out.println(" Doctor eliminado: " + doctor.getFullName());
         }
         return removed;
     }
@@ -185,7 +185,7 @@ public class MedicSystemService {
     public boolean updatePatient(Patient patient) {
         boolean updated = patientRepository.update(patient);
         if (updated) {
-            System.out.println("✅ Paciente actualizado: " + patient.getFullName());
+            System.out.println(" Paciente actualizado: " + patient.getFullName());
         }
         return updated;
     }
@@ -196,8 +196,8 @@ public class MedicSystemService {
     public boolean removePatient(Patient patient) {
         boolean removed = patientRepository.remove(patient);
         if (removed) {
-            System.out.println("✅ Paciente eliminado: " + patient.getFullName());
-            System.out.println("📊 Total de pacientes: " + patientRepository.getAll().size());
+            System.out.println(" Paciente eliminado: " + patient.getFullName());
+            System.out.println(" Total de pacientes: " + patientRepository.getAll().size());
         }
         return removed;
     }
@@ -210,7 +210,7 @@ public class MedicSystemService {
             Appointment appointment = new Appointment(dateTime, patient, doctor, diagnostic);
             return appointmentRepository.add(appointment);
         } catch (Exception e) {
-            System.err.println("❌ Error al programar cita: " + e.getMessage());
+            System.err.println(" Error al programar cita: " + e.getMessage());
             return false;
         }
     }
@@ -223,7 +223,7 @@ public class MedicSystemService {
             appointment.setStatus(status);
             return appointmentRepository.update(appointment);
         } catch (Exception e) {
-            System.err.println("❌ Error al actualizar cita: " + e.getMessage());
+            System.err.println(" Error al actualizar cita: " + e.getMessage());
             return false;
         }
     }
@@ -243,7 +243,7 @@ public class MedicSystemService {
             Speciality speciality = new Speciality(id, name, description);
             return specialityRepository.add(speciality);
         } catch (Exception e) {
-            System.err.println("❌ Error al agregar especialidad: " + e.getMessage());
+            System.err.println(" Error al agregar especialidad: " + e.getMessage());
             return false;
         }
     }

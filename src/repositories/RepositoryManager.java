@@ -43,7 +43,7 @@ public class RepositoryManager {
         registerShutdownHook();
 
         System.out.println("════════════════════════════════════════════");
-        System.out.println("✅ Sistema inicializado correctamente");
+        System.out.println(" Sistema inicializado correctamente");
         System.out.println("════════════════════════════════════════════\n");
     }
 
@@ -61,7 +61,7 @@ public class RepositoryManager {
      * Carga todos los datos desde archivos JSON
      */
     private void loadAllData() {
-        System.out.println("\n📂 Cargando datos desde archivos JSON...\n");
+        System.out.println("\n Cargando datos desde archivos JSON...\n");
 
         // 1. Cargar especialidades primero (las necesitan los doctores)
         List<Speciality> specialities = persistenceManager.loadSpecialities();
@@ -95,21 +95,21 @@ public class RepositoryManager {
             appointmentRepository.add(appointment);
         }
 
-        System.out.println("\n✅ Datos cargados exitosamente\n");
+        System.out.println("\n Datos cargados exitosamente\n");
     }
 
     /**
      * Guarda todos los datos en archivos JSON
      */
     public void saveAllData() {
-        System.out.println("\n💾 Guardando datos en archivos JSON...\n");
+        System.out.println("\n Guardando datos en archivos JSON...\n");
 
         persistenceManager.saveSpecialities(specialityRepository.getAll());
         persistenceManager.savePatients(patientRepository.getAll());
         persistenceManager.saveDoctors(doctorRepository.getAll());
         persistenceManager.saveAppointments(appointmentRepository.getAll());
 
-        System.out.println("\n✅ Datos guardados exitosamente\n");
+        System.out.println("\n Datos guardados exitosamente\n");
     }
 
     /**
@@ -117,9 +117,9 @@ public class RepositoryManager {
      */
     private void registerShutdownHook() {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            System.out.println("\n🔄 Guardando datos antes de cerrar...");
+            System.out.println("\n Guardando datos antes de cerrar...");
             saveAllData();
-            System.out.println("👋 Sistema cerrado correctamente\n");
+            System.out.println(" Sistema cerrado correctamente\n");
         }));
     }
 
@@ -152,10 +152,10 @@ public class RepositoryManager {
         System.out.println("\n═══════════════════════════════════════════");
         System.out.println("       ESTADÍSTICAS DEL SISTEMA");
         System.out.println("═══════════════════════════════════════════");
-        System.out.println("👥 Pacientes:      " + patientRepository.getAll().size());
-        System.out.println("⚕️  Doctores:       " + doctorRepository.getAll().size());
-        System.out.println("📋 Especialidades: " + specialityRepository.getAll().size());
-        System.out.println("📅 Citas:          " + appointmentRepository.getAll().size());
+        System.out.println(" Pacientes:      " + patientRepository.getAll().size());
+        System.out.println("  Doctores:       " + doctorRepository.getAll().size());
+        System.out.println(" Especialidades: " + specialityRepository.getAll().size());
+        System.out.println(" Citas:          " + appointmentRepository.getAll().size());
         System.out.println("═══════════════════════════════════════════\n");
     }
 

@@ -50,7 +50,7 @@ public class FrmManageDoctor extends javax.swing.JFrame {
         jPanelButtons.setBackground(new Color(245, 245, 245));
 
         // Título
-        JLabel jlblTitulo = new JLabel("🔍 Gestionar Doctor (Buscar, Modificar, Eliminar)");
+        JLabel jlblTitulo = new JLabel(" Gestionar Doctor (Buscar, Modificar, Eliminar)");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 22));
         jlblTitulo.setForeground(new Color(52, 152, 219));
         
@@ -91,12 +91,12 @@ public class FrmManageDoctor extends javax.swing.JFrame {
         row = addFormField(jPanelForm, gbc, row, "Especialidad:", jcbSpeciality);
         
         // --- Botones de Acción (Sur) ---
-        jbtnModify = new JButton("💾 Modificar Datos");
+        jbtnModify = new JButton(" Modificar Datos");
         jbtnModify.addActionListener(e -> jbtnModifyActionPerformed());
         jbtnModify.setBackground(new Color(46, 204, 113));
         jbtnModify.setForeground(Color.WHITE);
         
-        jbtnDelete = new JButton("🗑️ Eliminar Doctor");
+        jbtnDelete = new JButton("Eliminar Doctor");
         jbtnDelete.addActionListener(e -> jbtnDeleteActionPerformed());
         jbtnDelete.setBackground(new Color(231, 76, 60));
         jbtnDelete.setForeground(Color.WHITE);
@@ -210,7 +210,7 @@ public class FrmManageDoctor extends javax.swing.JFrame {
         try {
             id = Integer.parseInt(jtfSearchId.getText().trim());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Por favor, ingrese un ID de doctor válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Por favor, ingrese un ID de doctor válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -218,9 +218,9 @@ public class FrmManageDoctor extends javax.swing.JFrame {
 
         if (foundDoctor != null) {
             loadDoctorData(foundDoctor);
-            JOptionPane.showMessageDialog(this, "✅ Doctor encontrado.", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Doctor encontrado.", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            JOptionPane.showMessageDialog(this, "❌ Doctor con ID " + id + " no encontrado.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Doctor con ID " + id + " no encontrado.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
         }
     }
 

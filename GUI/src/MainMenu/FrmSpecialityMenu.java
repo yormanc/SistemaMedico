@@ -44,7 +44,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jlblTitulo.setText("🏥 GESTIÓN DE ESPECIALIDADES");
-        // ✅ LÍNEA PROBLEMÁTICA ELIMINADA - No hay carpeta /icons/ en el proyecto
+        //  LÍNEA PROBLEMÁTICA ELIMINADA - No hay carpeta /icons/ en el proyecto
 
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
@@ -85,7 +85,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
 
         // Botón Buscar
         jbtnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnBuscar.setText("🔍 Buscar/Modificar/Eliminar");
+        jbtnBuscar.setText(" Buscar/Modificar/Eliminar");
         jbtnBuscar.setBackground(new java.awt.Color(52, 152, 219));
         jbtnBuscar.setForeground(Color.WHITE);
         jbtnBuscar.setFocusPainted(false);
@@ -104,7 +104,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
 
         // Botón Listar
         jbtnListar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnListar.setText("📋 Ver Todas las Especialidades");
+        jbtnListar.setText(" Ver Todas las Especialidades");
         jbtnListar.setBackground(new java.awt.Color(155, 89, 182));
         jbtnListar.setForeground(Color.WHITE);
         jbtnListar.setFocusPainted(false);
@@ -223,7 +223,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
 
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // ✅ USAR EL MÉTODO PÚBLICO DEL SERVICIO
+            //  USAR EL MÉTODO PÚBLICO DEL SERVICIO
             ArrayList<Speciality> specialities = medicService.getSpecialityRepository().getAll();
 
             if (specialities == null || specialities.isEmpty()) {
@@ -283,7 +283,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
             bottomPanel.setBackground(new java.awt.Color(240, 248, 255));
             bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
 
-            JLabel lblTotal = new JLabel("📊 Total de especialidades registradas: " + specialities.size());
+            JLabel lblTotal = new JLabel(" Total de especialidades registradas: " + specialities.size());
             lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 15));
             lblTotal.setForeground(new java.awt.Color(0, 102, 204));
             bottomPanel.add(lblTotal);

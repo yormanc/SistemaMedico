@@ -67,11 +67,11 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
 
             // Si todas las validaciones pasan, agregar la cita
             appointments.add(appointment);
-            System.out.println("✅ Cita agregada exitosamente - ID: " + appointment.getAppointmentId());
+            System.out.println(" Cita agregada exitosamente - ID: " + appointment.getAppointmentId());
             return true;
 
         } catch (Exception e) {
-            System.err.println("❌ Error al agregar la cita: " + e.getMessage());
+            System.err.println(" Error al agregar la cita: " + e.getMessage());
             throw new RuntimeException("Error al agregar la cita: " + e.getMessage());
         }
     }
@@ -108,11 +108,11 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
                 throw new Exception("No se pudo eliminar la cita seleccionada");
             }
 
-            System.out.println("✅ Cita eliminada exitosamente");
+            System.out.println(" Cita eliminada exitosamente");
             return true;
 
         } catch (Exception e) {
-            System.err.println("❌ Error al eliminar la cita: " + e.getMessage());
+            System.err.println(" Error al eliminar la cita: " + e.getMessage());
             throw new RuntimeException("Error al eliminar la cita: " + e.getMessage());
         }
     }
@@ -223,11 +223,11 @@ public class AppoinmentRepository implements IRepositoryAppoinment {
             int index = appointments.indexOf(existingAppointment);
             appointments.set(index, updatedAppointment);
 
-            System.out.println("✅ Cita actualizada exitosamente");
+            System.out.println(" Cita actualizada exitosamente");
             return true;
 
         } catch (Exception e) {
-            System.err.println("❌ Error al actualizar la cita: " + e.getMessage());
+            System.err.println(" Error al actualizar la cita: " + e.getMessage());
             throw new RuntimeException("Error al actualizar la cita: " + e.getMessage());
         }
     }

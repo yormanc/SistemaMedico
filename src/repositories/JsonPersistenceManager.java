@@ -217,7 +217,7 @@ public class JsonPersistenceManager {
                         Appointment appointment = dto.toAppointment(patientsMap, doctorsMap);
                         appointments.add(appointment);
                     } catch (Exception e) {
-                        System.err.println("⚠️  Error al cargar cita ID " + 
+                        System.err.println("️  Error al cargar cita ID " +
                                          dto.getAppointmentId() + ": " + e.getMessage());
                     }
                 }
@@ -227,7 +227,7 @@ public class JsonPersistenceManager {
             if (maxId > 0) {
                 // Usar reflexión para actualizar el nextId estático
                 syncAppointmentIdCounter(maxId + 1);
-                System.out.println("🔄 Contador de IDs sincronizado. Próximo ID: " + (maxId + 1));
+                System.out.println(" Contador de IDs sincronizado. Próximo ID: " + (maxId + 1));
             }
 
             System.out.println("Citas cargadas: " + appointments.size());
@@ -253,10 +253,10 @@ public class JsonPersistenceManager {
                 new Appointment(); // Esto incrementa el contador interno
             }
             
-            System.out.println("✅ Contador de citas sincronizado exitosamente");
+            System.out.println(" Contador de citas sincronizado exitosamente");
             
         } catch (Exception e) {
-            System.err.println("⚠️  Advertencia: No se pudo sincronizar el contador de IDs: " + 
+            System.err.println(" Advertencia: No se pudo sincronizar el contador de IDs: " +
                              e.getMessage());
         }
     }
@@ -296,10 +296,10 @@ public class JsonPersistenceManager {
                 // Guardar archivo limpio
                 String cleanJson = gson.toJson(cleanDTOs);
                 Files.writeString(Paths.get(Constants.APPOINTMENTS_FILE), cleanJson);
-                System.out.println("🧹 Limpieza completada: " + duplicatesRemoved + 
+                System.out.println(" Limpieza completada: " + duplicatesRemoved +
                                  " citas duplicadas eliminadas");
             } else {
-                System.out.println("✅ No se encontraron citas duplicadas");
+                System.out.println(" No se encontraron citas duplicadas");
             }
 
         } catch (IOException e) {

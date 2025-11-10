@@ -46,7 +46,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 26));
         jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("🔍 BUSCAR ESPECIALIDAD");
+        jlblTitulo.setText(" BUSCAR ESPECIALIDAD");
 
         // Panel de búsqueda
         jPanelSearch.setBackground(Color.WHITE);
@@ -85,7 +85,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
 
         jbtnBuscarModificar.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        jbtnBuscarModificar.setText("✏️ Buscar y Modificar");
+        jbtnBuscarModificar.setText(" Buscar y Modificar");
         jbtnBuscarModificar.setBackground(new java.awt.Color(52, 152, 219));
         jbtnBuscarModificar.setForeground(Color.WHITE);
         jbtnBuscarModificar.setFocusPainted(false);
@@ -103,7 +103,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
         });
 
         jbtnBuscarEliminar.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        jbtnBuscarEliminar.setText("🗑️ Buscar y Eliminar");
+        jbtnBuscarEliminar.setText(" Buscar y Eliminar");
         jbtnBuscarEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jbtnBuscarEliminar.setForeground(Color.WHITE);
         jbtnBuscarEliminar.setFocusPainted(false);
@@ -121,7 +121,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
         });
 
         jbtnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14));
-        jbtnCancelar.setText("❌ Cancelar");
+        jbtnCancelar.setText(" Cancelar");
         jbtnCancelar.setBackground(new java.awt.Color(189, 195, 199));
         jbtnCancelar.setForeground(new java.awt.Color(52, 73, 94));
         jbtnCancelar.setFocusPainted(false);
@@ -202,7 +202,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
             if (idInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ Debe ingresar un ID de especialidad", 
+                    " Debe ingresar un ID de especialidad",
                     "Campo Vacío", 
                     JOptionPane.WARNING_MESSAGE);
                 jtextId.requestFocus();
@@ -213,7 +213,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ El ID debe ser un número positivo", 
+                    " El ID debe ser un número positivo",
                     "ID Inválido", 
                     JOptionPane.WARNING_MESSAGE);
                 jtextId.selectAll();
@@ -221,7 +221,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
+            // BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
             Speciality speciality = medicService.getSpecialityRepository().searchById(id);
             
             if (speciality != null) {
@@ -230,7 +230,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
-                    "❌ No se encontró especialidad con ID: " + id, 
+                    " No se encontró especialidad con ID: " + id,
                     "No Encontrada", 
                     JOptionPane.INFORMATION_MESSAGE);
                 jtextId.selectAll();
@@ -239,14 +239,14 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ El ID debe ser un número válido", 
+                " El ID debe ser un número válido",
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
             jtextId.selectAll();
             jtextId.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ Error al buscar: " + e.getMessage(), 
+                " Error al buscar: " + e.getMessage(),
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
@@ -259,7 +259,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
             if (idInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ Debe ingresar un ID de especialidad", 
+                    " Debe ingresar un ID de especialidad",
                     "Campo Vacío", 
                     JOptionPane.WARNING_MESSAGE);
                 jtextId.requestFocus();
@@ -270,7 +270,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
             if (id <= 0) {
                 JOptionPane.showMessageDialog(this, 
-                    "⚠️ El ID debe ser un número positivo", 
+                    "El ID debe ser un número positivo",
                     "ID Inválido", 
                     JOptionPane.WARNING_MESSAGE);
                 jtextId.selectAll();
@@ -278,7 +278,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
+            //  BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
             Speciality speciality = medicService.getSpecialityRepository().searchById(id);
             
             if (speciality != null) {
@@ -288,7 +288,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
-                    "❌ No se encontró especialidad con ID: " + id, 
+                    " No se encontró especialidad con ID: " + id,
                     "No Encontrada", 
                     JOptionPane.INFORMATION_MESSAGE);
                 jtextId.selectAll();
@@ -297,14 +297,14 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ El ID debe ser un número válido", 
+                " El ID debe ser un número válido",
                 "Error de Formato", 
                 JOptionPane.ERROR_MESSAGE);
             jtextId.selectAll();
             jtextId.requestFocus();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                "❌ Error al buscar: " + e.getMessage(), 
+                " Error al buscar: " + e.getMessage(),
                 "Error", 
                 JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();

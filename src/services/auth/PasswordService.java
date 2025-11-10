@@ -55,7 +55,7 @@ public class PasswordService implements IPasswordService {
             // Actualizar en repositorio
             try {
                 userRepository.update(user);
-                System.out.println("✅ Contraseña actualizada para usuario ID: " + userId);
+                System.out.println(" Contraseña actualizada para usuario ID: " + userId);
                 return true;
                 
             } catch (Exception e) {
@@ -63,10 +63,10 @@ public class PasswordService implements IPasswordService {
             }
             
         } catch (PasswordException | AuthenticationException e) {
-            System.err.println("❌ " + e.getMessage());
+            System.err.println(" " + e.getMessage());
             throw e;
         } catch (Exception e) {
-            System.err.println("❌ Error inesperado al cambiar contraseña: " + e.getMessage());
+            System.err.println("Error inesperado al cambiar contraseña: " + e.getMessage());
             throw new PasswordException("Error inesperado al cambiar contraseña", e);
         }
     }

@@ -67,7 +67,7 @@ public class FrmAppointmentMenu extends javax.swing.JFrame {
         
         // Botón Agendar
         jbtnAgendar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnAgendar.setText("➕ Agendar Nueva Cita");
+        jbtnAgendar.setText(" Agendar Nueva Cita");
         jbtnAgendar.setBackground(new java.awt.Color(46, 204, 113));
         jbtnAgendar.setForeground(Color.WHITE);
         jbtnAgendar.setFocusPainted(false);
@@ -86,7 +86,7 @@ public class FrmAppointmentMenu extends javax.swing.JFrame {
 
         // Botón Buscar
         jbtnBuscar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnBuscar.setText("🔍 Buscar/Modificar/Cancelar");
+        jbtnBuscar.setText(" Buscar/Modificar/Cancelar");
         jbtnBuscar.setBackground(new java.awt.Color(52, 152, 219));
         jbtnBuscar.setForeground(Color.WHITE);
         jbtnBuscar.setFocusPainted(false);
@@ -105,7 +105,7 @@ public class FrmAppointmentMenu extends javax.swing.JFrame {
 
         // Botón Listar
         jbtnListar.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnListar.setText("📋 Ver Todas las Citas");
+        jbtnListar.setText(" Ver Todas las Citas");
         jbtnListar.setBackground(new java.awt.Color(155, 89, 182));
         jbtnListar.setForeground(Color.WHITE);
         jbtnListar.setFocusPainted(false);
@@ -124,7 +124,7 @@ public class FrmAppointmentMenu extends javax.swing.JFrame {
 
         // Botón Historial Paciente
         jbtnHistorialPaciente.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnHistorialPaciente.setText("👤 Historial de Paciente");
+        jbtnHistorialPaciente.setText(" Historial de Paciente");
         jbtnHistorialPaciente.setBackground(new java.awt.Color(230, 126, 34));
         jbtnHistorialPaciente.setForeground(Color.WHITE);
         jbtnHistorialPaciente.setFocusPainted(false);
@@ -143,7 +143,7 @@ public class FrmAppointmentMenu extends javax.swing.JFrame {
 
         // Botón Historial Doctor
         jbtnHistorialDoctor.setFont(new java.awt.Font("Segoe UI", 0, 16));
-        jbtnHistorialDoctor.setText("⚕️ Historial de Doctor");
+        jbtnHistorialDoctor.setText("⚕ Historial de Doctor");
         jbtnHistorialDoctor.setBackground(new java.awt.Color(26, 188, 156));
         jbtnHistorialDoctor.setForeground(Color.WHITE);
         jbtnHistorialDoctor.setFocusPainted(false);

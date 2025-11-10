@@ -21,18 +21,18 @@ public class Main {
             // );
 
         } catch (Exception e) {
-            System.err.println("⚠️ No se pudo configurar el Look and Feel: " + e.getMessage());
+            System.err.println(" No se pudo configurar el Look and Feel: " + e.getMessage());
             // La aplicación continuará con el Look and Feel por defecto
         }
 
         // Mostrar información del sistema en consola
         System.out.println("════════════════════════════════════════════");
-        System.out.println("   🏥 SISTEMA DE GESTIÓN MÉDICA");
+        System.out.println("   SISTEMA DE GESTIÓN MÉDICA");
         System.out.println("════════════════════════════════════════════");
-        System.out.println("📅 Fecha de inicio: " + java.time.LocalDateTime.now().format(
+        System.out.println(" Fecha de inicio: " + java.time.LocalDateTime.now().format(
                 java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
         ));
-        System.out.println("🚀 Iniciando aplicación...");
+        System.out.println(" Iniciando aplicación...");
         System.out.println();
 
         // Crear y mostrar el formulario de login en el Event Dispatch Thread
@@ -44,11 +44,11 @@ public class Main {
                     FrmLogin loginForm = new FrmLogin();
                     loginForm.setVisible(true);
 
-                    System.out.println("✅ Formulario de login iniciado correctamente");
+                    System.out.println(" Formulario de login iniciado correctamente");
                     System.out.println();
 
                 } catch (Exception e) {
-                    System.err.println("❌ Error al iniciar el formulario de login:");
+                    System.err.println(" Error al iniciar el formulario de login:");
                     e.printStackTrace();
 
                     // Mostrar mensaje de error al usuario

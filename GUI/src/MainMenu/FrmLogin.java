@@ -34,7 +34,7 @@ public class FrmLogin extends javax.swing.JFrame {
         // Configuraciones adicionales
         setupForm();
         
-        System.out.println("✅ FrmLogin inicializado");
+        System.out.println(" FrmLogin inicializado");
     }
     
     /**
@@ -54,19 +54,19 @@ public class FrmLogin extends javax.swing.JFrame {
             
             if (registered) {
                 System.out.println("════════════════════════════════════════════");
-                System.out.println("✅ USUARIO ADMINISTRADOR CREADO");
+                System.out.println(" USUARIO ADMINISTRADOR CREADO");
                 System.out.println("════════════════════════════════════════════");
-                System.out.println("   📋 ID: 1234");
-                System.out.println("   🔑 Contraseña: aaa123");
-                System.out.println("   👤 Nombre: Administrador del Sistema");
-                System.out.println("   📧 Email: admin@sistemmedico.com");
-                System.out.println("   🎭 Rol: ADMIN");
+                System.out.println("    ID: 1234");
+                System.out.println("    Contraseña: aaa123");
+                System.out.println("    Nombre: Administrador del Sistema");
+                System.out.println("    Email: admin@sistemmedico.com");
+                System.out.println("    Rol: ADMIN");
                 System.out.println("════════════════════════════════════════════");
             } else {
-                System.out.println("ℹ️  Usuario administrador ya existe en el sistema");
+                System.out.println("  Usuario administrador ya existe en el sistema");
             }
         } catch (Exception e) {
-            System.err.println("❌ Error al crear usuario administrador: " + e.getMessage());
+            System.err.println("Error al crear usuario administrador: " + e.getMessage());
             e.printStackTrace();
         }
     }

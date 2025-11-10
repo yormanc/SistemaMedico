@@ -28,7 +28,7 @@ public class FrmListDoctors extends javax.swing.JFrame {
         jPanelMain.setBackground(new Color(245, 245, 245));
         
         // Título
-        JLabel jlblTitulo = new JLabel("👨‍⚕️ Listado de Todos los Doctores");
+        JLabel jlblTitulo = new JLabel(" Listado de Todos los Doctores");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(0, 102, 204)); // Color azul acorde al menú
         jPanelMain.add(jlblTitulo, BorderLayout.NORTH);

@@ -133,7 +133,7 @@ public class FrmAddDoctor extends javax.swing.JFrame {
      */
     private void loadSpecialities() {
         try {
-            // ✅ SOLUCIÓN: Usar método público en lugar de reflexión
+            //  SOLUCIÓN: Usar método público en lugar de reflexión
             repositories.SpecialityRepository specialityRepo = medicService.getSpecialityRepository();
 
             List<Speciality> specialities = specialityRepo.getAll();
@@ -212,10 +212,10 @@ public class FrmAddDoctor extends javax.swing.JFrame {
 
         // 3. Mostrar resultado
         if (success) {
-            JOptionPane.showMessageDialog(this, "✅ Doctor '" + fullName + "' registrado con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Doctor '" + fullName + "' registrado con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
             dispose(); // Cierra la ventana tras el éxito
         } else {
-            JOptionPane.showMessageDialog(this, "❌ Error al registrar el doctor. Es posible que el ID ya esté en uso.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Error al registrar el doctor. Es posible que el ID ya esté en uso.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

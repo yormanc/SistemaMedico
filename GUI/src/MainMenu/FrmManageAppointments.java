@@ -51,7 +51,7 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         jPanelSearch.setBackground(new Color(245, 245, 245));
 
         // Título
-        JLabel jlblTitulo = new JLabel("🔍 Modificar / Eliminar Cita");
+        JLabel jlblTitulo = new JLabel(" Modificar / Eliminar Cita");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(52, 152, 219));
         
@@ -109,12 +109,12 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         jPanelDetails.add(jspDiagnostic, gbc);
         
         // --- Panel de Botones de Acción ---
-        jbtnModify = new JButton("💾 Modificar Cita");
+        jbtnModify = new JButton(" Modificar Cita");
         jbtnModify.addActionListener(e -> jbtnModifyActionPerformed());
         jbtnModify.setBackground(new Color(46, 204, 113));
         jbtnModify.setForeground(Color.WHITE);
 
-        jbtnDelete = new JButton("🗑️ Eliminar Cita");
+        jbtnDelete = new JButton("️ Eliminar Cita");
         jbtnDelete.addActionListener(e -> jbtnDeleteActionPerformed());
         jbtnDelete.setBackground(new Color(231, 76, 60));
         jbtnDelete.setForeground(Color.WHITE);
@@ -193,13 +193,13 @@ public class FrmManageAppointments extends javax.swing.JFrame {
 
             if (foundAppointment != null) {
                 loadAppointmentData(foundAppointment);
-                JOptionPane.showMessageDialog(this, "✅ Cita encontrada.", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Cita encontrada.", "Búsqueda Exitosa", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 clearFields();
-                JOptionPane.showMessageDialog(this, "❌ Cita con ID " + id + " no encontrada.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Cita con ID " + id + " no encontrada.", "Error de Búsqueda", JOptionPane.ERROR_MESSAGE);
             }
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "❌ Por favor, ingrese un ID de cita válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Por favor, ingrese un ID de cita válido (número entero).", "Error de Entrada", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -224,17 +224,17 @@ public class FrmManageAppointments extends javax.swing.JFrame {
             boolean success = medicService.updateAppointment(currentAppointment, newStatus); 
 
             if (success) {
-                JOptionPane.showMessageDialog(this, "✅ Cita modificada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Cita modificada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 // Opcional: Recargar los datos para confirmar
                 loadAppointmentData(currentAppointment);
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al modificar la cita en el sistema.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Error al modificar la cita en el sistema.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (DateTimeParseException e) {
-             JOptionPane.showMessageDialog(this, "❌ Formato de Fecha/Hora inválido. Use YYYY-MM-DD HH:MM.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(this, " Formato de Fecha/Hora inválido. Use YYYY-MM-DD HH:MM.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "❌ Ocurrió un error inesperado al modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, " Ocurrió un error inesperado al modificar: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -255,12 +255,12 @@ public class FrmManageAppointments extends javax.swing.JFrame {
             boolean success = medicService.removeAppointment(currentAppointment);
             
             if (success) {
-                JOptionPane.showMessageDialog(this, "🗑️ Cita eliminada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Cita eliminada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 clearFields();
                 setFieldsEditable(false);
                 jtfAppointmentId.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "❌ Error al eliminar la cita.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, " Error al eliminar la cita.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
