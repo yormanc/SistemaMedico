@@ -5,11 +5,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import enumerations.UserRole;
+import enums.UserRole;
 import models.Appointment;
 import models.Patient;
 import models.Doctor;
-import Services.MedicSystemService;
+import services.MedicSystemService;
 
 /**
  * Formulario genérico para ver el historial de citas de un Paciente o un Doctor.

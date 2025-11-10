@@ -1,6 +1,7 @@
-import javax.swing.JOptionPane;
-import services.MedicSystemFacade;
 import models.Speciality;
+import services.MedicSystemFacade;
+
+import javax.swing.*;
 import java.util.List;
 
 /**

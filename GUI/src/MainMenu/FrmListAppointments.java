@@ -6,7 +6,7 @@ import java.awt.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import models.Appointment;
-import Services.MedicSystemService;
+import services.MedicSystemService;
 
 /**
  * Formulario para listar todas las citas médicas registradas en el sistema.

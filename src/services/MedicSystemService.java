@@ -1,10 +1,13 @@
 package services;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import enumerations.*;
+import enums.AppointmentStatus;
+import enums.UserRole;
 import models.*;
 import repositories.*;
+import services.auth.AuthenticationService;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Servicio principal del sistema médico
@@ -127,6 +130,7 @@ public class MedicSystemService {
             return false;
         }
     }
+
     
     /**
      * Inicia sesión de un usuario
@@ -214,7 +218,7 @@ public class MedicSystemService {
     /**
      * Actualiza el estado de una cita
      */
-    public boolean updateAppointment(Appointment appointment, AppoinmnetStatus status) {
+    public boolean updateAppointment(Appointment appointment,AppointmentStatus status) {
         try {
             appointment.setStatus(status);
             return appointmentRepository.update(appointment);
@@ -275,8 +279,8 @@ public class MedicSystemService {
     /**
      * Obtiene las citas programadas de un doctor
      */
-    public List<Appointment> viewScheduledAppointmentsDoctor(Doctor doctor, AppoinmnetStatus status) {
-        return appointmentRepository.getByDoctorAndStatus(doctor, AppoinmnetStatus.SCHEDULED);
+    public List<Appointment> viewScheduledAppointmentsDoctor(Doctor doctor, AppointmentStatus status) {
+        return appointmentRepository.getByDoctorAndStatus(doctor, status.SCHEDULED);
     }
     
     /**
@@ -284,5 +288,17 @@ public class MedicSystemService {
      */
     public PatientRepository getPatientRepository() {
         return patientRepository;
+    }
+
+    public DoctorRepository getDoctorRepository() {
+        return  doctorRepository;
+    }
+
+    public AppoinmentRepository getAppointmentRepository() {
+        return  appointmentRepository;
+    }
+
+    public SpecialityRepository getSpecialityRepository() {
+        return specialityRepository;
     }
 }

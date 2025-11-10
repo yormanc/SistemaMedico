@@ -1,6 +1,8 @@
+import services.MedicSystemService;
+
 import javax.swing.*;
 import java.awt.*;
-import Services.MedicSystemService;
+
 
 
 /**
@@ -108,7 +110,7 @@ public class FrmPatientMenu extends javax.swing.JFrame {
     }
 
     private void jbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {
-        FrmSearch frm = new FrmSearch(medicService.getPatientRepository(), medicService);
+        FrmSearch frm = new FrmSearch(medicService);
         frm.setVisible(true);
         frm.setLocationRelativeTo(this);
     }

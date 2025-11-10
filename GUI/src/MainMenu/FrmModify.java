@@ -1,6 +1,7 @@
-import javax.swing.JOptionPane;
 import models.Patient;
-import services.MedicSystemFacade;
+import services.MedicSystemService;
+
+import javax.swing.*;
 
 /**
  * Formulario para modificar un paciente
@@ -9,9 +10,9 @@ import services.MedicSystemFacade;
 public class FrmModify extends javax.swing.JFrame {
 
     private final Patient currentPatient;
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
     
-    public FrmModify(MedicSystemFacade systemFacade, Patient patient) {
+    public FrmModify(MedicSystemService systemFacade, Patient patient) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }

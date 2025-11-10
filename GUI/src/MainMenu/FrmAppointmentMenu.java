@@ -1,9 +1,9 @@
 import javax.swing.*;
 
-import enumerations.UserRole;
+import enums.UserRole;
 
 import java.awt.*;
-import Services.MedicSystemService;
+import services.MedicSystemService;
 
 /**
  * Menú de gestión de citas médicas

@@ -1,6 +1,8 @@
-import javax.swing.*;
-import Services.MedicSystemService;
 import models.Speciality;
+import services.MedicSystemService;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Formulario de búsqueda de especialidades
@@ -220,7 +222,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             }
             
             // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
-            Speciality speciality = medicService.findSpecialityById(id);
+            Speciality speciality = medicService.getSpecialityRepository().searchById(id);
             
             if (speciality != null) {
                 FrmModifySpeciality frmModify = new FrmModifySpeciality(speciality, medicService);
@@ -277,7 +279,7 @@ public class FrmSearchSpeciality extends javax.swing.JFrame {
             }
             
             // ✅ BUSCAR USANDO MÉTODO PÚBLICO DEL SERVICIO
-            Speciality speciality = medicService.findSpecialityById(id);
+            Speciality speciality = medicService.getSpecialityRepository().searchById(id);
             
             if (speciality != null) {
                 FrmDeleteSpeciality frmDelete = new FrmDeleteSpeciality();

@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import Services.MedicSystemService;
+import services.MedicSystemService;
 
 /**
  * Menú de gestión de doctores

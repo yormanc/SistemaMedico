@@ -1,7 +1,9 @@
+import models.Speciality;
+import services.MedicSystemService;
+
 import javax.swing.*;
 import java.awt.*;
-import Services.MedicSystemService;
-import repositories.SpecialityRepository;
+import java.util.ArrayList;
 
 /**
  * Menú de gestión de especialidades
@@ -222,7 +224,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
             // ✅ USAR EL MÉTODO PÚBLICO DEL SERVICIO
-            List<Speciality> specialities = medicService.viewAllSpecialities();
+            ArrayList<Speciality> specialities = medicService.getSpecialityRepository().getAll();
             
             if (specialities == null || specialities.isEmpty()) {
                 JOptionPane.showMessageDialog(this,

@@ -1,6 +1,7 @@
-import javax.swing.JOptionPane;
 import models.Patient;
-import services.MedicSystemFacade;
+import services.MedicSystemService;
+
+import javax.swing.*;
 
 /**
  * Formulario para buscar un paciente
@@ -8,9 +9,9 @@ import services.MedicSystemFacade;
  */
 public class FrmSearch extends javax.swing.JFrame {
 
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
     
-    public FrmSearch(MedicSystemFacade systemFacade) {
+    public FrmSearch(MedicSystemService systemFacade) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }
@@ -154,7 +155,7 @@ public class FrmSearch extends javax.swing.JFrame {
                 return;
             }
             
-            Patient patient = systemFacade.getPatientById(id);
+            Patient patient = systemFacade.getPatientRepository().searchById(id);
             
             if (patient != null) {
                 FrmModify frmModify = new FrmModify(systemFacade, patient);
@@ -208,7 +209,7 @@ public class FrmSearch extends javax.swing.JFrame {
                 return;
             }
             
-            Patient patient = systemFacade.getPatientById(id);
+            Patient patient = systemFacade.getPatientRepository().searchById(id);
             
             if (patient != null) {
                 FrmDelete frmDelete = new FrmDelete(systemFacade, patient);

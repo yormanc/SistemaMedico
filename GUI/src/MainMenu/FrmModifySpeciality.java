@@ -1,32 +1,38 @@
+import models.Speciality;
+import services.MedicSystemService;
+
 import javax.swing.*;
-import Services.MedicSystemService;
+import java.awt.*;
 
 /**
- * Formulario para agregar nueva especialidad
- * USA MedicSystemService para garantizar repositorios compartidos
+ * Formulario para modificar especialidad
  */
-public class FrmAddSpeciality extends javax.swing.JFrame {
+public class FrmModifySpeciality extends javax.swing.JFrame {
 
     private final MedicSystemService medicService;
-    
-    /**
-     * Constructor por defecto
-     */
-    public FrmAddSpeciality() {
-        this.medicService = new MedicSystemService();
-        initComponents();
-        setLocationRelativeTo(null);
-    }
-    
-    /**
-     * Constructor con inyección de dependencias
-     */
-    public FrmAddSpeciality(MedicSystemService medicService) {
+    private final Speciality originalSpeciality;
+
+    public FrmModifySpeciality(Speciality speciality, MedicSystemService medicService) {
+        this.originalSpeciality = speciality;
         this.medicService = medicService;
         initComponents();
+        loadSpecialityData();
         setLocationRelativeTo(null);
     }
-    
+
+    /**
+     * Carga los datos de la especialidad en los campos
+     */
+    private void loadSpecialityData() {
+        if (originalSpeciality != null) {
+            jtextId.setText(String.valueOf(originalSpeciality.getSpecialityId()));
+            jtextId.setEnabled(false); // El ID no se puede modificar
+            jtextNombre.setText(originalSpeciality.getName());
+            jtextAreaDescripcion.setText(originalSpeciality.getDescription());
+        }
+    }
+
+
     private void initComponents() {
         jPanelMain = new javax.swing.JPanel();
         jPanelHeader = new javax.swing.JPanel();
@@ -45,10 +51,9 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         jbtnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Agregar Especialidad Médica");
+        setTitle("Modificar Especialidad");
         setResizable(false);
 
-        // Panel principal
         jPanelMain.setBackground(new java.awt.Color(245, 245, 245));
         jPanelMain.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
@@ -56,9 +61,9 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         jPanelHeader.setBackground(new java.awt.Color(245, 245, 245));
         
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 26));
-        jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
+        jlblTitulo.setForeground(new java.awt.Color(52, 152, 219));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("➕ AGREGAR ESPECIALIDAD");
+        jlblTitulo.setText("✏️ MODIFICAR ESPECIALIDAD");
         
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
@@ -82,7 +87,6 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             BorderFactory.createEmptyBorder(20, 20, 20, 20)
         ));
 
-        // Labels con estilo mejorado
         jlblId.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jlblId.setForeground(new java.awt.Color(52, 73, 94));
         jlblId.setText("ID de Especialidad:");
@@ -92,7 +96,9 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        jtextId.setToolTipText("Ingrese un número único para identificar la especialidad");
+        jtextId.setEnabled(false);
+        jtextId.setBackground(new java.awt.Color(230, 230, 230));
+        jtextId.setToolTipText("El ID no se puede modificar");
 
         jlblNombre.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jlblNombre.setForeground(new java.awt.Color(52, 73, 94));
@@ -103,7 +109,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
             BorderFactory.createEmptyBorder(5, 10, 5, 10)
         ));
-        jtextNombre.setToolTipText("Ej: Cardiología, Pediatría, Dermatología");
+        jtextNombre.setToolTipText("Modifique el nombre de la especialidad");
 
         jlblDescripcion.setFont(new java.awt.Font("Segoe UI", 1, 14));
         jlblDescripcion.setForeground(new java.awt.Color(52, 73, 94));
@@ -118,7 +124,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             BorderFactory.createLineBorder(new java.awt.Color(189, 195, 199), 1),
             BorderFactory.createEmptyBorder(8, 10, 8, 10)
         ));
-        jtextAreaDescripcion.setToolTipText("Describa brevemente el área de esta especialidad médica");
+        jtextAreaDescripcion.setToolTipText("Modifique la descripción de la especialidad");
         jScrollPane1.setViewportView(jtextAreaDescripcion);
         jScrollPane1.setBorder(null);
 
@@ -140,10 +146,6 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtextId, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jlblNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jtextNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(jlblDescripcion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,13 +155,13 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
 
         jbtnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 15));
-        jbtnGuardar.setText("💾 Guardar");
+        jbtnGuardar.setText("💾 Guardar Cambios");
         jbtnGuardar.setBackground(new java.awt.Color(46, 204, 113));
         jbtnGuardar.setForeground(Color.WHITE);
         jbtnGuardar.setFocusPainted(false);
         jbtnGuardar.setBorderPainted(false);
         jbtnGuardar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        jbtnGuardar.setToolTipText("Guardar la especialidad en el sistema");
+        jbtnGuardar.setToolTipText("Guardar los cambios realizados");
         jbtnGuardar.addActionListener(evt -> jbtnGuardarActionPerformed(evt));
         jbtnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -177,7 +179,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
         jbtnCancelar.setFocusPainted(false);
         jbtnCancelar.setBorderPainted(false);
         jbtnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        jbtnCancelar.setToolTipText("Cancelar y cerrar el formulario");
+        jbtnCancelar.setToolTipText("Cancelar sin guardar cambios");
         jbtnCancelar.addActionListener(evt -> dispose());
         jbtnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -198,10 +200,9 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanelButtonsLayout.setVerticalGroup(
-            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+            .addComponent(jbtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jbtnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         // Layout principal
@@ -244,74 +245,31 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
 
     private void jbtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener y validar campos antes de parsear
-            String idInput = jtextId.getText().trim();
             String nombreInput = jtextNombre.getText().trim();
             String descripcionInput = jtextAreaDescripcion.getText().trim();
 
             // ✅ Validación 1: Campos vacíos
-            if (idInput.isEmpty() || nombreInput.isEmpty() || descripcionInput.isEmpty()) {
+            if (nombreInput.isEmpty() || descripcionInput.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
                     "⚠️ Todos los campos son obligatorios.\n\n" +
                     "Por favor, complete:\n" +
-                    "• ID de Especialidad\n" +
                     "• Nombre\n" +
                     "• Descripción",
                     "Campos Incompletos",
                     JOptionPane.WARNING_MESSAGE);
                 
-                // Enfocar el primer campo vacío
-                if (idInput.isEmpty()) {
-                    jtextId.requestFocus();
-                } else if (nombreInput.isEmpty()) {
+                if (nombreInput.isEmpty()) {
                     jtextNombre.requestFocus();
                 } else {
                     jtextAreaDescripcion.requestFocus();
                 }
                 return;
             }
-            
-            // ✅ Validación 2: Servicio inicializado
-            if (medicService == null) {
-                JOptionPane.showMessageDialog(this,
-                    "❌ Error crítico: El servicio no está inicializado.\n\n" +
-                    "Por favor, reinicie la aplicación.",
-                    "Error de Sistema",
-                    JOptionPane.ERROR_MESSAGE);
-                return;
-            }
 
-            // ✅ Validación 3: ID numérico válido
-            int id;
-            try {
-                id = Integer.parseInt(idInput);
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this,
-                    "❌ El ID debe ser un número entero válido.\n\n" +
-                    "Ejemplos válidos: 1, 2, 100, 999",
-                    "ID Inválido",
-                    JOptionPane.ERROR_MESSAGE);
-                jtextId.requestFocus();
-                jtextId.selectAll();
-                return;
-            }
-
-            // ✅ Validación 4: ID positivo
-            if (id <= 0) {
-                JOptionPane.showMessageDialog(this,
-                    "❌ El ID debe ser un número positivo mayor a cero.\n\n" +
-                    "ID ingresado: " + id,
-                    "ID Inválido",
-                    JOptionPane.WARNING_MESSAGE);
-                jtextId.requestFocus();
-                jtextId.selectAll();
-                return;
-            }
-
-            // ✅ Validación 5: Nombre no solo números
+            // ✅ Validación 2: Nombre no solo números
             if (nombreInput.matches("\\d+")) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El nombre de la especialidad no puede contener solo números.\n\n" +
+                    "❌ El nombre no puede contener solo números.\n\n" +
                     "Ingrese un nombre descriptivo como:\n" +
                     "• Cardiología\n" +
                     "• Pediatría\n" +
@@ -323,7 +281,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 6: Longitud mínima del nombre
+            // ✅ Validación 3: Longitud mínima del nombre
             if (nombreInput.length() < 3) {
                 JOptionPane.showMessageDialog(this,
                     "❌ El nombre debe tener al menos 3 caracteres.\n\n" +
@@ -335,7 +293,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 7: Longitud máxima del nombre
+            // ✅ Validación 4: Longitud máxima del nombre
             if (nombreInput.length() > 100) {
                 JOptionPane.showMessageDialog(this,
                     "❌ El nombre es demasiado largo (máximo 100 caracteres).\n\n" +
@@ -346,7 +304,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 8: Longitud mínima de la descripción
+            // ✅ Validación 5: Longitud mínima de la descripción
             if (descripcionInput.length() < 10) {
                 JOptionPane.showMessageDialog(this,
                     "❌ La descripción debe tener al menos 10 caracteres.\n\n" +
@@ -357,7 +315,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            // ✅ Validación 9: Longitud máxima de la descripción
+            // ✅ Validación 6: Longitud máxima de la descripción
             if (descripcionInput.length() > 500) {
                 JOptionPane.showMessageDialog(this,
                     "❌ La descripción es demasiado larga (máximo 500 caracteres).\n\n" +
@@ -368,50 +326,55 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 return;
             }
 
-            // ✅ GUARDAR EN EL SISTEMA
-            System.out.println("\n=== INTENTANDO GUARDAR ESPECIALIDAD ===");
-            System.out.println("ID: " + id);
-            System.out.println("Nombre: " + nombreInput);
-            System.out.println("Descripción: " + descripcionInput);
+            // ✅ Verificar si hay cambios
+            boolean hasChanges = !nombreInput.equals(originalSpeciality.getName()) ||
+                                !descripcionInput.equals(originalSpeciality.getDescription());
             
-            boolean isAdded = medicService.addSpeciality(id, nombreInput, descripcionInput);
-
-            if (!isAdded) {
-                System.out.println("❌ NO SE PUDO AGREGAR LA ESPECIALIDAD");
+            if (!hasChanges) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ No se pudo agregar la especialidad.\n\n" +
-                    "Posibles causas:\n" +
-                    "• El ID " + id + " ya está registrado\n" +
-                    "• Error en la base de datos\n\n" +
-                    "Por favor, intente con un ID diferente.",
-                    "Error al Registrar",
+                    "ℹ️ No se detectaron cambios en los datos.\n\n" +
+                    "Modifique al menos un campo para guardar.",
+                    "Sin Cambios",
+                    JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+
+            // ✅ ACTUALIZAR LA ESPECIALIDAD
+            System.out.println("\n=== MODIFICANDO ESPECIALIDAD ===");
+            System.out.println("ID: " + originalSpeciality.getSpecialityId());
+            System.out.println("Nombre anterior: " + originalSpeciality.getName());
+            System.out.println("Nombre nuevo: " + nombreInput);
+            
+            // Actualizar los datos del objeto
+            originalSpeciality.setName(nombreInput);
+            originalSpeciality.setDescription(descripcionInput);
+            
+            // Guardar en el repositorio
+            boolean isUpdated = medicService.updateSpeciality(originalSpeciality);
+
+            if (!isUpdated) {
+                System.out.println("❌ NO SE PUDO ACTUALIZAR LA ESPECIALIDAD");
+                JOptionPane.showMessageDialog(this,
+                    "❌ No se pudo actualizar la especialidad.\n\n" +
+                    "Por favor, intente nuevamente.",
+                    "Error al Actualizar",
                     JOptionPane.ERROR_MESSAGE);
-                jtextId.requestFocus();
-                jtextId.selectAll();
                 return;
             }
 
             // ✅ ÉXITO
-            System.out.println("✅ ESPECIALIDAD AGREGADA EXITOSAMENTE");
+            System.out.println("✅ ESPECIALIDAD ACTUALIZADA EXITOSAMENTE");
             JOptionPane.showMessageDialog(this,
-                "✅ Especialidad agregada exitosamente\n\n" +
-                "ID: " + id + "\n" +
+                "✅ Especialidad actualizada exitosamente\n\n" +
+                "ID: " + originalSpeciality.getSpecialityId() + "\n" +
                 "Nombre: " + nombreInput + "\n\n" +
-                "La especialidad ha sido registrada en el sistema.",
-                "Registro Exitoso",
+                "Los cambios han sido guardados en el sistema.",
+                "Actualización Exitosa",
                 JOptionPane.INFORMATION_MESSAGE);
 
-            // Limpiar los campos después del éxito
-            limpiarCampos();
+            // Cerrar el formulario
+            dispose();
 
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this,
-                "❌ El ID debe contener solo números válidos.\n\n" +
-                "Error: " + e.getMessage(),
-                "Error de Formato",
-                JOptionPane.ERROR_MESSAGE);
-            jtextId.requestFocus();
-            jtextId.selectAll();
         } catch (Exception e) {
             System.err.println("❌ ERROR INESPERADO: " + e.getMessage());
             e.printStackTrace();
@@ -423,18 +386,7 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
                 JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    /**
-     * Limpia todos los campos del formulario
-     */
-    private void limpiarCampos() {
-        jtextId.setText("");
-        jtextNombre.setText("");
-        jtextAreaDescripcion.setText("");
-        jtextId.requestFocus();
-    }
 
-    // Variables de instancia
     private javax.swing.JPanel jPanelMain;
     private javax.swing.JPanel jPanelHeader;
     private javax.swing.JPanel jPanelForm;
@@ -450,5 +402,4 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
     private javax.swing.JTextArea jtextAreaDescripcion;
     private javax.swing.JButton jbtnGuardar;
     private javax.swing.JButton jbtnCancelar;
-    
 }

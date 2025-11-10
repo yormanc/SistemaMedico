@@ -1,9 +1,9 @@
 package repositories;
 
-import java.util.ArrayList;
-
 import interfaces.repositories.IRepositorySpeciality;
 import models.Speciality;
+
+import java.util.ArrayList;
 
 public class SpecialityRepository implements IRepositorySpeciality {
     private final ArrayList<Speciality> specialities;
@@ -131,6 +131,7 @@ public class SpecialityRepository implements IRepositorySpeciality {
             return null;
         }
     }
+
 
     public int count() {
         return specialities.size();

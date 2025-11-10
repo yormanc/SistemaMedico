@@ -1,12 +1,12 @@
+import enums.AppointmentStatus;
+import models.Appointment;
+import services.MedicSystemService;
 
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import enumerations.AppoinmnetStatus;
-import models.Appointment;
-import Services.MedicSystemService;
 
 /**
  * Formulario para Buscar, Modificar y Eliminar Citas
@@ -20,7 +20,7 @@ public class FrmManageAppointments extends javax.swing.JFrame {
     // Componentes del formulario
     private JTextField jtfAppointmentId;
     private JButton jbtnSearch;
-    private JComboBox<AppoinmnetStatus> jcbStatus;
+    private JComboBox<AppointmentStatus> jcbStatus;
     private JTextArea jtaDiagnostic;
     private JLabel jlblPatientName;
     private JLabel jlblDoctorName;
@@ -96,7 +96,7 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         // 4. Estado
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0.0;
         jPanelDetails.add(new JLabel("Estado:"), gbc);
-        jcbStatus = new JComboBox<>(AppoinmnetStatus.values());
+        jcbStatus = new JComboBox<>(AppointmentStatus.values());
         gbc.gridx = 1; gbc.gridy = 3; gbc.weightx = 1.0;
         jPanelDetails.add(jcbStatus, gbc);
 
@@ -212,7 +212,7 @@ public class FrmManageAppointments extends javax.swing.JFrame {
         try {
             // 1. Obtener nuevos valores
             LocalDateTime newDateTime = LocalDateTime.parse(jtfDateTime.getText().trim(), DATE_TIME_FORMATTER);
-            AppoinmnetStatus newStatus = (AppoinmnetStatus) jcbStatus.getSelectedItem();
+            AppointmentStatus newStatus = (AppointmentStatus) jcbStatus.getSelectedItem();
             String newDiagnostic = jtaDiagnostic.getText().trim();
             
             // 2. Actualizar el modelo (solo los campos modificables)

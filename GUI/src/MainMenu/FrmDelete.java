@@ -1,6 +1,7 @@
-import javax.swing.JOptionPane;
 import models.Patient;
-import services.MedicSystemFacade;
+import services.MedicSystemService;
+
+import javax.swing.*;
 
 /**
  * Formulario para eliminar un paciente
@@ -8,10 +9,10 @@ import services.MedicSystemFacade;
  */
 public class FrmDelete extends javax.swing.JFrame {
 
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
     private final Patient currentPatient;
 
-    public FrmDelete(MedicSystemFacade systemFacade, Patient patient) {
+    public FrmDelete(MedicSystemService systemFacade, Patient patient) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }
@@ -182,7 +183,7 @@ public class FrmDelete extends javax.swing.JFrame {
         
         if (confirm == JOptionPane.YES_OPTION) {
             try {
-                boolean success = systemFacade.deletePatient(currentPatient);
+                boolean success = systemFacade.removePatient(currentPatient);
                 
                 if (success) {
                     JOptionPane.showMessageDialog(

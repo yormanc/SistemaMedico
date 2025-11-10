@@ -1,5 +1,6 @@
-import javax.swing.JOptionPane;
-import services.MedicSystemFacade;
+import services.MedicSystemService;
+
+import javax.swing.*;
 
 /**
  * Formulario para agregar un nuevo paciente
@@ -7,9 +8,9 @@ import services.MedicSystemFacade;
  */
 public class FrmAddPatient extends javax.swing.JFrame {
 
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
     
-    public FrmAddPatient(MedicSystemFacade systemFacade) {
+    public FrmAddPatient(MedicSystemService systemFacade) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }

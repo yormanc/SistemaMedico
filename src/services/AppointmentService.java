@@ -1,12 +1,13 @@
 package services;
 
-import interfaces.services.IAppointmentService;
-import interfaces.repositories.IRepositoryAppoinment;
-import models.Appointment;
-import models.Patient;
-import models.Doctor;
 import enums.AppointmentStatus;
+import interfaces.services.IAppointmentService;
+import models.Appointment;
+import models.Doctor;
+import models.Patient;
+import repositories.AppoinmentRepository;
 import repositories.RepositoryManager;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,9 +17,9 @@ import java.util.List;
  */
 public class AppointmentService implements IAppointmentService {
     
-    private final IRepositoryAppoinment appointmentRepository;
+    private final AppoinmentRepository appointmentRepository;
     
-    public AppointmentService(IRepositoryAppoinment appointmentRepository) {
+    public AppointmentService(AppoinmentRepository appointmentRepository) {
         if (appointmentRepository == null) {
             throw new IllegalArgumentException("El repositorio de citas no puede ser nulo");
         }

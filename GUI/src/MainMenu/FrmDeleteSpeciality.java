@@ -1,6 +1,8 @@
-import javax.swing.*;
-import Services.MedicSystemService;
 import models.Speciality;
+import services.MedicSystemService;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Formulario para eliminar especialidad
@@ -270,7 +272,7 @@ public class FrmDeleteSpeciality extends javax.swing.JFrame {
                 return;
             }
             
-            currentSpeciality = medicService.findSpecialityById(id);
+            currentSpeciality = medicService.getSpecialityRepository().searchById(id);
             
             if (currentSpeciality == null) {
                 JOptionPane.showMessageDialog(this, 
