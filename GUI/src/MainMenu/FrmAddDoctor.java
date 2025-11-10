@@ -1,8 +1,9 @@
+import models.Speciality;
+import services.MedicSystemService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import models.Speciality;
-import services.MedicSystemService;
 
 /**
  * Formulario para agregar un nuevo Doctor al sistema.
@@ -10,7 +11,7 @@ import services.MedicSystemService;
 public class FrmAddDoctor extends javax.swing.JFrame {
 
     private final MedicSystemService medicService;
-    
+
     // Componentes del formulario
     private JTextField jtfFullName;
     private JTextField jtfId;
@@ -26,6 +27,8 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Agregar Nuevo Doctor");
+        setSize(550, 450);
+        setMinimumSize(new Dimension(500, 400));
         loadSpecialities();
     }
 
@@ -44,12 +47,12 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         JLabel jlblTitulo = new JLabel("➕ Registrar Nuevo Doctor");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(0, 102, 204));
-        
+
         // Configuración de GridBagLayout
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 5, 8, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
         // --- Campos del formulario ---
         jtfFullName = new JTextField(20);
         jtfId = new JTextField(20);
@@ -57,6 +60,20 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         jtfAge = new JTextField(20);
         jtfEmail = new JTextField(20);
         jcbSpeciality = new JComboBox<>();
+
+        // Configurar renderer para el ComboBox de especialidades
+        jcbSpeciality.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Speciality) {
+                    Speciality spec = (Speciality) value;
+                    setText(spec.getName()); // Ajusta según tu getter
+                }
+                return this;
+            }
+        });
 
         // Helper para agregar filas al GridBagLayout
         int row = 0;
@@ -73,13 +90,13 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         jbtnSave.setForeground(Color.WHITE);
         jbtnSave.setFocusPainted(false);
         jbtnSave.addActionListener(evt -> jbtnSaveActionPerformed());
-        
+
         jbtnCancel = new JButton("Cancelar/Volver");
         jbtnCancel.setBackground(new Color(189, 195, 199));
         jbtnCancel.setForeground(new Color(52, 73, 94));
         jbtnCancel.setFocusPainted(false);
         jbtnCancel.addActionListener(evt -> dispose());
-        
+
         jPanelButtons.add(jbtnCancel);
         jPanelButtons.add(jbtnSave);
 
@@ -88,7 +105,7 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         jPanelHeader.setBackground(new Color(245, 245, 245));
         jPanelHeader.add(jlblTitulo, BorderLayout.NORTH);
         jPanelHeader.add(new JSeparator(), BorderLayout.SOUTH);
-        
+
         jPanelMain.add(jPanelHeader, BorderLayout.NORTH);
         jPanelMain.add(jPanelForm, BorderLayout.CENTER);
         jPanelMain.add(jPanelButtons, BorderLayout.SOUTH);
@@ -98,13 +115,13 @@ public class FrmAddDoctor extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         pack();
     }
-    
+
     /** Helper para agregar un par etiqueta-campo al GridBagLayout */
     private int addFormField(JPanel panel, GridBagConstraints gbc, int row, String labelText, Component field) {
         // Etiqueta
         gbc.gridx = 0; gbc.gridy = row; gbc.weightx = 0.0; gbc.anchor = GridBagConstraints.WEST;
         panel.add(new JLabel(labelText), gbc);
-        
+
         // Campo
         gbc.gridx = 1; gbc.gridy = row; gbc.weightx = 1.0; gbc.anchor = GridBagConstraints.EAST;
         panel.add(field, gbc);
@@ -116,11 +133,9 @@ public class FrmAddDoctor extends javax.swing.JFrame {
      */
     private void loadSpecialities() {
         try {
-            // Usamos reflexión para obtener el SpecialityRepository, igual que en FrmDoctorMenu
-            repositories.SpecialityRepository specialityRepo = 
-                (repositories.SpecialityRepository) medicService.getClass()
-                    .getDeclaredField("specialityRepository").get(medicService);
-            
+            // ✅ SOLUCIÓN: Usar método público en lugar de reflexión
+            repositories.SpecialityRepository specialityRepo = medicService.getSpecialityRepository();
+
             List<Speciality> specialities = specialityRepo.getAll();
             jcbSpeciality.removeAllItems();
 
@@ -128,10 +143,10 @@ public class FrmAddDoctor extends javax.swing.JFrame {
                 jcbSpeciality.addItem(new Speciality(0, "NO DISPONIBLE", "No hay especialidades registradas"));
                 jcbSpeciality.setEnabled(false);
                 jbtnSave.setEnabled(false);
-                JOptionPane.showMessageDialog(this, 
-                    "Advertencia: No hay especialidades registradas. No se puede agregar un doctor.",
-                    "Faltan Datos", 
-                    JOptionPane.WARNING_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Advertencia: No hay especialidades registradas. No se puede agregar un doctor.",
+                        "Faltan Datos",
+                        JOptionPane.WARNING_MESSAGE);
             } else {
                 specialities.forEach(jcbSpeciality::addItem);
                 jcbSpeciality.setEnabled(true);
@@ -139,9 +154,9 @@ public class FrmAddDoctor extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al cargar especialidades: " + e.getMessage(),
-                "Error de Carga",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error al cargar especialidades: " + e.getMessage(),
+                    "Error de Carga",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
             jbtnSave.setEnabled(false);
         }
@@ -163,7 +178,7 @@ public class FrmAddDoctor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Todos los campos deben ser completados.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         int id, age;
         try {
             id = Integer.parseInt(idText);
@@ -173,7 +188,7 @@ public class FrmAddDoctor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "El ID y la Edad deben ser números enteros positivos válidos.", "Error de Formato", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+
         if (password.length() < 6) {
             JOptionPane.showMessageDialog(this, "La contraseña debe tener al menos 6 caracteres.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
@@ -184,10 +199,10 @@ public class FrmAddDoctor extends javax.swing.JFrame {
 
         // 3. Mostrar resultado
         if (success) {
-            JOptionPane.showMessageDialog(this, "Doctor '" + fullName + "' registrado con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "✅ Doctor '" + fullName + "' registrado con éxito.", "Registro Exitoso", JOptionPane.INFORMATION_MESSAGE);
             dispose(); // Cierra la ventana tras el éxito
         } else {
-            JOptionPane.showMessageDialog(this, "Error al registrar el doctor. Es posible que el ID ya esté en uso.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "❌ Error al registrar el doctor. Es posible que el ID ya esté en uso.", "Error de Registro", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

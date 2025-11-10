@@ -30,6 +30,8 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         loadComboboxData(); // Carga pacientes y doctores al iniciar
         setTitle("Agendar Nueva Cita");
+        setSize(600, 500); // Establecer tamaño de la ventana
+        setMinimumSize(new Dimension(500, 450)); // Tamaño mínimo
     }
 
     private void initComponents() {
@@ -37,23 +39,23 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         JPanel jPanelMain = new JPanel(new BorderLayout(10, 10));
         JPanel jPanelForm = new JPanel(new GridBagLayout());
         JPanel jPanelButtons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        
+
         // Estilo general
         jPanelMain.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
         jPanelMain.setBackground(new Color(245, 245, 245));
         jPanelForm.setBackground(new Color(245, 245, 245));
         jPanelButtons.setBackground(new Color(245, 245, 245));
-        
+
         // Configuración de GridBagLayout
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(8, 5, 8, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        
+
         // Título
         JLabel jlblTitulo = new JLabel("➕ Agendar Nueva Cita");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(46, 204, 113));
-        
+
         // Campos del formulario
         jcbPatient = new JComboBox<>();
         jcbDoctor = new JComboBox<>();
@@ -61,58 +63,85 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         jtfTime = new JTextField(10);
         jtaDiagnostic = new JTextArea(4, 20);
         JScrollPane jspDiagnostic = new JScrollPane(jtaDiagnostic);
-        
+
+        // Configurar renderers personalizados para los ComboBox
+        jcbPatient.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Patient) {
+                    Patient patient = (Patient) value;
+                    setText(patient.getFullName()); // Ajusta según el nombre del método getter
+                }
+                return this;
+            }
+        });
+
+        jcbDoctor.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value,
+                                                          int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Doctor) {
+                    Doctor doctor = (Doctor) value;
+                    // Muestra nombre y especialidad
+                    setText(doctor.getFullName() + " - " + doctor.getSpeciality().getName());
+                }
+                return this;
+            }
+        });
+
         // Establecer un formato de ejemplo
         jtfDate.setToolTipText("Formato: YYYY-MM-DD");
         jtfTime.setToolTipText("Formato: HH:MM (24h)");
-        
+
         // Etiqueta y Campo Paciente
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.0;
         jPanelForm.add(new JLabel("Paciente:"), gbc);
         gbc.gridx = 1; gbc.gridy = 0; gbc.weightx = 1.0;
         jPanelForm.add(jcbPatient, gbc);
-        
+
         // Etiqueta y Campo Doctor
         gbc.gridx = 0; gbc.gridy = 1; gbc.weightx = 0.0;
         jPanelForm.add(new JLabel("Doctor:"), gbc);
         gbc.gridx = 1; gbc.gridy = 1; gbc.weightx = 1.0;
         jPanelForm.add(jcbDoctor, gbc);
-        
+
         // Etiqueta y Campo Fecha
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.0;
         jPanelForm.add(new JLabel("Fecha (YYYY-MM-DD):"), gbc);
         gbc.gridx = 1; gbc.gridy = 2; gbc.weightx = 1.0;
         jPanelForm.add(jtfDate, gbc);
-        
+
         // Etiqueta y Campo Hora
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0.0;
         jPanelForm.add(new JLabel("Hora (HH:MM):"), gbc);
         gbc.gridx = 1; gbc.gridy = 3; gbc.weightx = 1.0;
         jPanelForm.add(jtfTime, gbc);
-        
+
         // Etiqueta y Campo Diagnóstico/Motivo
         gbc.gridx = 0; gbc.gridy = 4; gbc.weightx = 0.0; gbc.anchor = GridBagConstraints.NORTH;
         jPanelForm.add(new JLabel("Motivo/Diagnóstico:"), gbc);
         gbc.gridx = 1; gbc.gridy = 4; gbc.weightx = 1.0; gbc.anchor = GridBagConstraints.CENTER;
         jPanelForm.add(jspDiagnostic, gbc);
-        
+
         // Botones
         jbtnSave = new JButton("Guardar Cita");
         jbtnSave.setBackground(new Color(46, 204, 113));
         jbtnSave.setForeground(Color.WHITE);
         jbtnSave.addActionListener(evt -> jbtnSaveActionPerformed());
-        
+
         jbtnCancel = new JButton("Cancelar");
         jbtnCancel.setBackground(new Color(189, 195, 199));
         jbtnCancel.setForeground(new Color(52, 73, 94));
         jbtnCancel.addActionListener(evt -> dispose());
-        
+
         jPanelButtons.add(jbtnCancel);
         jPanelButtons.add(jbtnSave);
 
         // Armar el Main Panel
         jPanelMain.add(jlblTitulo, BorderLayout.NORTH);
-        jPanelMain.add(new JSeparator(), BorderLayout.CENTER);
         jPanelMain.add(jPanelForm, BorderLayout.CENTER);
         jPanelMain.add(jPanelButtons, BorderLayout.SOUTH);
 
@@ -121,7 +150,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         pack();
     }
-    
+
     /**
      * Carga los datos de Pacientes y Doctores en los JComboBox
      */
@@ -135,7 +164,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         } else {
             patients.forEach(jcbPatient::addItem);
         }
-        
+
         // Cargar Doctores
         List<Doctor> doctors = medicService.getDoctorRepository().getAll();
         jcbDoctor.removeAllItems();
@@ -167,28 +196,25 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             String dateTimeStr = dateStr + " " + timeStr;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
-            
-            // Simulación de la utilidad DateTimeConverter. Este método debe existir en tu proyecto
-            // LocalDateTime dateTime = DateTimeConverter.toLocalDateTime(dateStr, timeStr); 
 
             // Llamar al servicio para programar la cita
             boolean success = medicService.scheduleAppointment(dateTime, selectedPatient, selectedDoctor, diagnostic);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, " Cita agendada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "✅ Cita agendada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, " Error al agendar la cita. Verifique la disponibilidad.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "❌ Error al agendar la cita. Verifique la disponibilidad.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (java.time.format.DateTimeParseException e) {
-            JOptionPane.showMessageDialog(this, 
-                " Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.", 
-                "Error de Formato", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "❌ Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.",
+                    "Error de Formato", JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                " Ocurrió un error inesperado: " + e.getMessage(), 
-                "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,
+                    "❌ Ocurrió un error inesperado: " + e.getMessage(),
+                    "Error de Sistema", JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
