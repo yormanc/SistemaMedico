@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class FrmSpecialityMenu extends javax.swing.JFrame {
 
     private final MedicSystemService medicService;
-    
+
     public FrmSpecialityMenu(MedicSystemService medicService) {
         this.medicService = medicService;
         initComponents();
@@ -39,31 +39,31 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
 
         // Panel de encabezado
         jPanelHeader.setBackground(new java.awt.Color(245, 245, 245));
-        
+
         jlblTitulo.setFont(new java.awt.Font("Segoe UI", 1, 28));
         jlblTitulo.setForeground(new java.awt.Color(0, 102, 204));
         jlblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jlblTitulo.setText("GESTIÓN DE ESPECIALIDADES");
-        jlblTitulo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/medical.png"))); // Opcional
-        
+        jlblTitulo.setText("🏥 GESTIÓN DE ESPECIALIDADES");
+        // ✅ LÍNEA PROBLEMÁTICA ELIMINADA - No hay carpeta /icons/ en el proyecto
+
         javax.swing.GroupLayout jPanelHeaderLayout = new javax.swing.GroupLayout(jPanelHeader);
         jPanelHeader.setLayout(jPanelHeaderLayout);
         jPanelHeaderLayout.setHorizontalGroup(
-            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jlblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jSeparator1)
+                jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jlblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jSeparator1)
         );
         jPanelHeaderLayout.setVerticalGroup(
-            jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelHeaderLayout.createSequentialGroup()
-                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                jPanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelHeaderLayout.createSequentialGroup()
+                                .addComponent(jlblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         // Panel de botones
         jPanelButtons.setBackground(new java.awt.Color(245, 245, 245));
-        
+
         // Botón Agregar
         jbtnAgregar.setFont(new java.awt.Font("Segoe UI", 0, 16));
         jbtnAgregar.setText("➕ Agregar Nueva Especialidad");
@@ -143,53 +143,53 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         javax.swing.GroupLayout jPanelButtonsLayout = new javax.swing.GroupLayout(jPanelButtons);
         jPanelButtons.setLayout(jPanelButtonsLayout);
         jPanelButtonsLayout.setHorizontalGroup(
-            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jbtnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
-            .addComponent(jbtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jbtnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jbtnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jbtnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                        .addComponent(jbtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jbtnVolver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanelButtonsLayout.setVerticalGroup(
-            jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelButtonsLayout.createSequentialGroup()
-                .addComponent(jbtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(jbtnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jbtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                jPanelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelButtonsLayout.createSequentialGroup()
+                                .addComponent(jbtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(jbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(15, 15, 15)
+                                .addComponent(jbtnListar, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jbtnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         // Layout principal
         javax.swing.GroupLayout jPanelMainLayout = new javax.swing.GroupLayout(jPanelMain);
         jPanelMain.setLayout(jPanelMainLayout);
         jPanelMainLayout.setHorizontalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+                jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelHeader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanelMainLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanelMainLayout.setVerticalGroup(
-            jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMainLayout.createSequentialGroup()
-                .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                jPanelMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanelMainLayout.createSequentialGroup()
+                                .addComponent(jPanelHeader, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jPanelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanelMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -201,9 +201,9 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
             frm.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al abrir el formulario: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error al abrir el formulario: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -214,9 +214,9 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
             frm.setVisible(true);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al abrir el formulario: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error al abrir el formulario: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -225,32 +225,32 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         try {
             // ✅ USAR EL MÉTODO PÚBLICO DEL SERVICIO
             ArrayList<Speciality> specialities = medicService.getSpecialityRepository().getAll();
-            
+
             if (specialities == null || specialities.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                    "No hay especialidades registradas en el sistema.\n\n" +
-                    "Por favor, agregue especialidades primero.",
-                    "Lista Vacía",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        "No hay especialidades registradas en el sistema.\n\n" +
+                                "Por favor, agregue especialidades primero.",
+                        "Lista Vacía",
+                        JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            
+
             // Crear diálogo para mostrar la lista
             JDialog dialog = new JDialog(this, "Lista de Especialidades Médicas", true);
             dialog.setSize(750, 450);
             dialog.setLocationRelativeTo(this);
-            
+
             // Crear tabla con los datos
             String[] columnNames = {"ID", "Nombre", "Descripción"};
             Object[][] data = new Object[specialities.size()][3];
-            
+
             for (int i = 0; i < specialities.size(); i++) {
                 Speciality s = specialities.get(i);
                 data[i][0] = s.getSpecialityId();
                 data[i][1] = s.getName();
                 data[i][2] = s.getDescription();
             }
-            
+
             JTable table = new JTable(data, columnNames);
             table.setEnabled(false);
             table.setRowHeight(30);
@@ -259,45 +259,45 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
             table.getTableHeader().setBackground(new java.awt.Color(0, 102, 204));
             table.getTableHeader().setForeground(Color.WHITE);
             table.setSelectionBackground(new java.awt.Color(230, 240, 255));
-            
+
             // Ajustar ancho de columnas
             table.getColumnModel().getColumn(0).setPreferredWidth(60);   // ID
             table.getColumnModel().getColumn(1).setPreferredWidth(180);  // Nombre
             table.getColumnModel().getColumn(2).setPreferredWidth(400);  // Descripción
-            
+
             // Centrar el contenido de la columna ID
-            javax.swing.table.DefaultTableCellRenderer centerRenderer = 
-                new javax.swing.table.DefaultTableCellRenderer();
+            javax.swing.table.DefaultTableCellRenderer centerRenderer =
+                    new javax.swing.table.DefaultTableCellRenderer();
             centerRenderer.setHorizontalAlignment(JLabel.CENTER);
             table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
-            
+
             JScrollPane scrollPane = new JScrollPane(table);
             scrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            
+
             JPanel panel = new JPanel(new BorderLayout());
             panel.setBackground(Color.WHITE);
             panel.add(scrollPane, BorderLayout.CENTER);
-            
+
             // Panel inferior con información
             JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             bottomPanel.setBackground(new java.awt.Color(240, 248, 255));
             bottomPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
-            
+
             JLabel lblTotal = new JLabel("📊 Total de especialidades registradas: " + specialities.size());
             lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 15));
             lblTotal.setForeground(new java.awt.Color(0, 102, 204));
             bottomPanel.add(lblTotal);
-            
+
             panel.add(bottomPanel, BorderLayout.SOUTH);
-            
+
             dialog.add(panel);
             dialog.setVisible(true);
-            
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al listar especialidades:\n" + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error al listar especialidades:\n" + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
@@ -312,7 +312,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
     private javax.swing.JButton jbtnBuscar;
     private javax.swing.JButton jbtnListar;
     private javax.swing.JButton jbtnVolver;
-    
+
     /**
      * Método main para testing independiente
      */
@@ -322,7 +322,7 @@ public class FrmSpecialityMenu extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+
         java.awt.EventQueue.invokeLater(() -> {
             MedicSystemService service = new MedicSystemService();
             new FrmSpecialityMenu(service).setVisible(true);

@@ -1,10 +1,10 @@
 [
   {
-    "fullName": "Santiago Acevedo",
-    "age": 40,
-    "email": "santiacevedo@udea.edu.co",
-    "id": 1122334455,
-    "password": "123456",
+    "fullName": "Yorman Cortez",
+    "age": 88,
+    "email": "yormitan@udea.edu",
+    "id": 696969,
+    "password": "1234567",
     "role": "DOCTOR",
     "specialityId": 123
   }

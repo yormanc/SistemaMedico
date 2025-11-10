@@ -1,6 +1,7 @@
 import models.Doctor;
 import models.Speciality;
 import services.MedicSystemFacade;
+import services.MedicSystemService;
 
 import javax.swing.*;
 import java.util.List;
@@ -10,10 +11,10 @@ import java.util.List;
  * ACTUALIZADO para usar MedicSystemFacade
  */
 public class FrmModifyDoctor extends javax.swing.JFrame {
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
     private final Doctor currentDoctor;
     
-    public FrmModifyDoctor(MedicSystemFacade systemFacade, Doctor doctor) {
+    public FrmModifyDoctor(MedicSystemService systemFacade, Doctor doctor) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }
@@ -30,7 +31,7 @@ public class FrmModifyDoctor extends javax.swing.JFrame {
     
     private void loadSpecialities() {
         jcmbEspecialidad.removeAllItems();
-        List<Speciality> specialities = systemFacade.getAllSpecialities();
+        List<Speciality> specialities = systemFacade.getSpecialityRepository().getAll();
         
         for (Speciality s : specialities) {
             jcmbEspecialidad.addItem(s);

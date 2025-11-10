@@ -311,19 +311,19 @@ public class FrmAddSpeciality extends javax.swing.JFrame {
             }
 
             // ✅ Validación 5: Nombre no solo números
-            if (nombreInput.matches("\\d+")) {
+            if (!nombreInput.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
                 JOptionPane.showMessageDialog(this,
-                    "❌ El nombre de la especialidad no puede contener solo números.\n\n" +
-                    "Ingrese un nombre descriptivo como:\n" +
-                    "• Cardiología\n" +
-                    "• Pediatría\n" +
-                    "• Dermatología",
-                    "Nombre Inválido",
-                    JOptionPane.WARNING_MESSAGE);
+                        "❌ El nombre solo puede contener letras y espacios.\n\n" +
+                                "No se permiten:\n" +
+                                "• Números\n" +
+                                "• Caracteres especiales (@, #, $, etc.)",
+                        "Nombre Inválido",
+                        JOptionPane.WARNING_MESSAGE);
                 jtextNombre.requestFocus();
                 jtextNombre.selectAll();
                 return;
             }
+
             
             // ✅ Validación 6: Longitud mínima del nombre
             if (nombreInput.length() < 3) {

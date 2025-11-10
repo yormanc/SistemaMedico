@@ -178,6 +178,19 @@ public class FrmAddDoctor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Todos los campos deben ser completados.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        if (!fullName.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+            JOptionPane.showMessageDialog(this,
+                    " El nombre solo puede contener letras y espacios.\n\n" +
+                            "No se permiten:\n" +
+                            "• Números\n" +
+                            "• Caracteres especiales (@, #, $, etc.)",
+                    "Nombre Inválido",
+                    JOptionPane.WARNING_MESSAGE);
+            jtfFullName.requestFocus();
+            jtfFullName.selectAll();
+
+            return;
+        }
 
         int id, age;
         try {

@@ -135,28 +135,27 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
 
     private void jbtnListarActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            // Obtener el repositorio de doctores mediante reflexión
-            repositories.DoctorRepository doctorRepo = 
-                (repositories.DoctorRepository) medicService.getClass()
-                    .getDeclaredField("doctorRepository").get(medicService);
-            
-            java.util.List<models.Doctor> doctors = doctorRepo.getAll();
-            
+            // ✅ Usar método público en lugar de reflexión
+            java.util.List<models.Doctor> doctors = medicService.getDoctorRepository().getAll();
+
             if (doctors == null || doctors.isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                    "No hay doctores registrados",
-                    "Lista Vacía",
-                    JOptionPane.INFORMATION_MESSAGE);
+                        "📋 No hay doctores registrados en el sistema.",
+                        "Lista Vacía",
+                        JOptionPane.INFORMATION_MESSAGE);
                 return;
             }
-            
+
+            // Crear diálogo para mostrar la tabla
             JDialog dialog = new JDialog(this, "Lista de Doctores", true);
-            dialog.setSize(700, 400);
+            dialog.setSize(800, 450);
             dialog.setLocationRelativeTo(this);
-            
-            String[] columnNames = {"ID", "Nombre", "Edad", "Email", "Especialidad"};
+
+            // Definir columnas
+            String[] columnNames = {"ID", "Nombre Completo", "Edad", "Email", "Especialidad"};
             Object[][] data = new Object[doctors.size()][5];
-            
+
+            // Llenar datos
             for (int i = 0; i < doctors.size(); i++) {
                 models.Doctor d = doctors.get(i);
                 data[i][0] = d.getCredentials().getId();
@@ -165,26 +164,37 @@ public class FrmDoctorMenu extends javax.swing.JFrame {
                 data[i][3] = d.getEmail();
                 data[i][4] = d.getSpeciality().getName();
             }
-            
+
+            // Crear tabla
             JTable table = new JTable(data, columnNames);
             table.setEnabled(false);
-            table.setRowHeight(25);
+            table.setRowHeight(28);
+            table.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+            table.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+            table.getTableHeader().setBackground(new Color(52, 152, 219));
+            table.getTableHeader().setForeground(Color.WHITE);
+
             JScrollPane scrollPane = new JScrollPane(table);
-            
-            JPanel panel = new JPanel(new BorderLayout());
+
+            // Panel principal
+            JPanel panel = new JPanel(new BorderLayout(10, 10));
+            panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
             panel.add(scrollPane, BorderLayout.CENTER);
-            
-            JLabel lblTotal = new JLabel("Total: " + doctors.size());
-            lblTotal.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+            // Etiqueta de total
+            JLabel lblTotal = new JLabel("📊 Total de doctores registrados: " + doctors.size());
+            lblTotal.setFont(new Font("Segoe UI", Font.BOLD, 14));
+            lblTotal.setBorder(BorderFactory.createEmptyBorder(10, 5, 5, 5));
             panel.add(lblTotal, BorderLayout.SOUTH);
-            
+
             dialog.add(panel);
             dialog.setVisible(true);
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this,
-                "Error al listar: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "❌ Error al listar doctores:\n\n" + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }

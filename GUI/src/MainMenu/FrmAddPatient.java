@@ -214,12 +214,17 @@ public class FrmAddPatient extends javax.swing.JFrame {
                     JOptionPane.WARNING_MESSAGE);
                 return;
             }
-            
-            if (nameInput.matches("\\d+")) {
-                JOptionPane.showMessageDialog(this, 
-                    "El nombre no puede contener solo números", 
-                    "Nombre Inválido", 
-                    JOptionPane.WARNING_MESSAGE);
+
+            if (!nameInput.matches("^[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s]+$")) {
+                JOptionPane.showMessageDialog(this,
+                        "❌ El nombre solo puede contener letras y espacios.\n\n" +
+                                "No se permiten:\n" +
+                                "• Números\n" +
+                                "• Caracteres especiales (@, #, $, etc.)",
+                        "Nombre Inválido",
+                        JOptionPane.WARNING_MESSAGE);
+                    jtextNombreCompleto.requestFocus();
+                    jtextNombreCompleto.selectAll();
                 return;
             }
             

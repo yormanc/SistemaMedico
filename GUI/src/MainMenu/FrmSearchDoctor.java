@@ -1,16 +1,17 @@
 import javax.swing.JOptionPane;
 import services.MedicSystemFacade;
 import models.Doctor;
+import services.MedicSystemService;
 
 /**
  * Formulario para buscar un médico
  * ACTUALIZADO para usar MedicSystemFacade
  */
-public class FrmSearch extends javax.swing.JFrame {
+public class FrmSearchDoctor extends javax.swing.JFrame {
 
-    private final MedicSystemFacade systemFacade;
+    private final MedicSystemService systemFacade;
 
-    public FrmSearch(MedicSystemFacade systemFacade) {
+    public FrmSearchDoctor(MedicSystemService systemFacade) {
         if (systemFacade == null) {
             throw new IllegalArgumentException("MedicSystemFacade no puede ser nulo");
         }
@@ -150,7 +151,7 @@ public class FrmSearch extends javax.swing.JFrame {
                 return;
             }
             
-            Doctor doctor = systemFacade.getDoctorById(id);
+            Doctor doctor = systemFacade.getDoctorRepository().searchById(id);
 
             if (doctor != null) {
                 FrmModifyDoctor frmModify = new FrmModifyDoctor(systemFacade, doctor);
@@ -204,12 +205,12 @@ public class FrmSearch extends javax.swing.JFrame {
                 return;
             }
             
-            Doctor doctor = systemFacade.getDoctorById(id);
+            Doctor doctor = systemFacade.getDoctorRepository().searchById(id);
 
             if (doctor != null) {
-                FrmDelete frmDelete = new FrmDelete(systemFacade, doctor);
-                frmDelete.setVisible(true);
-                frmDelete.setLocationRelativeTo(this);
+                FrmDeleteDoctor frmDeleteDoctor = new FrmDeleteDoctor(systemFacade, doctor);
+                frmDeleteDoctor.setVisible(true);
+                frmDeleteDoctor.setLocationRelativeTo(this);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, 
