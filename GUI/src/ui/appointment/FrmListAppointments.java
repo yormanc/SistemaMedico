@@ -1,5 +1,3 @@
-
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -22,7 +20,7 @@ public class FrmListAppointments extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setTitle("Listado Completo de Citas");
-        loadAppointmentsTable(); // Cargar los datos al iniciar la ventana
+        loadAppointmentsTable();
     }
 
     private void initComponents() {
@@ -31,16 +29,16 @@ public class FrmListAppointments extends javax.swing.JFrame {
         jPanelMain.setBackground(new Color(245, 245, 245));
         
         // Título
-        JLabel jlblTitulo = new JLabel("📋 Listado de Todas las Citas");
+        JLabel jlblTitulo = new JLabel("Listado de Todas las Citas");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
-        jlblTitulo.setForeground(new Color(155, 89, 182)); // Color púrpura
+        jlblTitulo.setForeground(new Color(155, 89, 182));
         jPanelMain.add(jlblTitulo, BorderLayout.NORTH);
         
         // Tabla
         jTableAppointments = new JTable();
         jTableAppointments.setRowHeight(25);
         jTableAppointments.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        jTableAppointments.setDefaultEditor(Object.class, null); // Hacer la tabla no editable
+        jTableAppointments.setDefaultEditor(Object.class, null);
         
         JScrollPane jScrollPaneTable = new JScrollPane(jTableAppointments);
         jScrollPaneTable.setBorder(BorderFactory.createLineBorder(new Color(189, 195, 199)));
@@ -67,31 +65,28 @@ public class FrmListAppointments extends javax.swing.JFrame {
      * Recupera todas las citas y las carga en la JTable.
      */
     private void loadAppointmentsTable() {
-        // Nombres de las columnas
         String[] columnNames = {"ID", "Fecha y Hora", "Paciente", "Doctor", "Estado", "Diagnóstico/Motivo"};
         
-        // Obtener datos del servicio (asumiendo que getAppointmentRepository().getAll() devuelve List<Appointment>)
-        List<Appointment> appointments = medicService.getAppointmentRepository().getAll(); 
+        // CORREGIDO: usar getAppointmentRepository()
+        List<Appointment> appointments = medicService.getAppointmentRepository().getAll();
 
-        // Preparar datos para JTable
         Object[][] data = new Object[appointments.size()][columnNames.length];
         
         for (int i = 0; i < appointments.size(); i++) {
             Appointment appt = appointments.get(i);
             data[i][0] = appt.getAppointmentId();
             data[i][1] = appt.getDateTime().format(DATE_TIME_FORMATTER);
-            data[i][2] = appt.getPatient().getFullName(); // Asume que existe getFullName()
-            data[i][3] = appt.getDoctor().getFullName(); // Asume que existe getFullName()
+            data[i][2] = appt.getPatient().getFullName();
+            data[i][3] = appt.getDoctor().getFullName();
             data[i][4] = appt.getStatus().toString();
             data[i][5] = appt.getDiagnostic();
         }
         
-        // Crear el modelo de tabla y asignarlo
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
         jTableAppointments.setModel(model);
         jTableAppointments.getTableHeader().setReorderingAllowed(false);
         
-        // Ajuste de ancho de columnas para mejor visualización
+        // Ajuste de ancho de columnas
         jTableAppointments.getColumnModel().getColumn(0).setPreferredWidth(30); 
         jTableAppointments.getColumnModel().getColumn(1).setPreferredWidth(120); 
         jTableAppointments.getColumnModel().getColumn(2).setPreferredWidth(150);

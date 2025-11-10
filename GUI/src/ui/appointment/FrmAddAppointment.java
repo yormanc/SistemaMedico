@@ -27,7 +27,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         this.medicService = medicService;
         initComponents();
         setLocationRelativeTo(null);
-        loadComboboxData(); // Carga pacientes y doctores al iniciar
+        loadComboboxData();
         setTitle("Agendar Nueva Cita");
     }
 
@@ -49,7 +49,7 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         gbc.fill = GridBagConstraints.HORIZONTAL;
         
         // Título
-        JLabel jlblTitulo = new JLabel("➕ Agendar Nueva Cita");
+        JLabel jlblTitulo = new JLabel("Agendar Nueva Cita");
         jlblTitulo.setFont(new Font("Segoe UI", 1, 24));
         jlblTitulo.setForeground(new Color(46, 204, 113));
         
@@ -110,8 +110,12 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         jPanelButtons.add(jbtnSave);
 
         // Armar el Main Panel
-        jPanelMain.add(jlblTitulo, BorderLayout.NORTH);
-        jPanelMain.add(new JSeparator(), BorderLayout.CENTER);
+        JPanel jPanelTop = new JPanel(new BorderLayout());
+        jPanelTop.setBackground(new Color(245, 245, 245));
+        jPanelTop.add(jlblTitulo, BorderLayout.NORTH);
+        jPanelTop.add(new JSeparator(), BorderLayout.SOUTH);
+        
+        jPanelMain.add(jPanelTop, BorderLayout.NORTH);
         jPanelMain.add(jPanelForm, BorderLayout.CENTER);
         jPanelMain.add(jPanelButtons, BorderLayout.SOUTH);
 
@@ -125,22 +129,30 @@ public class FrmAddAppointment extends javax.swing.JFrame {
      * Carga los datos de Pacientes y Doctores en los JComboBox
      */
     private void loadComboboxData() {
-        // Cargar Pacientes
+        // Cargar Pacientes - CORREGIDO: usar getPatientRepository()
         List<Patient> patients = medicService.getPatientRepository().getAll();
         jcbPatient.removeAllItems();
         if (patients.isEmpty()) {
-            jcbPatient.addItem(new Patient("No hay Pacientes", 0, "", null));
+            JOptionPane.showMessageDialog(this, 
+                "No hay pacientes registrados.\nPor favor, registre pacientes primero.",
+                "Sin Pacientes",
+                JOptionPane.WARNING_MESSAGE);
             jcbPatient.setEnabled(false);
+            jbtnSave.setEnabled(false);
         } else {
             patients.forEach(jcbPatient::addItem);
         }
         
-        // Cargar Doctores
+        // Cargar Doctores - CORREGIDO: usar getDoctorRepository()
         List<Doctor> doctors = medicService.getDoctorRepository().getAll();
         jcbDoctor.removeAllItems();
         if (doctors.isEmpty()) {
-            jcbDoctor.addItem(new Doctor("No hay Doctores", 0, "", null, null));
+            JOptionPane.showMessageDialog(this,
+                "No hay doctores registrados.\nPor favor, registre doctores primero.",
+                "Sin Doctores",
+                JOptionPane.WARNING_MESSAGE);
             jcbDoctor.setEnabled(false);
+            jbtnSave.setEnabled(false);
         } else {
             doctors.forEach(jcbDoctor::addItem);
         }
@@ -156,8 +168,12 @@ public class FrmAddAppointment extends javax.swing.JFrame {
         String timeStr = jtfTime.getText().trim();
         String diagnostic = jtaDiagnostic.getText().trim();
 
+        // Validaciones
         if (selectedPatient == null || selectedDoctor == null || dateStr.isEmpty() || timeStr.isEmpty() || diagnostic.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Todos los campos deben ser completados.", "Error de Validación", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, 
+                "Todos los campos deben ser completados.", 
+                "Error de Validación", 
+                JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -166,28 +182,33 @@ public class FrmAddAppointment extends javax.swing.JFrame {
             String dateTimeStr = dateStr + " " + timeStr;
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, formatter);
-            
-            // Simulación de la utilidad DateTimeConverter. Este método debe existir en tu proyecto
-            // LocalDateTime dateTime = DateTimeConverter.toLocalDateTime(dateStr, timeStr); 
 
             // Llamar al servicio para programar la cita
             boolean success = medicService.scheduleAppointment(dateTime, selectedPatient, selectedDoctor, diagnostic);
 
             if (success) {
-                JOptionPane.showMessageDialog(this, " Cita agendada exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Cita agendada exitosamente.", 
+                    "Éxito", 
+                    JOptionPane.INFORMATION_MESSAGE);
                 dispose();
             } else {
-                JOptionPane.showMessageDialog(this, " Error al agendar la cita. Verifique la disponibilidad.", "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, 
+                    "Error al agendar la cita. Verifique la disponibilidad.", 
+                    "Error de Sistema", 
+                    JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (java.time.format.DateTimeParseException e) {
             JOptionPane.showMessageDialog(this, 
-                " Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.", 
-                "Error de Formato", JOptionPane.ERROR_MESSAGE);
+                "Error de formato en Fecha/Hora.\nUse YYYY-MM-DD para la fecha y HH:MM para la hora.", 
+                "Error de Formato", 
+                JOptionPane.ERROR_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, 
-                " Ocurrió un error inesperado: " + e.getMessage(), 
-                "Error de Sistema", JOptionPane.ERROR_MESSAGE);
+                "Ocurrió un error inesperado: " + e.getMessage(), 
+                "Error de Sistema", 
+                JOptionPane.ERROR_MESSAGE);
             e.printStackTrace();
         }
     }
